@@ -3,24 +3,42 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --ink: #161616;
+  --paper: #fbfaf7;
+  --muted: #6f6a63;
+  --copper: #b5703c;
+  --copper-dark: #7c4a23;
+  --copper-light: #f4e8dc;
+  --copper-hi: #e0a463;
+  --border: #e7ddd0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-head);
+}
+
+.hl {
+  background: var(--copper-hi);
+  color: var(--ink);
+  padding: 0 6px;
+  border-radius: 3px;
 }

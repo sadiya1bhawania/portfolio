@@ -1,0 +1,74 @@
+.band {
+  width: 100%;
+  background: var(--copper-light);
+  padding: 64px 24px;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--copper-dark);
+  letter-spacing: 0.04em;
+  margin: 0 0 12px;
+}
+
+.heading {
+  font-family: var(--font-head);
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+
+.paragraph {
+  font-family: var(--font-body);
+  color: var(--muted);
+  max-width: 460px;
+  line-height: 1.6;
+  margin: 0 0 32px;
+}
+
+.pipeline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: #fff;
+  color: var(--copper-dark);
+  border: 1px solid var(--copper);
+  border-radius: 999px;
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+
+.arrow {
+  color: var(--copper);
+  font-weight: 500;
+}
+
+.btnFilled {
+  font-family: var(--font-body);
+  background: var(--copper);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.btnFilled:focus-visible {
+  outline: 2px solid var(--copper-dark);
+  outline-offset: 2px;
+}
