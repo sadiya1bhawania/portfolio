@@ -1,0 +1,22 @@
+.band {
+  width: 100%;
+  background: var(--copper-dark);
+  padding: 56px 24px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.tagline {
+  font-family: var(--font-head);
+  font-style: italic;
+  font-size: 21px;
+  color: #fff;
+  max-width: 720px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.tagline u {
+  text-decoration-color: var(--copper-hi);
+}
