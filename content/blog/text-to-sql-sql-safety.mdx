@@ -1,0 +1,60 @@
+---
+title: "Making AI-Generated SQL Safe to Execute"
+slug: "text-to-sql-sql-safety"
+date: "2026-06-23"
+excerpt: "You can't trust an LLM's SQL blindly. Here are the layers of defense the demo enforces automatically, and why production put a human in the loop instead."
+tags: ["text-to-sql", "sql-safety", "security"]
+project: "text-to-sql"
+---
+
+## The problem
+
+An LLM writing SQL is a model predicting tokens that happen to be syntactically valid SQL, it is not a system that understands the consequences of running that SQL against your database. It can hallucinate a table that doesn't exist, write a query that's technically correct but scans far more rows than intended, or, in the worst case, generate something destructive if it's ever given the access to do so. You cannot treat generated SQL as trusted input just because the source is an LLM instead of a user typing into a form. It needs the same skepticism you'd apply to any other untrusted input, arguably more, since it's syntactically fluent and easy to mistake for already-validated.
+
+There's a second, related danger that's easy to miss: the *context* fed to the model, a retrieved schema, a customer's data, anything pulled in to ground generation, has to be treated strictly as data, never as instructions. If a model is reading retrieved content to decide what to do next, and that content can influence its behavior the way an instruction would, you have a prompt-injection surface. This is the same discipline that applies to any agent reading untrusted content, not something specific to text-to-SQL: retrieved content informs the answer, it does not get to redirect the pipeline.
+
+Both systems I built treat generated SQL as unsafe until proven otherwise. They just enforce that differently, because the stakes are different.
+
+## The demo: automatic, layered defense
+
+The [text-to-SQL demo](/projects/textToSql) is public and unattended, nobody is reviewing each generated query before it runs, because that's the entire point of letting a stranger ask it a question and get an answer in real time. Since there's no human checkpoint, safety has to be enforced structurally, and no single layer is enough on its own:
+
+- **Read-only database connection.** The connection itself cannot write. Even a generated `DROP TABLE` has nowhere to go, it fails at the connection level, not because the SQL was caught and rejected, but because the capability to execute it doesn't exist.
+- **Statement allow-listing.** Only a single `SELECT` statement is permitted. `INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER`, `ATTACH`, and `PRAGMA` are all blocked, and multiple statements in one request are rejected outright, no stacking a harmless-looking `SELECT` in front of something else via a statement separator.
+- **Auto-appended `LIMIT`.** Every query gets a `LIMIT` appended automatically, so a query that's correct but unbounded, say, one that omits a `WHERE` clause it should have had, can't return or scan an unbounded number of rows.
+- **Query timeout.** If a query is slow regardless of why, a missing index, an expensive join, anything, it gets cut off rather than left to run indefinitely.
+- **Self-correct loop capped at 2 retries.** When execution fails, the pipeline feeds the error back to the model and lets it retry, but only twice. This isn't a safety control in the same sense as the others; it's a bound on how long the system will keep trying before giving up and surfacing the failure, so a fundamentally wrong question doesn't loop forever.
+
+Each layer is independently enforceable and checks a different failure mode, connection-level write prevention doesn't care about statement type, allow-listing doesn't care about row count, the timeout doesn't care about either. Stacking them means a generated query has to pass all of them to do anything, rather than relying on any single check to catch everything.
+
+## Production: instructions first, then a hard check
+
+At ELB US the stakes were higher, a real company database, not a public sample, but the *read* path still wasn't gated by a human; approving every SELECT would have been pointless overhead. (The human gate belonged to the write phase, covered earlier.) Read safety came from two layers instead.
+
+The first layer was the instructions. The model was told, explicitly and repeatedly, that it could only read, produce a single SELECT, never write, update, delete, or alter anything. Good instructions get you most of the way, but they're *probabilistic*: the model usually complies. "Usually" isn't a safety guarantee, especially once untrusted text, like a user's question or retrieved content, can influence what the model writes.
+
+So the second layer was a deterministic check that ran after generation and before execution. The generated SQL never went straight to the database, it was validated first. The check enforced what the instructions only requested: it had to be a single statement, and that statement had to be a SELECT. Anything else was rejected before it could run.
+
+That layer earns its keep against queries like:
+
+```sql
+SELECT * FROM customers; DROP TABLE customers;
+```
+
+The first half is an innocent read. The second half, a stacked statement after the semicolon, is exactly what you never want reaching the database, whether the model produced it by mistake or because someone tried to steer it there. Instructions might stop it most of the time; the post-generation check makes sure it *can't* execute at all.
+
+That's the principle underneath all of it: the model's output is a suggestion, never something trusted. A generated query is guilty until a deterministic check proves it safe, the same discipline the public demo enforces structurally, just arrived at from the higher-stakes side.
+
+## The actual tradeoff
+
+The demo can't put a person between generation and execution, there's no reviewer to put there for anonymous public traffic, and the whole value of the demo is showing the pipeline run live, unattended. So safety has to be structural and automatic: enforce the same guarantees a human would be checking for, but as hard constraints the system can't bypass, before a human ever could be in the loop.
+
+Production could afford a human gate, and the stakes asked for one, a real database, with write access in scope, where the cost of a wrong approval is much higher than the cost of a slower review step. Neither approach is "more secure" in the abstract; they're matched to what each system could put at risk, and to whether unattended throughput or human judgment was the thing worth optimizing for.
+
+## Back to the hub
+
+This is one of four deep dives expanding on the [text-to-SQL overview](/blog/text-to-sql-overview). The others:
+
+- [RAG tradeoffs in text-to-SQL](/blog/text-to-sql-rag-tradeoffs)
+- [Model routing for text-to-SQL](/blog/text-to-sql-model-routing)
+- [Building a live pipeline visualization with SSE](/blog/text-to-sql-live-visualization)

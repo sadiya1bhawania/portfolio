@@ -1,0 +1,52 @@
+---
+title: "Model Routing for Text-to-SQL: Paying for Complexity, Not Every Query"
+slug: "text-to-sql-model-routing"
+date: "2026-06-23"
+excerpt: "Why production routed queries to different models by complexity score, and why the demo deliberately doesn't, one model, a spend cap, and a much smaller bill to manage."
+tags: ["text-to-sql", "llm-routing", "cost-optimization"]
+project: "text-to-sql"
+---
+
+## The question
+
+Once a text-to-SQL pipeline is generating SQL with an LLM, the next question is which model. The instinct is to reach for the strongest model available and call it done, best accuracy, fewest retries, simplest mental model. The problem is that "strongest" is also usually the slowest and most expensive, and not every question needs it. A query against two tables with an obvious join doesn't need the same model as a query that has to reason through five joins and a subquery.
+
+I handled this differently in production than I do in the demo, and the difference comes down to one thing: whether routing is solving a real cost problem, or solving a problem that doesn't exist yet.
+
+## Production: routing by complexity score
+
+At ELB US, every incoming query went through a complexity-scoring layer before generation. Queries that scored above a 65% complexity threshold were routed to a Pro model; everything at or below that threshold went to a base model. The goal was to cut inference cost and latency without degrading output quality, most questions people actually ask don't need the most expensive model in the fleet to answer correctly, and paying Pro-model prices for a query that a base model would get right on the first try is just waste.
+
+The router scored each query's complexity before generating any SQL, using what the vector-retrieval step had already surfaced. When a question came in, retrieval returned the relevant slice of the schema, which told me how many distinct tables the question reached into. That table count was my complexity signal: a single-table question is cheap and unambiguous, while a question pulling in four or five tables almost certainly implies multiple joins and more room for the model to get it wrong. So join complexity was inferred from the retrieved table count, not measured from SQL that didn't exist yet.
+
+The score was a weighted heuristic over that signal, normalized and compared against a ~65% threshold, past it, the query went to the Pro model; under it, the cheaper base model handled it. The weights and threshold were hand-tuned against real query patterns, which kept the whole thing interpretable: I could always explain why a given query routed where it did, which matters more than you'd expect when you're debugging a wrong answer in production.
+
+The next iteration, which I'd designed and gotten approved, pushed the score past raw table count toward how interconnected the retrieved tables were (foreign-key density, plus signals of aggregation or time-windowing in the question itself), and added an outcome-aware path: if the base model's SQL failed validation or tripped the self-correct loop, the retry escalated to the Pro model automatically. That made routing key on results, not just structure, the cheap model always got the first attempt, and only the queries that genuinely needed more got escalated.
+
+The 65% threshold itself was a deliberate calibration point, not an arbitrary number, it's the line where the system decided a query was complex enough that the cheaper model's risk of getting it wrong outweighed the cost savings of using it.
+
+## The demo: one model, a spend cap instead of a router
+
+The [text-to-SQL demo](/projects/textToSql) runs every question through a single model, Gemini (gemini-3.1-flash-lite), on a capped shared key. There's no complexity scorer, no threshold, no second model waiting in reserve for harder questions.
+
+This isn't a smaller version of the production system with the routing left out because it was too much work. It's the right call at this scale, for reasons that mirror exactly why routing existed in production in the first place:
+
+- **The schema is small.** Chinook doesn't produce the kind of query complexity spread that makes routing pay off, there's no meaningful population of "trivial" versus "hard" queries to sort between when the whole schema is eleven tables.
+- **The volume is low.** This is a public demo, not a system serving sustained traffic from real users asking real business questions all day. Routing earns its complexity under volume; a demo doesn't generate enough of it.
+- **Cost control happens at a different layer.** Instead of routing to control spend, the demo enforces a capped shared key. That's the cost control mechanism here, a hard ceiling on total spend, not a per-query decision about which model is worth the money.
+
+One detail that makes the comparison cleaner than it could have been: the demo runs on Gemini Flash-Lite, the same vendor as the Pro model production routed high-complexity queries to. That's not a coincidence I'm reading into after the fact, it means the demo-vs-production story is "same vendor, different tier," not "different vendors entirely." Production reached for the Pro tier when a query's complexity score justified the cost; the demo runs everything on the cheaper Flash-Lite tier from that same model family, because at this scale and traffic, there's no query population complex enough to justify ever stepping up.
+
+## The actual tradeoff
+
+Model routing is a cost-and-latency optimization that only pays for itself once you have enough query volume and enough complexity variance for the savings to outweigh the added system complexity, a scoring layer to build, calibrate, and maintain, plus a second model to keep available and monitored. Below that volume and variance, routing is overhead with no payoff, the same way vector retrieval is overhead with no payoff below a certain schema size (see the [RAG tradeoffs post](/blog/text-to-sql-rag-tradeoffs) for the same shape of argument applied to context retrieval instead of model selection).
+
+The demo's single-model simplicity is a deliberate choice, not a limitation. Routing is what you add once scale and cost pressure justify it, not a default you reach for because it's available.
+
+## Back to the hub
+
+This is one of four deep dives expanding on the [text-to-SQL overview](/blog/text-to-sql-overview). The others:
+
+- [RAG tradeoffs in text-to-SQL](/blog/text-to-sql-rag-tradeoffs)
+- [SQL safety without a human in the loop](/blog/text-to-sql-sql-safety)
+- [Building a live pipeline visualization with SSE](/blog/text-to-sql-live-visualization)

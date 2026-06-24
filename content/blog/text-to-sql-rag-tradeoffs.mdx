@@ -1,0 +1,49 @@
+---
+title: "RAG Tradeoffs in Text-to-SQL: When Schema-in-Prompt Stops Being Enough"
+slug: "text-to-sql-rag-tradeoffs"
+date: "2026-06-23"
+excerpt: "Why my demo embeds the whole Chinook schema directly in the prompt, why production needed ChromaDB instead, and where the line between those two approaches actually sits."
+tags: ["text-to-sql", "rag", "vector-search"]
+project: "text-to-sql"
+---
+
+## The question
+
+Every text-to-SQL pipeline has to answer the same question before it generates a single line of SQL: what does the model need to know about the database to write a correct query? The naive answer, "give it the whole schema", works right up until it doesn't. The interesting engineering decision isn't whether to give the model schema context, it's *how much* and *how it gets there*.
+
+I've answered this question two different ways on the same underlying problem: schema-in-prompt for the public demo, and vector retrieval for production. Neither is the "right" answer in the abstract, they're right for the schema sizes they're solving for. This post is about why I picked each one, and where the line between them sits.
+
+## The demo: schema in the prompt
+
+The [text-to-SQL demo](/projects/textToSql) runs against Chinook, a sample SQLite music-store database. Chinook is small enough that the full schema DDL, plus a handful of few-shot examples, fits directly in the prompt alongside the user's question. No retrieval step, no vector store, no embedding model in the loop at all.
+
+This isn't a simplification I made for the sake of the demo, it's the correct engineering choice at this scale. Retrieval exists to solve a context-budget problem: when you can't afford to show the model everything, you have to be selective about what you show it. Chinook never creates that problem. Every table is relevant context for some plausible question a visitor might ask, the whole schema costs a small, fixed number of tokens, and there's no latency or infrastructure cost to retrieve from a store that doesn't need to exist. Standing up ChromaDB to retrieve from an 11-table schema would be solving a problem I don't have, in exchange for a slower, more complex pipeline.
+
+## Production: why ChromaDB earned its place
+
+At ELB US, the calculus flipped. The production schema was too large to stuff entirely into the prompt, there was more schema (tables, columns, relationships) than could reasonably fit in context alongside the rest of what the model needed: the user's question, instructions, and few-shot examples of correctly-written queries for that domain.
+
+So retrieval became necessary, not optional. We used ChromaDB to do two things at once: retrieve the schema DDL relevant to the user's specific question, and retrieve few-shot examples similar to that question, so the model saw worked examples that were actually applicable rather than generic ones. Both are doing the same job, narrowing a large universe of context down to the slice that's actually useful for *this* query, just applied to two different kinds of content.
+
+Retrieval ran over Google's Gemini embedding model, which embedded the schema, tables and views, into ChromaDB. Indexing the views alongside the tables was deliberate: a view already encodes a common join or a slice of business logic, so embedding them gave the retriever semantic shortcuts the raw tables alone wouldn't surface.
+
+The sales module came to roughly 250 tables and views, far past what you could paste into a single prompt. That's the whole reason retrieval existed: you can't hand a model a schema that size and expect it to pick the right three tables, so you retrieve the relevant slice first, then generate against just that.
+
+## The actual tradeoff
+
+Embedding the whole schema in the prompt is simpler and lower-latency: there's no retrieval step, no vector store to keep in sync with schema changes, no embedding model call before generation even starts. That simplicity is real and worth defaulting to, right up until one of two things happens:
+
+1. **The schema outgrows the context budget.** At some point you physically cannot fit the full schema, the user's question, instructions, and few-shot examples into a single prompt without truncating something important.
+2. **Extra tables dilute the prompt and hurt accuracy**, even before you hit a hard context limit. A model asked to write a query against forty tables when only three are relevant has more surface area to get a join wrong, pick the wrong column name, or hallucinate a relationship that doesn't exist. Showing it everything isn't free even when it technically fits.
+
+That inflection point, schema too large to fit, or large enough that including all of it actively hurts generation quality, is when selective vector retrieval starts earning its complexity. Below that point, retrieval is overhead with no payoff. Above it, schema-in-prompt isn't just inelegant, it's actively worse than narrowing the context first.
+
+Chinook sits comfortably below that line. The production schema at ELB US sat above it. Same pipeline shape, same stage in the sequence, [retrieve context, in the language of the overview post](/blog/text-to-sql-overview), solved two different ways because the inputs to the decision were genuinely different.
+
+## Back to the hub
+
+This is one of four deep dives expanding on the [text-to-SQL overview](/blog/text-to-sql-overview). The others:
+
+- [Model routing for text-to-SQL](/blog/text-to-sql-model-routing)
+- [SQL safety without a human in the loop](/blog/text-to-sql-sql-safety)
+- [Building a live pipeline visualization with SSE](/blog/text-to-sql-live-visualization)

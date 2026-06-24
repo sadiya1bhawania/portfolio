@@ -1,0 +1,47 @@
+---
+title: "Building a Live Pipeline Visualization with SSE"
+slug: "text-to-sql-live-visualization"
+date: "2026-06-23"
+excerpt: "The demo's pipeline diagram is driven by real backend events over SSE, not a timer faking progress, and it's the same instinct I built by hand at Cisco, years before I was building with AI."
+tags: ["text-to-sql", "sse", "frontend", "observability"]
+project: "text-to-sql"
+---
+
+## The problem
+
+A lot of "live" progress indicators aren't actually live, they're a timer counting up while a spinner moves, decoupled from whatever the backend is actually doing. That's fine when you don't care whether the UI reflects reality. It's not fine for a pipeline I want people to trust: if I'm showing someone the path their question takes through retrieval, generation, execution, and summarization, the visualization has to be telling the truth about what's happening, when it's happening.
+
+So for the [text-to-SQL demo](/projects/textToSql), the pipeline diagram is driven entirely by real backend events, streamed over Server-Sent Events as each stage actually completes, never by a timer simulating progress.
+
+## How it actually works
+
+As the backend pipeline runs, it emits a stage event over SSE the moment each step finishes, retrieve, generate, execute, summarize. The frontend doesn't guess at timing or animate toward an assumed duration; it just renders whatever state the latest event says is true. The active stage is highlighted live, in sync with what the backend is actually doing at that instant, not what the frontend predicts it's probably doing.
+
+This shows up clearly in two places:
+
+- **The self-correct loop is visible, not hidden.** When a generated query fails and the pipeline retries, the Generate SQL stage visibly re-activates rather than the UI just sitting on a generic "thinking" state until something eventually succeeds. You can watch the system catch its own mistake and try again, because that's literally what the event stream is telling the UI happened.
+- **LLM calls and deterministic steps are color-coded separately.** Stages that call the LLM are visually distinct from stages that are plain deterministic logic, retrieval and execution don't get treated the same as generation and summarization, because they aren't the same kind of step. One is a model making a decision; the other is code doing exactly what it was told. The visualization makes that distinction visible instead of flattening every stage into the same generic "loading" look.
+
+None of this is cosmetic. It's the visualization staying honest about what kind of work is happening and when, which is the entire point of building it as an event stream instead of a progress bar.
+
+## The bridge: I've built this instinct before
+
+Here's the thing I didn't expect to notice until I was deep into this pipeline: I'd already built a version of this, years earlier, with a completely different stack and nothing AI involved at all.
+
+At Cisco ThousandEyes, I built a real-time agent-tracking UI, TypeScript on the frontend, Spring Boot on the backend, alongside a gRPC API for agent proxy listing. The motivation was the same motivation driving this visualization: don't make someone guess the state of a running system. Show it to them, live, as it actually changes, instead of leaving them to poll a database by hand and piece together a stale picture.
+
+I built that one entirely by hand. No agent frameworks, no LLM writing the streaming logic or the UI states for me, just me reasoning through how to represent "agent healthy," "agent reassigned," "proxy unreachable" as real-time state, years before I was building anything with AI in the loop.
+
+Now the same impulse shows up again, except what's being observed has changed. At Cisco, I was building a window into the state of infrastructure, agents, proxies, assignments. Here, I'm building a window into the state of an AI pipeline observing itself, each stage emitting its own event as it runs, including the moment it decides to retry its own work. Real-time observability: by hand, then with AI. Same instinct, different thing being made legible each time.
+
+Full writeup on the Cisco side: [Real-Time Agent Tracking at Cisco ThousandEyes](/blog/cisco-agent-tracking).
+
+## Back to the hub
+
+This is one of four deep dives expanding on the [text-to-SQL overview](/blog/text-to-sql-overview). The others:
+
+- [RAG tradeoffs in text-to-SQL](/blog/text-to-sql-rag-tradeoffs)
+- [Model routing for text-to-SQL](/blog/text-to-sql-model-routing)
+- [SQL safety without a human in the loop](/blog/text-to-sql-sql-safety)
+
+And the project that started this whole comparison: [Real-Time Agent Tracking at Cisco ThousandEyes](/blog/cisco-agent-tracking) / [project page](/projects/cisco-agent-tracking).

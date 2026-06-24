@@ -1,0 +1,39 @@
+---
+title: "Real-Time Agent Tracking at Cisco ThousandEyes: Observability, By Hand"
+slug: "cisco-agent-tracking"
+date: "2026-06-23"
+excerpt: "Before I was building with AI, I built a real-time agent-tracking UI and a gRPC API at Cisco ThousandEyes, the same instinct toward observability that shows up years later in text-to-SQL's live pipeline visualization."
+tags: ["typescript", "spring-boot", "grpc", "observability"]
+project: "cisco-agent-tracking"
+---
+
+## The problem
+
+During my internship on ThousandEyes at Cisco, the team needed a way to check the status of monitoring agents, and, separately, to see and manage which proxy each agent was assigned to, without someone running a SQL query by hand every time. Status checks were a manual, query-the-database affair. That's slow, it doesn't scale past whoever knows the schema, and it gives you a snapshot, not a live picture.
+
+I built two things to fix that: a real-time agent-tracking UI, and a gRPC API that gave users visibility and control over proxy assignments directly, instead of going through a database query.
+
+## What I built
+
+The stack was TypeScript on the frontend and Spring Boot on the backend, with a gRPC API as the interface for proxy listing and assignment. The tracking UI replaced the manual SQL-querying workflow entirely, instead of someone writing a query to check whether an agent was healthy or which proxy it was on, the UI showed that state directly, live.
+
+
+I also wrote integration tests at roughly 95% coverage for this work, at an internship, that level of test coverage wasn't a formality, it was how I made sure a system I was still learning the edges of didn't quietly break for someone else's workflow downstream.
+
+## By hand, before AI
+
+This was 2023. No agent frameworks, no LLM scaffolding, no AI pair-programmer writing the gRPC service definitions for me. Every piece of this, the proxy data model, the streaming/update logic, the UI states for "agent healthy," "agent reassigned," "proxy unreachable", I reasoned through and wrote by hand, at intern scale, on a small slice of a much larger monitoring platform.
+
+## The thread that connects to now
+
+Here's the part I didn't expect to notice until I was deep into a different project, two years and a different stack later: the instinct behind this project, *don't make someone guess the state of a system; show it to them, live*, is the exact same instinct behind the [live pipeline visualization](/blog/text-to-sql-live-visualization) in my text-to-SQL demo.
+
+The difference is what's being observed. At Cisco, I was building a window into the state of *infrastructure*, agents, proxies, assignments, by hand, with a UI and an API I wrote query-by-query, state-by-state. In the text-to-SQL pipeline, I'm building a window into the state of an *AI system observing itself*, each pipeline stage (retrieve, generate, execute, self-correct, summarize) emits a live event as it happens, and the UI reflects that in real time, the same way the agent-tracking UI reflected agent and proxy state in real time.
+
+Same impulse, make the system legible while it's running, not after the fact. Different phase of my career, different thing being made legible. 
+
+## See also
+
+- [Live pipeline visualization with SSE](/blog/text-to-sql-live-visualization), the AI-era version of this same instinct
+- [Text-to-SQL: From Production Pipeline to Live Demo](/blog/text-to-sql-overview), the broader project this connects to
+- [Text-to-SQL project](/projects/textToSql), try the live demo

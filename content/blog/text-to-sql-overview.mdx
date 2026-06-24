@@ -1,0 +1,88 @@
+---
+title: "Text-to-SQL: From Production Pipeline to Live Demo"
+slug: "text-to-sql-overview"
+date: "2026-06-23"
+excerpt: "Why I built a read-only text-to-SQL demo on Chinook, how it mirrors the agentic pipeline I shipped in production, and where the two diverge on purpose."
+tags: ["text-to-sql", "llm-agents", "rag", "sql"]
+project: "text-to-sql"
+---,
+
+## The problem
+
+Most people who need an answer from a database can't write SQL. They can ask a question in plain English, though, "which customers spent the most last quarter," "what's our top-selling track by genre." Text-to-SQL closes that gap: an LLM turns the question into a query, the query runs against a real database, and the answer comes back in the language the person actually asked in.
+
+The hard part isn't getting an LLM to write *some* SQL, most frontier models can do that today. The hard part is everything around it: knowing which tables and columns are even relevant, making sure the generated query is syntactically and semantically correct before anything executes, deciding what to do when it isn't, and doing all of this safely against a database you don't want corrupted or DOS'd by a bad query.
+
+I've built this pipeline twice, once in production at ELB US, serving real users against a real warehouse, and once here, as a public demo against the Chinook sample database. The shapes are nearly identical. The constraints are not. That gap is the most interesting part of the story, so I'll carry a **demo vs. production** comparison through the rest of this post.
+
+## The pipeline
+
+Both systems follow the same sequence of stages:
+
+**User question → Retrieve context → Generate SQL → Execute → Self-correct → Summarize → Respond**
+
+1. **User question** - plain-English input, no SQL knowledge assumed.
+2. **Retrieve context** - pull in the schema (and, in production, relevant few-shot examples) the model needs to write a correct query for *this* database.
+3. **Generate SQL** - the LLM produces a candidate query grounded in that context.
+4. **Execute** - the query runs against the actual database, read-only.
+5. **Self-correct** - if execution fails or returns something clearly wrong, feed the error back to the model and let it retry, bounded.
+6. **Summarize** - translate the raw rows back into a plain-English answer.
+7. **Respond** - return the answer alongside the SQL and rows that produced it, so the user can verify it themselves.
+
+Below is how each stage actually differs between the two systems.
+
+### Retrieve context
+
+In **production**, schema and few-shot examples were retrieved from a ChromaDB vector store. The warehouse had enough tables and enough historical query patterns that embedding-based retrieval was the only practical way to keep the prompt focused, you can't hand a model your entire schema and expect it to reliably pick the right joins.
+
+In the **demo**, Chinook is small enough that the entire schema is embedded directly in the prompt. No vector DB needed at this scale, retrieval-by-embedding would be solving a problem that doesn't exist yet for an 11-table sample database. This is the clearest case of the demo intentionally *not* replicating production complexity, because the complexity wouldn't teach anything here. The tradeoffs of schema-in-prompt vs. RAG-based retrieval are their own post, see [RAG tradeoffs in text-to-SQL](/blog/text-to-sql-rag-tradeoffs).
+
+### Generate SQL
+
+**Production** used a query-complexity scorer to route requests: queries scored above a 65% complexity threshold went to a Pro model, simpler queries went to a base model. This was a cost/latency optimization, most questions don't need the strongest (and slowest, and most expensive) model to answer correctly.
+
+The **demo** runs everything through Gemini (gemini-3.1-flash-lite) on a capped shared key. There's no routing because there's only one model in play, and the traffic profile (a public demo, not 150 concurrent business users) doesn't justify the complexity. More on why model routing existed in production at all in [model routing for text-to-SQL](/blog/text-to-sql-model-routing).
+
+### Execute
+
+In production, reads were never what a human gated, approving every SELECT would be absurd at 150 users. Read safety came from constraining the model itself: it was instructed, tightly, to produce only read-only queries and never to write, update, or mutate anything. That guardrail lived at the instruction layer.
+
+The human-approval gate belonged to the **write** phase, the agentic, action-taking side of the system that was still in development. The design was deliberate: a confirmed write or action wouldn't execute free-form, model-generated SQL at all. Once the system understood the user's intent, that intent was mapped to a controlled, predefined action, and a human approved it before anything ran. The gate stood between the agent and any real change, updating a record, taking an action, not in front of harmless reads.
+
+The demo has no write path; it's read-only by design. And because it's anonymous public traffic rather than 150 known employees, it can't lean on instructions the way production could, so read safety is enforced structurally instead: read-only database access, statement allow-listing, automatic `LIMIT` injection, and query timeouts. That's the deliberate difference, production constrained the model with instructions; the public demo doesn't rely on the model behaving at all, and bounds it at the infrastructure layer. Full breakdown in [SQL safety without a human in the loop](/blog/text-to-sql-sql-safety).
+
+### Self-correct
+
+Both systems retry on failure rather than failing the whole request on the first bad query. The **demo** caps this at 2 retries, enough to recover from a typo-class SQL error without looping forever on a fundamentally wrong question. **TODO(sadie): confirm whether production used the same retry cap or a different policy.**
+
+### Summarize → Respond
+
+**Production** served roughly 150 users, with Redis caching responses and Docker handling deployment, caching mattered there because real users ask overlapping questions against a warehouse that doesn't change every second.
+
+The **demo** skips caching for repeat correctness-of-experience reasons (every visitor should see the pipeline run live) but adds something production didn't need for its users: a live, staged visualization. Each pipeline stage emits a server-sent event as it happens, and the UI updates in real time, the visualization is driven by actual pipeline state, not by timers faking progress. That's its own post: [building a live pipeline visualization with SSE](/blog/text-to-sql-live-visualization).
+
+## Demo vs. production, side by side
+
+| | Production (ELB US) | Demo (this site) |
+|---|---|---|
+| Database | Internal warehouse | Chinook (SQLite, read-only) |
+| Context retrieval | ChromaDB vector search (schema + few-shot) | Schema embedded in prompt |
+| Model | Routed: base model or Pro by complexity score (>65% → Pro) | Gemini (gemini-3.1-flash-lite) |
+| Safety gate | Reads: model instructed to stay read-only. Writes/actions: human approval before execution (in-development write phase). | Read-only + allow-listing + auto-LIMIT + timeout |
+| Self-correct | Capped at 2 retries | Capped at 2 retries |
+| Caching / infra | Redis + Docker | None, every run is live |
+| Scale | ~150 users | Public demo traffic |
+| Visualization | N/A (internal tool) | Live SSE-driven pipeline stages |
+
+The throughline: production optimized for cost, scale, and human trust in a system making decisions against real business data, behind an agentic router that also handled document RAG. The demo optimizes for transparency, showing a stranger, in real time, exactly how an LLM gets from a question to a verified answer, without needing infrastructure that a sample database doesn't justify.
+
+## What's next
+
+This post is the hub. Four deep dives expand on the decisions above:
+
+- [RAG tradeoffs in text-to-SQL](/blog/text-to-sql-rag-tradeoffs), when schema-in-prompt is enough, and when you need vector retrieval
+- [Model routing for text-to-SQL](/blog/text-to-sql-model-routing), routing by query complexity instead of always reaching for the biggest model
+- [SQL safety without a human in the loop](/blog/text-to-sql-sql-safety), read-only enforcement, allow-listing, auto-`LIMIT`, and timeouts
+- [Building a live pipeline visualization with SSE](/blog/text-to-sql-live-visualization), driving UI state from real pipeline events, not timers
+
+You can also try the live demo: [Text-to-SQL](/projects/textToSql).
