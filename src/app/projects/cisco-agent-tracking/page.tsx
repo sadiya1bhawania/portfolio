@@ -60,7 +60,7 @@ export default function CiscoAgentTrackingPage() {
           className="rounded-lg border p-4 text-sm"
           style={{ borderColor: "var(--border)", background: "var(--copper-light)" }}
         >
-          This was hand-built, pre-AI-assisted engineering — no agent frameworks, no
+          This was hand-built, pre-AI-assisted engineering, no agent frameworks, no
           LLM scaffolding. I wrote up the full story, including the throughline to
           how that same instinct shows up in my text-to-SQL pipeline&apos;s live
           visualization, in{" "}
@@ -82,7 +82,7 @@ export default function CiscoAgentTrackingPage() {
           Related project
         </p>
         <p className="text-sm mb-3" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
-          Real-time observability, by hand — then with AI. My text-to-SQL pipeline
+          Real-time observability, by hand, then with AI. My text-to-SQL pipeline
           carries the same instinct forward, except now it&apos;s an AI system
           observing itself, live, stage by stage.
         </p>

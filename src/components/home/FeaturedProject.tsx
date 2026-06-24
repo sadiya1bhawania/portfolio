@@ -11,7 +11,7 @@ export default function FeaturedProject() {
         <h2 className={styles.heading}>A drop-in text-to-SQL engine</h2>
         <p className={styles.paragraph}>
           Point it at your database, ask questions in plain English, get
-          answers you can trust — with validation gates between the model
+          answers you can trust, with validation gates between the model
           and your data.
         </p>
         <div className={styles.pipeline}>

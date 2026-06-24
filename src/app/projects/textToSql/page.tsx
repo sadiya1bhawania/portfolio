@@ -356,7 +356,7 @@ export default function TextToSqlPage() {
               </h2>
               <p className="text-sm text-[var(--tts-muted)] mb-4" style={{ fontFamily: "var(--font-body)" }}>
                 Claude turns your question into SQL, runs it read-only, and explains the result.
-                Every answer shows its work — toggle to see the generated SQL and raw rows.
+                Every answer shows its work, toggle to see the generated SQL and raw rows.
               </p>
             </div>
           )}

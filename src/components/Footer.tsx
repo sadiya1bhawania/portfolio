@@ -16,7 +16,7 @@ export default function Footer() {
         className="max-w-md text-[var(--muted)] text-sm"
         style={{ fontFamily: "var(--font-mono)" }}
       >
-        Take a look at what I&apos;ve built, then say hi — recruiters,
+        Take a look at what I&apos;ve built, then say hi, recruiters,
         founders, anyone curious.
       </p>
       <Link

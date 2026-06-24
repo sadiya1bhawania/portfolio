@@ -24,7 +24,7 @@ const MILESTONES: Milestone[] = [
     bullets: [
       "Built an automated tax-form filing system spanning 250+ forms, cutting document creation from 2 weeks to 1 day.",
       "Merged 8 overlapping applications into 3, reducing customer dissatisfaction ~30%.",
-      "Automated GST filing and secure data APIs — 98% less manual checking, 99% uptime.",
+      "Automated GST filing and secure data APIs, 98% less manual checking, 99% uptime.",
     ],
   },
   {
@@ -60,7 +60,7 @@ const MILESTONES: Milestone[] = [
     range: "Feb 2024 – Sep 2025 · 1 yr 8 mos",
     tags: ["React", "Node", "MongoDB", "AWS", "Docker"],
     bullets: [
-      "Built a master vendor table and a suite of vendor marketplaces — ~150 vendors across 600 users.",
+      "Built a master vendor table and a suite of vendor marketplaces, ~150 vendors across 600 users.",
       "Automated HTML/PDF parsing with TensorLake, reducing manual data entry ~90%.",
       "Led growth engineering: 40% faster onboarding, 30% lower drop-off.",
     ],
@@ -86,7 +86,7 @@ const MILESTONES: Milestone[] = [
     range: "2026 –",
     tags: ["AI · Full-Stack"],
     bullets: [
-      "Looking for my next role on a team building seriously with AI — startup or scaled.",
+      "Looking for my next role on a team building seriously with AI, startup or scaled.",
       "Recruiters and founders, let's talk.",
     ],
   },

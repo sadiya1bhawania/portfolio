@@ -65,7 +65,7 @@ export default function ProjectsPage() {
             <Link href="/projects/cisco-agent-tracking" className="underline" style={{ color: "var(--copper-dark)" }}>
               Cisco agent tracking
             </Link>{" "}
-            — the same real-time-observability instinct, by hand, before AI.
+            , the same real-time-observability instinct, by hand, before AI.
           </p>
         </article>
 
@@ -90,7 +90,7 @@ export default function ProjectsPage() {
             style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}
           >
             A real-time agent-tracking UI (TypeScript + Spring Boot) and a gRPC API
-            for proxy assignments, built by hand at Cisco — before AI was part of
+            for proxy assignments, built by hand at Cisco, before AI was part of
             how I built anything.
           </p>
           <div className="flex items-center gap-4">
@@ -117,7 +117,7 @@ export default function ProjectsPage() {
             <Link href="/projects/textToSql" className="underline" style={{ color: "var(--copper-dark)" }}>
               Text-to-SQL
             </Link>{" "}
-            — the same instinct, years later, observing an AI pipeline instead.
+            , the same instinct, years later, observing an AI pipeline instead.
           </p>
         </article>
       </div>

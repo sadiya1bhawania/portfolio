@@ -187,7 +187,7 @@ export async function* runPipeline(question: string): AsyncGenerator<PipelineEve
     yield {
       stage: "done",
       status: "error",
-      error: "Daily usage limit reached — see the generated SQL above. Please try again tomorrow.",
+      error: "Daily usage limit reached, see the generated SQL above. Please try again tomorrow.",
     };
     return;
   }
@@ -236,7 +236,7 @@ export async function* runPipeline(question: string): AsyncGenerator<PipelineEve
         yield {
           stage: "done",
           status: "error",
-          error: "Daily usage limit reached — see the generated SQL above. Please try again tomorrow.",
+          error: "Daily usage limit reached, see the generated SQL above. Please try again tomorrow.",
         };
         return;
       }

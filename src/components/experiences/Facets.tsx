@@ -10,7 +10,7 @@ export default function Facets() {
         </div>
         <h3 className={styles.title}>Systems thinker</h3>
         <p className={styles.blurb}>
-          I don&apos;t just call the model — I design the gates that catch it
+          I don&apos;t just call the model, I design the gates that catch it
           when it&apos;s wrong, before it ever hits your database.
         </p>
       </div>
@@ -21,7 +21,7 @@ export default function Facets() {
         </div>
         <h3 className={styles.title}>Ships, not prototypes</h3>
         <p className={styles.blurb}>
-          Six years owning features end-to-end — from the prompt all the way
+          Six years owning features end-to-end, from the prompt all the way
           to the product the user actually uses.
         </p>
       </div>

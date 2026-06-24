@@ -7,10 +7,10 @@ export default function Hero() {
       <div>
         <p className={styles.kicker}>/ HI, I&apos;M SADIYA</p>
         <h1 className={styles.heading}>
-          I make AI do real work — <span className="hl">safely</span>.
+          I make AI do real work, <span className="hl">safely</span>.
         </h1>
         <p className={styles.paragraph}>
-          Full-stack software engineer building production AI systems — from
+          Full-stack software engineer building production AI systems, from
           the React frontend to the cloud infrastructure to the validation
           layers most demos skip.
         </p>

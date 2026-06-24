@@ -15,7 +15,7 @@ export default function UnderConstruction({ section }: { section: string }) {
         building this page<span className={styles.cursor}>_</span>
       </p>
       <p className={styles.paragraph}>
-        This section is still being built. Check back soon — or explore the
+        This section is still being built. Check back soon, or explore the
         rest of the site in the meantime.
       </p>
     </section>

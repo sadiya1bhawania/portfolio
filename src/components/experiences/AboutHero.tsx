@@ -13,7 +13,7 @@ export default function AboutHero() {
         </h1>
         <p className={styles.paragraph}>
           Senior software engineer working where LLMs meet real product
-          problems — text-to-SQL, agentic pipelines, and the validation gates
+          problems, text-to-SQL, agentic pipelines, and the validation gates
           that keep them safe to ship. Looking for my next role on a team
           building seriously with AI.
         </p>
