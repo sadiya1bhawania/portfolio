@@ -355,7 +355,7 @@ export default function TextToSqlPage() {
                 Ask the Chinook database a question
               </h2>
               <p className="text-sm text-[var(--tts-muted)] mb-4" style={{ fontFamily: "var(--font-body)" }}>
-                Claude turns your question into SQL, runs it read-only, and explains the result.
+                LLM turns your question into SQL, runs it read-only, and explains the result.
                 Every answer shows its work, toggle to see the generated SQL and raw rows.
               </p>
             </div>
