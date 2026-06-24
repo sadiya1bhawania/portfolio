@@ -155,7 +155,7 @@ export default function PipelineStages({ events }: { events: PipelineEvent[] }) 
 
       <p className="mt-6 text-[11px] text-[var(--tts-muted)]" style={{ fontFamily: "var(--font-mono)" }}>
         <span className="inline-block w-2 h-2 rounded-full bg-[var(--tts-indigo)] mr-1 align-middle" />
-        Indigo = calls Claude ·{" "}
+        Indigo = calls LLM ·{" "}
         <span className="inline-block w-2 h-2 rounded-full bg-gray-400 mr-1 align-middle" />
         Gray = deterministic (no LLM) · pulsing = active now
       </p>

@@ -37,7 +37,7 @@ export default function ProjectsPage() {
             className="text-sm leading-relaxed mb-5 flex-1"
             style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}
           >
-            Ask the Chinook music store database questions in plain English. Claude
+            Ask the Chinook music store database questions in plain English. LLM
             generates the SQL, a hardened pipeline executes it read-only with a
             self-correct retry loop, and every answer shows the SQL and rows behind it.
           </p>
