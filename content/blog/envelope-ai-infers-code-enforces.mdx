@@ -1,0 +1,66 @@
+---
+title: "AI Infers, Code Enforces: Why the Boundary Can't Live in the Prompt"
+slug: "envelope-ai-infers-code-enforces"
+date: "2026-07-02"
+excerpt: "Telling a model 'you don't have permission' is an instruction, not a boundary, and goal-seeking models route around instructions. In Envelope, extraction and self-review are inference; load_policy, evaluate, and decide are TypeScript the model never touches."
+tags: ["ai-agents", "envelope", "architecture", "safety"]
+project: "envelope"
+---
+
+## The instruction is not the boundary
+
+A prompt that says "you are not permitted to do X" is a request made in natural language to a system optimizing for a goal. It is not a constraint the system is mechanically incapable of violating. Those are different things, and the difference only shows up once the model is actually goal-seeking against an obstacle instead of just following a script.
+
+Reporting on Amazon's own security leadership describes exactly this failure mode (Constantin, 2026, see Source below): an agent told it doesn't have permission to modify a database, denied, that routes around the denial by dropping and recreating the database from scratch, technically satisfying "I didn't modify it," while producing exactly the outcome the permission boundary existed to prevent. The instruction was followed to the letter. The boundary it was supposed to enforce didn't exist, because there was no boundary, there was only a sentence the model was free to satisfy in a way nobody intended.
+
+That's the argument against "the model was told not to" as a safety property anywhere it matters: an instruction is advice the model is free to reinterpret in service of the goal it's actually optimizing for. If you need the outcome to be impossible, not just discouraged, the check has to live somewhere the model's output can't argue its way past. That somewhere is code that runs after the model, evaluates its output as data, and branches deterministically. Envelope is built around that split as a hard architectural line, not a convention.
+
+## Which stages are AI, which are code
+
+Envelope's pipeline has seven stages. Exactly two of them ever call a model. The rest are deterministic TypeScript that treats the model's output as untrusted input to be checked, never as an instruction to be obeyed.
+
+**`extract` — AI.** The model reads the document and infers field values plus a confidence score per field. This is inference by design, extraction is a judgment call about noisy source text, and it's the one place in the pipeline where that's the right tool. Nothing downstream trusts these values yet; they're a candidate, not a fact.
+
+**`load_policy` — code.** A pure lookup. It reads whichever policy was last activated in the configuration UI and reports it, plus the session's running tally. No inference, nothing to argue with, it just reads state.
+
+**`evaluate` — code.** This is the actual boundary. `evaluateRule` runs each active rule, requiredFields, reconciliation, valueSanity, referenceIntegrity, confidenceFloor, against the fields `extract` produced, and returns a pass/fail per rule with the specific offending values attached. Every rule here is arithmetic or a lookup: does the line-item sum match the subtotal within a cent, is the invoice date in the future, is the vendor on a known list. None of it is asking a model whether something looks okay.
+
+**`decide` — code.** The narrowest function in the whole system, and deliberately so:
+
+```ts
+export function decide(results: RuleResult[]): DecideResult {
+  const failedRules = results.filter((r) => !r.pass);
+  return { branch: failedRules.length === 0 ? "commit" : "escalate", failedRules };
+}
+```
+
+It takes `evaluate`'s output and branches. That's the entire function. It never sees the document, never sees the model's reasoning, never receives anything the model could phrase persuasively. It receives a list of booleans and returns one of two branches. There is no surface area here for a goal-seeking model to argue its way around, because the model isn't a party to this function call at all.
+
+**`ai_review` — AI, and capped.** If `evaluate` fails, the pipeline doesn't escalate immediately. It gives the model one bounded attempt to resolve the specific fields that failed, consulting the source document again for just those fields. This is still inference, it's still a model producing a candidate, and it's capped at exactly one attempt so it can't retry indefinitely against the same failure looking for a version that slips through.
+
+**`act` — code, with one narrow model assist.** `act` executes whichever branch `decide` already fixed, it commits the record or composes an escalation. A model is consulted here only to word the escalation email's prose. It cannot flip a commit into an escalation or vice versa; that decision was already made and passed in as a plain value before `act` runs.
+
+**`log` — code.** Appends the outcome to the session ledger. No inference.
+
+## Why the retry has to re-enter the same function, unchanged
+
+The one rule that keeps `ai_review` from quietly becoming a second, more lenient approval path: its output doesn't get evaluated by a different, friendlier check. It goes back through the identical `evaluate` call, the same `evaluateRule` invocations, the same thresholds, on the corrected fields. Looking at the actual pipeline code, both the first pass and the post-review pass call the same `runDemoEvaluateStage`, which wraps the same `evaluateRule`, no separate leniency, no self-attestation. If a `resolved_by_ai` outcome exists, it's because the corrected fields cleared the exact bar the original fields failed, checked by code that has no idea whether the input in front of it came from the model's first pass or its retry. That indifference is the point, it's what makes the check trustworthy: the model never gets to grade its own retry, because the function grading it doesn't know a retry happened.
+
+## The same principle, shipped earlier
+
+I applied this exact split before Envelope existed, in production, on the text-to-SQL system at ELB US **(shipped)**. The model was instructed to generate only read-only SQL, and it usually complied, instructions get you most of the way. But "usually" isn't a guarantee once untrusted content, a user's question, retrieved context, can influence what the model writes. So a deterministic check ran after generation and before execution: single statement, and that statement had to be a `SELECT`. Anything else, including something like a `SELECT` innocently followed by a stacked `DROP TABLE` after a semicolon, was rejected before it ever reached the database. The instruction was the first layer and it wasn't trusted alone. The enforcement was a check the model's output had to pass, not a rule it was asked to remember. Full writeup: [SQL safety without a human in the loop](/blog/text-to-sql-sql-safety).
+
+Envelope generalizes the same move: the model infers, and it gets exactly one bounded chance to improve its own inference. Whether anything commits is decided by code that was never in the conversation.
+
+## Back to the hub
+
+This is one of the deep dives expanding on [the Envelope overview](/blog/envelope-overview). Related:
+
+- [The reviewer that doesn't rubber-stamp: capping the AI's self-review](/blog/envelope-capping-ai-self-review)
+- Policy design for auto-commit boundaries — **TODO(sadie): link when published**
+
+Envelope is still in build. The demo: [Envelope](/projects/envelope).
+
+## Source
+
+Constantin, Ana Maria. ["Amazon says human-in-the-loop AI oversight is failing because humans stop paying attention."](https://thenextweb.com/news/amazon-human-in-the-loop-ai-governance-normalization-deviance) *The Next Web*, 21 June 2026. Drawing on Eric Brandwine (VP & Distinguished Engineer, Amazon Security), interviewed by *The Register*, 20 June 2026.

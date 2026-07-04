@@ -1,6 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/projects/envelope/demo")) return null;
+
   return (
     <footer
       className="w-full py-16 px-4 flex flex-col items-center text-center gap-4"

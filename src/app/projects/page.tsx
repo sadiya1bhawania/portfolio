@@ -31,6 +31,49 @@ export default function ProjectsPage() {
             className="text-xl font-medium mb-3"
             style={{ fontFamily: "var(--font-head)" }}
           >
+            Envelope
+          </h2>
+          <p
+            className="text-sm leading-relaxed mb-5 flex-1"
+            style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}
+          >
+            Document extraction pipeline for invoices and property records. Every
+            extracted field carries a confidence score, and mismatched line-item
+            totals or missing required fields get flagged instead of silently passed
+            through.
+          </p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/projects/envelope"
+              className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium text-white"
+              style={{ background: "var(--copper)", fontFamily: "var(--font-body)" }}
+            >
+              Open project →
+            </Link>
+            <Link
+              href="/blog/envelope-overview"
+              className="text-sm hover:underline"
+              style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
+            >
+              Engineering notes →
+            </Link>
+          </div>
+        </article>
+
+        <article
+          className="rounded-lg border p-6 flex flex-col"
+          style={{ borderColor: "var(--border)", background: "#fff" }}
+        >
+          <p
+            className="text-[11px] uppercase tracking-wide mb-2"
+            style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
+          >
+            AI Systems
+          </p>
+          <h2
+            className="text-xl font-medium mb-3"
+            style={{ fontFamily: "var(--font-head)" }}
+          >
             Text-to-SQL
           </h2>
           <p

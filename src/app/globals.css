@@ -12,6 +12,11 @@
   --copper-light: #f4e8dc;
   --copper-hi: #e0a463;
   --border: #e7ddd0;
+
+  /* Reserved for escalation/failure states only — everything else uses copper. */
+  --brick: #9c3b2e;
+  --brick-dark: #6e2a20;
+  --brick-light: #f6e2de;
 }
 
 @theme inline {

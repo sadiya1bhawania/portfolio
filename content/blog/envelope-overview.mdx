@@ -1,0 +1,62 @@
+---
+title: "Per-Action Approval Doesn't Scale. Here's What I Built Instead."
+slug: "envelope-overview"
+date: "2026-07-02"
+excerpt: "Human-in-the-loop degrades the same way every checklist does: normalization of deviance, alarm fatigue, the ER-nurse pattern. Envelope moves the human's job upstream instead, an enforced boundary, an AI that reviews its own output first, and a human who only sees what code couldn't clear."
+tags: ["ai-agents", "human-in-the-loop", "safety", "envelope"]
+project: "envelope"
+---
+
+## The approval gate that stops working
+
+"Put a human in the loop" is the default answer to giving an AI system real permissions. It sounds like a safety property. In practice, per-action human approval is a checklist a person executes dozens or hundreds of times a day, and checklists executed at that frequency degrade in a well-documented, predictable way.
+
+The mechanism has a name: normalization of deviance. Amazon's own security leadership has been describing this exact pattern in AI oversight specifically (Constantin, 2026, see Source below). The short version is that when a checked thing is correct almost every time, the check itself stops carrying information. The reviewer isn't evaluating the item anymore, they're pattern-matching against "this looks like all the other ones I approved today." Deviance from the real standard creeps in gradually, each small skip looks locally reasonable because nothing bad happened last time, until the skipped step is no longer actually being performed, just nominally present in the process.
+
+This is the same failure mode behind alarm fatigue in hospitals: when a monitor alarms constantly and is almost always a false positive, staff stop responding to it with the urgency the alarm was designed to produce, right up until the one time it isn't a false positive. It's the same pattern nurses describe when triaging a full ER waiting room: with enough volume, the check compresses from "evaluate this case" to "does this look like the others," because there is no other way to survive the throughput. A human approving every AI action is doing the ER-nurse triage scan, not a review, and it will fail the same way, quietly, and usually not on the action that got flagged for extra scrutiny.
+
+If the checkpoint degrades predictably, the fix isn't a better checkpoint. It's moving the human's actual judgment to a point where it doesn't have to fire per action at all.
+
+## Two systems, two versions of the same failure
+
+I've watched this pattern happen for real, in two shipped systems, in two different shapes.
+
+**ELB finance (shipped).** The system extracted structured data from invoices with an AI model and surfaced it for a human to confirm before it flowed downstream. Early on, people actually read the extracted fields against the source document. Over time, as the extraction was right often enough, confirmation turned into a reflexive click. Nobody removed the approval step from the process, it was still there in the UI, still logged as "confirmed", but the checking behavior behind it had quietly stopped. That's normalization of deviance happening in production, not in a textbook.
+
+**HomePulse (shipped).** Parsing came from vendor-submitted HTML and PDF documents via TensorLake, and the extraction pipeline didn't route every parse to a human queue. Instead, when required fields were missing or values didn't reconcile with what was expected, the system emailed the user directly, one message, specific to what actually needed attention. Nothing was approved by default and nothing sat in a queue waiting on a person to eyeball it. A human only heard from the system when something concrete was wrong.
+
+Those two systems point in opposite directions. ELB finance is what a per-action human gate looks like once it's been running long enough to degrade. HomePulse is what happens when you don't build that gate at all, and instead let the system fail loud only when it actually has something to flag.
+
+## Envelope: the generalization (designed / in-build, not shipped)
+
+**Envelope is a design in progress. It has not shipped.** It's the attempt to take what HomePulse got right by accident and turn it into an explicit, reusable pattern instead of a one-off email-on-mismatch script.
+
+The idea: define the boundary once, as an enforced, deterministic policy, not "AI, please only do reasonable things," but an explicit, checkable rule about what's allowed to happen automatically. Inside that boundary, the agent auto-commits. There is no per-action human gate for the common case, because the common case is exactly what the boundary was written to allow.
+
+The part that's easy to skip, and the part that actually does the work AI proponents claim human-in-the-loop does, is what happens *before* anything reaches a person. When the agent's output doesn't clearly satisfy the policy, the system doesn't immediately escalate to a human. It first attempts a bounded review of its own: re-check the extraction, re-derive the field, retry against the same deterministic check that flagged it in the first place. Only what survives that attempt and still fails reaches a person. The human's queue is built from what code couldn't clear, not from everything the AI touched.
+
+That's the actual generalization of the HomePulse pattern: push the human's judgment upstream, into the design of the policy and the design of the self-review step, instead of downstream into a per-item click that will erode with volume the same way it eroded at ELB.
+
+## Three end states, and the rule that keeps them honest
+
+Every item that moves through Envelope's policy lands in exactly one of three states:
+
+- **Committed.** The item satisfied the policy outright. No human involvement, nothing to review.
+- **Resolved by AI.** The item initially failed the deterministic check, the agent attempted a bounded self-review, and the corrected version now satisfies the same check. Still no human involvement.
+- **Escalated.** The item failed the check, the agent's bounded review attempt didn't produce something that passes, and it goes to a human. This is the only state a person sees.
+
+The rule that keeps this from quietly becoming the ELB pattern again: **the AI never marks itself resolved.** Its retry doesn't get to grade itself, "resolved by AI" only happens when the corrected output re-enters the exact same deterministic check that failed it the first time, and passes that check on its own terms. There's no separate, more lenient path for AI-corrected items, no self-attestation. The check that would have escalated a human error escalates an AI error identically. That's what makes "resolved by AI" trustworthy as a state instead of a place to hide a self-graded pass.
+
+## What's next
+
+This is the hub post. The deep dives on the specific pieces are still being written:
+
+- [AI infers, code enforces: why the boundary can't live in the prompt](/blog/envelope-ai-infers-code-enforces), the extract/evaluate split, and why the retry must re-enter the same deterministic check
+- [The reviewer that doesn't rubber-stamp: capping the AI's self-review](/blog/envelope-capping-ai-self-review), why the retry is capped at one attempt and logged as its own outcome, never folded into "committed"
+- Policy design for auto-commit boundaries, deciding what's safe to run without a human at all — **TODO(sadie): link when published**
+
+Envelope is still in build. The demo walks through configuring a policy, running a document through it, and reading the resulting session log: [Envelope](/projects/envelope).
+
+## Source
+
+Constantin, Ana Maria. ["Amazon says human-in-the-loop AI oversight is failing because humans stop paying attention."](https://thenextweb.com/news/amazon-human-in-the-loop-ai-governance-normalization-deviance) *The Next Web*, 21 June 2026. Drawing on Eric Brandwine (VP & Distinguished Engineer, Amazon Security), interviewed by *The Register*, 20 June 2026.

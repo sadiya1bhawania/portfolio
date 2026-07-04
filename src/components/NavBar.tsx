@@ -16,6 +16,8 @@ export default function NavBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  if (pathname?.startsWith("/projects/envelope/demo")) return null;
+
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-[var(--border)]">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 h-16 flex items-center justify-between">

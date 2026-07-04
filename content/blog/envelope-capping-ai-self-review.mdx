@@ -1,0 +1,44 @@
+---
+title: "The Reviewer That Doesn't Rubber-Stamp: Capping the AI's Self-Review"
+slug: "envelope-capping-ai-self-review"
+date: "2026-07-02"
+excerpt: "Moving review from a person to an AI can recreate the exact failure it was supposed to fix, an approver that stops actually checking, just harder to notice. Two guardrails keep Envelope's ai_review stage honest: a hard one-attempt cap, and a log line for every attempt, pass or fail."
+tags: ["ai-agents", "envelope", "architecture", "safety"]
+project: "envelope"
+---
+
+## The rubber stamp doesn't need a human to be a rubber stamp
+
+The [hub post](/blog/envelope-overview) covers why per-action human approval degrades: normalization of deviance, alarm fatigue, the ER-nurse pattern, a checkpoint executed often enough stops being a checkpoint and becomes a reflex. Envelope's answer is to let the AI attempt its own bounded review before anything reaches a person, so a human only ever sees what code couldn't clear.
+
+That answer has an obvious failure mode built into it, and it's worth naming directly instead of glossing over: an AI reviewing its own output can rubber-stamp itself exactly the way a fatigued human rubber-stamps a familiar-looking form. Nothing about swapping the approver from a person to a model fixes the underlying mechanism, a check performed routinely enough, without a hard reason to actually engage with it, degrades into a formality. If anything it's worse here, because a human rubber-stamping is at least visible, someone eventually notices the confirm button gets clicked without anyone reading the screen. A model that always finds a reason its own retry looks fine is a rubber stamp with no visible tell, it produces a clean "resolved" log line every time, and there's no obvious signal in the data that the check stopped meaning anything.
+
+So `ai_review` in Envelope isn't just "let the model try again." It's built with two specific guardrails against becoming the thing it replaced.
+
+## Guardrail one: the retry is capped at exactly one attempt
+
+`ai_review` fires only when `evaluate` has already failed the document against the active policy, wrong field, mismatched total, whatever the rule caught. When it fires, the model gets one attempt to correct the specific fields the failed rules named, consulting the source document again for just those fields. Then the corrected fields go back through `evaluate`, unchanged, no special leniency. Either they pass now or they don't. There's no third pass, no "let it try once more since it got closer."
+
+The cap isn't a performance optimization, it's a structural requirement. This is the same failure this whole series keeps coming back to (Constantin, 2026, see Source below): a goal-seeking system given room to keep trying against a check it hasn't satisfied yet will eventually find a way to satisfy the check's *letter* without satisfying its *intent*. An uncapped self-review loop is that failure mode with a friendlier name. Give a model unlimited retries against a fixed deterministic check and enough attempts, and you're no longer testing whether the extraction is actually correct, you're testing whether the model can eventually produce output that happens to satisfy the check's mechanics, drifting the input toward whatever clears the gate rather than toward what's true. One attempt means the model doesn't get to search for a technicality. It gets one honest shot at the correction, and if that doesn't hold up against the same bar the original failed, the document escalates. No amount of additional trying changes that outcome.
+
+## Guardrail two: every attempt is its own logged line, never folded into "committed"
+
+The second guardrail is about what the record says happened, not just what happened. It would be easy to build a version of this system where a successful `ai_review` just quietly becomes a normal commit, same log entry as a document that cleared on the first pass, no distinguishing mark. That's the version that hides the rubber stamp: from the outside, "committed after the AI fixed it" and "committed clean" look identical, and nobody reviewing the ledger later can tell how much of what's committing is actually clearing the bar unassisted.
+
+Envelope doesn't do that. Every run's history entry carries an explicit `outcome` field with three distinct values: `"committed"`, `"resolved_by_ai"`, and `"escalated"`, plus a separate `aiReviewFired` boolean recording whether the review stage ran at all. A document that passed clean on the first `evaluate` call logs as `committed`, `aiReviewFired: false`. A document that failed, got corrected by `ai_review`, and then passed the identical `evaluate` call on the second try logs as `resolved_by_ai`, `aiReviewFired: true`, visibly distinct in the ledger, labeled "resolved by AI" rather than absorbed into the same bucket as an untouched pass. Nothing about the log format lets a self-corrected document disappear into the unremarkable case.
+
+That's what makes `resolved_by_ai` an honest state instead of a place to hide a self-graded pass. It only exists because the corrected fields cleared the same deterministic check the original fields failed, `evaluate` doesn't know or care whether its input is a first pass or a post-review retry, and it's recorded as its own category every single time it happens, not merged into "committed" where the fact that a review even took place would be invisible. If `resolved_by_ai` starts showing up on a large fraction of runs, that's visible in the ledger as a fact about the system, not something buried in an aggregate commit count.
+
+## A future direction, explicitly not built
+
+One idea worth naming, and worth being precise about not overselling: right now, when a document escalates and a human fixes it, that fix is a one-off action, it doesn't feed back into the policy. A natural phase-two direction is having the AI propose boundary or policy changes based on patterns in logged human fixes, for instance, if humans keep correcting the same field the same way, that's a signal the rule or the extraction prompt might need adjusting. **This is a labeled future direction. It has not been designed in detail and is not built.** It would need its own guardrails, almost certainly a human approval step for any policy change it proposes, since a policy boundary is exactly the kind of thing that shouldn't auto-commit on the AI's own say-so. Worth flagging now because it's the natural next question this post's argument raises: if the AI reviews its own extraction, should it eventually get a say in the rules it's reviewed against? Not yet, and not without its own explicit guardrails when it does.
+
+## Back to the hub
+
+This is one of the deep dives expanding on [the Envelope overview](/blog/envelope-overview). Related: [AI infers, code enforces: why the boundary can't live in the prompt](/blog/envelope-ai-infers-code-enforces), which covers the extract/evaluate/decide split this post's caps and logging sit inside of.
+
+Envelope is still in build. The demo: [Envelope](/projects/envelope).
+
+## Source
+
+Constantin, Ana Maria. ["Amazon says human-in-the-loop AI oversight is failing because humans stop paying attention."](https://thenextweb.com/news/amazon-human-in-the-loop-ai-governance-normalization-deviance) *The Next Web*, 21 June 2026. Drawing on Eric Brandwine (VP & Distinguished Engineer, Amazon Security), interviewed by *The Register*, 20 June 2026.
