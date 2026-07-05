@@ -1,0 +1,64 @@
+---
+title: "Words are not the world"
+slug: "words-are-not-the-world"
+date: "2026-07-06"
+excerpt: "A world model tries to predict what happens next in the real world, not the next word, and that one difference is why one of AI's most respected researchers just raised a billion dollars to chase it."
+tags: ["world models", "JEPA", "AI research", "beyond-llms"]
+project: "beyond-llms"
+---
+
+You are playing catch. A friend throws the ball high, and before it comes down you are already moving to the spot where it will land. You did not do any math. You did not measure the wind. Some quiet part of your mind already knew where the ball was going.
+
+That quiet knowing is the whole story. Somewhere inside your head is a small working copy of how the world behaves. Balls fall. Cups tip. A push makes things slide. Nobody taught you these rules from a book. You picked them up by watching the world, thousands of times, since before you could talk. And once you have that inner copy, you can run it forward. You can close your eyes and see what happens next.
+
+Scientists call that inner copy a world model. This post is about what happens when we try to give one to a machine, why it is so much harder than it sounds, and why one of the most respected people in AI just raised a billion dollars to work on it.
+
+## Two ways to guess
+
+A language model predicts the next word. It has read a huge amount of text, so it knows that after "the ball rolls off the table and" the word "falls" is likely. That is a real skill. It is just not the same skill as knowing what a falling ball actually does.
+
+A world model predicts the next state of the world instead of the next word. Here is the key trick: it does not predict every pixel of the next frame. That would be wasteful and hard, most of a scene does not change frame to frame, and getting every pixel right is a much harder problem than the one you actually care about. Instead it predicts in a compressed "idea" space, a small summary of the scene that keeps the parts that matter, like where the ball is and how fast it is moving, and drops the parts that do not, like the exact grain of the wood on the table.
+
+This compressed prediction is the core of the JEPA idea, which Yann LeCun has been pushing since 2022. Predict the idea, not the pixels.
+
+## What the paper actually is
+
+The [stable-worldmodel paper (arXiv 2605.21800)](https://arxiv.org/pdf/2605.21800) is not a new world model. It is a shared set of measuring tools, so different labs can compare their work fairly.
+
+Before it, every lab built its own one-off code and reimplemented the same algorithms slightly differently. That made it hard to know if one team's model was actually better than another's, or just measured differently. The paper standardizes three things: how you store and load training data, clean shared versions of the main world model designs, and the planning algorithms that search for a good action to take.
+
+It also adds a test suite that deliberately distorts each scene. It changes colors, lighting, object size, even physics like friction. The point is to check whether a model truly understood the world, or just memorized the surface of its training data.
+
+## The honest finding
+
+Using this shared toolkit, the results are humbling. One world model scored 88% on data that looked like its training, but only 30% once the colors, shapes, and sizes in the scene were varied. In a separate test that changed just one thing at a time, a single change could be brutal: shifting the background color took another model from about 51% down to 6%. Adding a few visual distractions was tolerable, but past a small number the success rate fell off fast.
+
+The paper also found something that complicates how people usually judge these models. A model's raw prediction accuracy did not reliably tell you whether it would succeed at the task. A model could predict well and still fail to plan.
+
+## The billion dollar bet
+
+Yann LeCun left Meta in late 2025 and co-founded Advanced Machine Intelligence Labs, AMI Labs. It [raised 1.03 billion dollars](https://techcrunch.com/2026/03/09/yann-lecuns-ami-labs-raises-1-03-billion-to-build-world-models/) at a 3.5 billion dollar pre-money valuation, backed by investors including Nvidia, Samsung, and Bezos Expeditions. For scale, that is close to Fei-Fei Li's World Labs, which raised 1 billion dollars for the same kind of research, and far past smaller world model startups like SpAItial, which raised 13 million.
+
+An honesty note that matters here: AMI is a research organization. It is not expected to ship a product for around five years. This is a research bet, not a product launch.
+
+LeCun's argument is that language models alone will not reach real understanding of the world, and that world models are the missing piece. That view is respected. It is also contested. Plenty of serious researchers disagree. So take it as his argument, not as settled fact.
+
+## Why I built the illustration
+
+I built an interactive illustration of these ideas, at [/beyond-llms](/beyond-llms).
+
+I built it first to understand the idea myself. Writing an explanation forces you to find the parts you were fuzzy on. Then I built it as a demo, for anyone curious about what comes next, beyond LLMs.
+
+Here is the part I want to be fully honest about. The last section of that page lets you pick a scene and an action, and see a predicted next state. That prediction comes from a language model. It is a language model pretending to be a world model. It is not a real one.
+
+That gap is the point, not a bug I am hiding. A real world model learns physics by watching, the way you learned that a pushed cup slides. A language model is only matching words, guessing that "tip the cup" is often followed by "spill" in text it has read. The page shows you the model's guess, and next to it, the honest gap between that guess and real understanding.
+
+## A short close
+
+The catch you make without thinking is a quiet miracle. Teaching a machine to do the same, to actually understand the world instead of just describing it, is one of the hardest open problems in AI today.
+
+## Sources
+
+["stable-worldmodel" paper.](https://arxiv.org/pdf/2605.21800) arXiv 2605.21800.
+
+["Yann LeCun's AMI Labs raises $1.03 billion to build world models."](https://techcrunch.com/2026/03/09/yann-lecuns-ami-labs-raises-1-03-billion-to-build-world-models/) *TechCrunch*, 9 March 2026.
