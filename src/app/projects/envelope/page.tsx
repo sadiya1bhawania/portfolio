@@ -23,7 +23,7 @@ export default function EnvelopePage() {
       >
         Document extraction &amp; confidence-scoring pipeline: AI infers field values,
         deterministic code decides what happens next. Configure a policy, run a document
-        through it, and see the session log — all in one walkthrough.
+        through it, and see the session log - all in one walkthrough.
       </p>
 
       <Link

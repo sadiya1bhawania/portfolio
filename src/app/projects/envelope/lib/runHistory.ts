@@ -18,7 +18,7 @@ export interface RunHistoryEntry {
   policyVersion: number;
 }
 
-// In-memory only, per the batch scope — resets on server restart, no DB yet.
+// In-memory only, per the batch scope - resets on server restart, no DB yet.
 const history: RunHistoryEntry[] = [];
 
 export function appendHistoryEntry(entry: Omit<RunHistoryEntry, "id">): RunHistoryEntry {
@@ -27,7 +27,7 @@ export function appendHistoryEntry(entry: Omit<RunHistoryEntry, "id">): RunHisto
   return full;
 }
 
-// Reverse-chronological — most recent run first.
+// Reverse-chronological - most recent run first.
 export function getHistory(): RunHistoryEntry[] {
   return [...history];
 }

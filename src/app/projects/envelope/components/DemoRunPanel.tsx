@@ -44,7 +44,7 @@ function ResultList({ results }: { results: RuleResultSummary[] }) {
           <span style={{ color: r.pass ? "var(--copper)" : "var(--brick)" }}>{r.pass ? "✓" : "✗"}</span>
           <span>
             <span style={{ color: "var(--ink)" }}>{ruleLabel(r.rule)}</span>
-            <span style={{ color: "var(--muted)" }}> — {r.detail}</span>
+            <span style={{ color: "var(--muted)" }}> - {r.detail}</span>
           </span>
         </div>
       ))}
@@ -226,7 +226,7 @@ export default function DemoRunPanel({
                   {sample.id}
                 </p>
                 <p className="text-[12px]" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
-                  {sample.label.replace(/^\w+\s*—\s*/, "")}
+                  {sample.label.replace(/^\w+\s*-\s*/, "")}
                 </p>
               </button>
             );

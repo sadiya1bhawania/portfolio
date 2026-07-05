@@ -14,7 +14,7 @@ import { runLoadPolicyStage, runDecideStage, runActStage, runLogStage, RULE_DELA
 import { recordOutcome, getPolicyVersion } from "./serverPolicyState";
 import type { Policy } from "./policyTypes";
 
-// extract — same model-backed extraction as the standalone pipeline, just
+// extract - same model-backed extraction as the standalone pipeline, just
 // sourced from the demo sample's firstRead layer instead of an upload.
 async function* runDemoExtractStage(sample: ReturnType<typeof getDemoSample>, out: { fields?: ExtractedFields }): AsyncGenerator<RunEvent> {
   const documentText = renderDemoDocumentText(sample);
@@ -43,9 +43,9 @@ async function* runDemoExtractStage(sample: ReturnType<typeof getDemoSample>, ou
   yield { stage: "extract", status: "done", fields: out.fields, usedFallback };
 }
 
-// evaluate — deterministic, the policy's two active rules only. Reused for
+// evaluate - deterministic, the policy's two active rules only. Reused for
 // both the first pass and the post-ai_review re-check: it's the exact same
-// function either time, which is the point — code re-checks, not the model.
+// function either time, which is the point - code re-checks, not the model.
 async function* runDemoEvaluateStage(
   policy: Policy,
   fields: ExtractedFields,
@@ -73,7 +73,7 @@ async function* runDemoEvaluateStage(
   yield { stage: "evaluate", status: "done", results };
 }
 
-// ai_review — capped at exactly one attempt. Swaps only the fields the
+// ai_review - capped at exactly one attempt. Swaps only the fields the
 // failed rules named over to the sample's carefulRead layer; the model is
 // consulted only to word what happened, never to judge whether it worked.
 async function* runAiReviewStage(

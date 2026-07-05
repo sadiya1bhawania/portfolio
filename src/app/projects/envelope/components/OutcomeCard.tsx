@@ -7,7 +7,7 @@ function ruleLabel(id: RuleResultSummary["rule"]): string {
 }
 
 function formatValue(value: unknown): string {
-  if (value === null || value === undefined) return "—";
+  if (value === null || value === undefined) return "-";
   if (typeof value === "object") return JSON.stringify(value);
   return String(value);
 }
@@ -56,7 +56,7 @@ function RuleLine({ result, forceCheck }: { result: RuleResultSummary; forceChec
       <span style={{ color: pass ? "var(--copper)" : "var(--brick)" }}>{pass ? "✓" : "✗"}</span>
       <span>
         <span style={{ color: "var(--ink)" }}>{ruleLabel(result.rule)}</span>
-        <span style={{ color: "var(--muted)" }}> — {result.detail}</span>
+        <span style={{ color: "var(--muted)" }}> - {result.detail}</span>
       </span>
     </div>
   );
@@ -100,7 +100,7 @@ export function CommitOutcomeCard({ ruleResults, clicks, actionAt, policyVersion
         className="rounded-lg px-3 py-2 text-[13px] font-medium"
         style={{ fontFamily: "var(--font-mono)", background: "var(--copper-light)", color: "var(--copper-dark)" }}
       >
-        Saved — {clicks} clicks
+        Saved - {clicks} clicks
       </div>
 
       <AuditLine verb="committed" actionAt={actionAt} policyVersion={policyVersion} />
@@ -117,7 +117,7 @@ interface ResolvedByAiOutcomeCardProps {
 
 // The commit path, but the fields shipped are the ai_review-corrected ones,
 // not what extract() first read. decide() still only saw a pass because
-// evaluate() re-ran and said so — this card is just being honest about how
+// evaluate() re-ran and said so - this card is just being honest about how
 // it got there.
 export function ResolvedByAiOutcomeCard({
   ruleResults,
@@ -162,7 +162,7 @@ export function ResolvedByAiOutcomeCard({
         className="rounded-lg px-3 py-2 text-[13px] font-medium"
         style={{ fontFamily: "var(--font-mono)", background: "var(--copper-light)", color: "var(--copper-dark)" }}
       >
-        AI reviewed and corrected — human not needed
+        AI reviewed and corrected - human not needed
       </div>
 
       <AuditLine verb="committed" note="after AI review" actionAt={actionAt} policyVersion={policyVersion} />
@@ -209,12 +209,12 @@ export function EscalateOutcomeCard({
         className="rounded-lg px-3 py-2 text-[13px] font-medium mb-4"
         style={{ fontFamily: "var(--font-mono)", background: "var(--brick-light)", color: "var(--brick-dark)" }}
       >
-        Held — needs a human
+        Held - needs a human
       </div>
 
       <div className="rounded-lg border p-3 mb-1" style={{ borderColor: "var(--border)" }}>
         <p className="text-[11px] mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
-          Composed for review — not sent.
+          Composed for review - not sent.
         </p>
         <p className="text-[12px] mb-1" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
           <strong style={{ color: "var(--ink)" }}>To:</strong> {escalateTo}

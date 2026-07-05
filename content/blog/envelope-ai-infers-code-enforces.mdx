@@ -19,13 +19,13 @@ That's the argument against "the model was told not to" as a safety property any
 
 Envelope's pipeline has seven stages. Exactly two of them ever call a model. The rest are deterministic TypeScript that treats the model's output as untrusted input to be checked, never as an instruction to be obeyed.
 
-**`extract` — AI.** The model reads the document and infers field values plus a confidence score per field. This is inference by design, extraction is a judgment call about noisy source text, and it's the one place in the pipeline where that's the right tool. Nothing downstream trusts these values yet; they're a candidate, not a fact.
+**`extract`: AI.** The model reads the document and infers field values plus a confidence score per field. This is inference by design, extraction is a judgment call about noisy source text, and it's the one place in the pipeline where that's the right tool. Nothing downstream trusts these values yet; they're a candidate, not a fact.
 
-**`load_policy` — code.** A pure lookup. It reads whichever policy was last activated in the configuration UI and reports it, plus the session's running tally. No inference, nothing to argue with, it just reads state.
+**`load_policy`: code.** A pure lookup. It reads whichever policy was last activated in the configuration UI and reports it, plus the session's running tally. No inference, nothing to argue with, it just reads state.
 
-**`evaluate` — code.** This is the actual boundary. `evaluateRule` runs each active rule, requiredFields, reconciliation, valueSanity, referenceIntegrity, confidenceFloor, against the fields `extract` produced, and returns a pass/fail per rule with the specific offending values attached. Every rule here is arithmetic or a lookup: does the line-item sum match the subtotal within a cent, is the invoice date in the future, is the vendor on a known list. None of it is asking a model whether something looks okay.
+**`evaluate`: code.** This is the actual boundary. `evaluateRule` runs each active rule, requiredFields, reconciliation, valueSanity, referenceIntegrity, confidenceFloor, against the fields `extract` produced, and returns a pass/fail per rule with the specific offending values attached. Every rule here is arithmetic or a lookup: does the line-item sum match the subtotal within a cent, is the invoice date in the future, is the vendor on a known list. None of it is asking a model whether something looks okay.
 
-**`decide` — code.** The narrowest function in the whole system, and deliberately so:
+**`decide`: code.** The narrowest function in the whole system, and deliberately so:
 
 ```ts
 export function decide(results: RuleResult[]): DecideResult {
@@ -36,11 +36,11 @@ export function decide(results: RuleResult[]): DecideResult {
 
 It takes `evaluate`'s output and branches. That's the entire function. It never sees the document, never sees the model's reasoning, never receives anything the model could phrase persuasively. It receives a list of booleans and returns one of two branches. There is no surface area here for a goal-seeking model to argue its way around, because the model isn't a party to this function call at all.
 
-**`ai_review` — AI, and capped.** If `evaluate` fails, the pipeline doesn't escalate immediately. It gives the model one bounded attempt to resolve the specific fields that failed, consulting the source document again for just those fields. This is still inference, it's still a model producing a candidate, and it's capped at exactly one attempt so it can't retry indefinitely against the same failure looking for a version that slips through.
+**`ai_review`: AI, and capped.** If `evaluate` fails, the pipeline doesn't escalate immediately. It gives the model one bounded attempt to resolve the specific fields that failed, consulting the source document again for just those fields. This is still inference, it's still a model producing a candidate, and it's capped at exactly one attempt so it can't retry indefinitely against the same failure looking for a version that slips through.
 
-**`act` — code, with one narrow model assist.** `act` executes whichever branch `decide` already fixed, it commits the record or composes an escalation. A model is consulted here only to word the escalation email's prose. It cannot flip a commit into an escalation or vice versa; that decision was already made and passed in as a plain value before `act` runs.
+**`act`: code, with one narrow model assist.** `act` executes whichever branch `decide` already fixed, it commits the record or composes an escalation. A model is consulted here only to word the escalation email's prose. It cannot flip a commit into an escalation or vice versa; that decision was already made and passed in as a plain value before `act` runs.
 
-**`log` — code.** Appends the outcome to the session ledger. No inference.
+**`log`: code.** Appends the outcome to the session ledger. No inference.
 
 ## Why the retry has to re-enter the same function, unchanged
 
@@ -57,9 +57,8 @@ Envelope generalizes the same move: the model infers, and it gets exactly one bo
 This is one of the deep dives expanding on [the Envelope overview](/blog/envelope-overview). Related:
 
 - [The reviewer that doesn't rubber-stamp: capping the AI's self-review](/blog/envelope-capping-ai-self-review)
-- Policy design for auto-commit boundaries — **TODO(sadie): link when published**
 
-Envelope is still in build. The demo: [Envelope](/projects/envelope).
+The demo: [Envelope](/projects/envelope).
 
 ## Source
 

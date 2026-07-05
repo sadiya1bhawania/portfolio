@@ -16,7 +16,7 @@ function fallbackEmail(failedRules: RuleResult[]): ComposedEmail {
 }
 
 // act's only model call: turns already-decided failures into a short,
-// specific email. It cannot change the commit/escalate branch — that was
+// specific email. It cannot change the commit/escalate branch - that was
 // fixed by decide() before this ever runs.
 export async function composeEscalationEmail(failedRules: RuleResult[], escalateTo: string): Promise<ComposedEmail> {
   const failureText = failedRules.map((r) => `- ${r.detail}`).join("\n");

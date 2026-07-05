@@ -30,7 +30,7 @@ export default function EnvelopeLogPage() {
         Run log
       </h1>
       <p className="text-sm leading-relaxed mb-8" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
-        Every document run through the pipeline this session, most recent first —
+        Every document run through the pipeline this session, most recent first -
         which two rules were active, whether each passed, and what happened as a result.
       </p>
 

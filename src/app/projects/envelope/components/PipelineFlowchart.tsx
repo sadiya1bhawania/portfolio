@@ -21,8 +21,8 @@ function realNodeState(status?: RunStatus): NodeState {
   return "pending";
 }
 
-// decide/act/log land on the final commit/escalate branch once done, so —
-// unlike the earlier stages — their "done" color reflects the outcome.
+// decide/act/log land on the final commit/escalate branch once done, so -
+// unlike the earlier stages - their "done" color reflects the outcome.
 function outcomeNodeState(status: RunStatus | undefined, branch: "commit" | "escalate" | null): NodeState {
   if (status === "done") return branch === "escalate" ? "fail-done" : "done";
   if (status === "active") return "active";

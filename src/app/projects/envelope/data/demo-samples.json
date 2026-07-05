@@ -3,72 +3,206 @@
   "samples": [
     {
       "id": "clean",
-      "label": "Clean — passes every check on the first read",
+      "label": "Clean - passes every check on the first read",
       "fields": {
-        "invoiceNumber": { "firstRead": "INV-77210", "carefulRead": "INV-77210", "confidence": 0.99 },
-        "vendor": { "firstRead": "Alderbrook Supply Co.", "carefulRead": "Alderbrook Supply Co.", "confidence": 0.97 },
-        "invoiceDate": { "firstRead": "2026-06-10", "carefulRead": "2026-06-10", "confidence": 0.98 },
-        "dueDate": { "firstRead": "2026-07-10", "carefulRead": "2026-07-10", "confidence": 0.97 },
-        "currency": { "firstRead": "USD", "carefulRead": "USD", "confidence": 0.99 },
+        "invoiceNumber": {
+          "firstRead": "INV-77210",
+          "carefulRead": "INV-77210",
+          "confidence": 0.99
+        },
+        "vendor": {
+          "firstRead": "Alderbrook Supply Co.",
+          "carefulRead": "Alderbrook Supply Co.",
+          "confidence": 0.97
+        },
+        "invoiceDate": {
+          "firstRead": "2026-06-10",
+          "carefulRead": "2026-06-10",
+          "confidence": 0.98
+        },
+        "dueDate": {
+          "firstRead": "2026-07-10",
+          "carefulRead": "2026-07-10",
+          "confidence": 0.97
+        },
+        "currency": {
+          "firstRead": "USD",
+          "carefulRead": "USD",
+          "confidence": 0.99
+        },
         "lineItems": {
           "firstRead": [
-            { "description": "Structural steel beams", "quantity": 4, "unitPrice": 175.0, "amount": 700.0 },
-            { "description": "Galvanized fasteners (box)", "quantity": 10, "unitPrice": 35.0, "amount": 350.0 }
+            {
+              "description": "Structural steel beams",
+              "quantity": 4,
+              "unitPrice": 175.0,
+              "amount": 700.0
+            },
+            {
+              "description": "Galvanized fasteners (box)",
+              "quantity": 10,
+              "unitPrice": 35.0,
+              "amount": 350.0
+            }
           ],
           "carefulRead": [
-            { "description": "Structural steel beams", "quantity": 4, "unitPrice": 175.0, "amount": 700.0 },
-            { "description": "Galvanized fasteners (box)", "quantity": 10, "unitPrice": 35.0, "amount": 350.0 }
+            {
+              "description": "Structural steel beams",
+              "quantity": 4,
+              "unitPrice": 175.0,
+              "amount": 700.0
+            },
+            {
+              "description": "Galvanized fasteners (box)",
+              "quantity": 10,
+              "unitPrice": 35.0,
+              "amount": 350.0
+            }
           ],
           "confidence": 0.96
         },
-        "lineItemsTotal": { "firstRead": 1050.0, "carefulRead": 1050.0, "confidence": 0.97 },
-        "total": { "firstRead": 1050.0, "carefulRead": 1050.0, "confidence": 0.99 }
+        "lineItemsTotal": {
+          "firstRead": 1050.0,
+          "carefulRead": 1050.0,
+          "confidence": 0.97
+        },
+        "total": {
+          "firstRead": 1050.0,
+          "carefulRead": 1050.0,
+          "confidence": 0.99
+        }
       }
     },
     {
       "id": "recoverable",
-      "label": "Recoverable — fails first read, a closer look fixes everything",
+      "label": "Recoverable - fails first read, a closer look fixes everything",
       "fields": {
-        "invoiceNumber": { "firstRead": null, "carefulRead": "INV-88342", "confidence": 0.3 },
-        "vendor": { "firstRead": "Alderbrok Supl Co", "carefulRead": "Alderbrook Supply Co.", "confidence": 0.4 },
-        "invoiceDate": { "firstRead": "2026-12-25", "carefulRead": "2026-06-18", "confidence": 0.35 },
-        "dueDate": { "firstRead": null, "carefulRead": "2026-07-18", "confidence": 0.3 },
-        "currency": { "firstRead": "USD", "carefulRead": "USD", "confidence": 0.9 },
+        "invoiceNumber": {
+          "firstRead": null,
+          "carefulRead": "INV-88342",
+          "confidence": 0.3
+        },
+        "vendor": {
+          "firstRead": "Alderbrok Supl Co",
+          "carefulRead": "Alderbrook Supply Co.",
+          "confidence": 0.4
+        },
+        "invoiceDate": {
+          "firstRead": "2026-12-25",
+          "carefulRead": "2026-06-18",
+          "confidence": 0.35
+        },
+        "dueDate": {
+          "firstRead": null,
+          "carefulRead": "2026-07-18",
+          "confidence": 0.3
+        },
+        "currency": {
+          "firstRead": "USD",
+          "carefulRead": "USD",
+          "confidence": 0.9
+        },
         "lineItems": {
           "firstRead": [
-            { "description": "Steel beams", "quantity": 4, "unitPrice": 175.0, "amount": 700.0 },
-            { "description": "Fasteners", "quantity": 10, "unitPrice": 35.0, "amount": 999.0 }
+            {
+              "description": "Steel beams",
+              "quantity": 4,
+              "unitPrice": 175.0,
+              "amount": 700.0
+            },
+            {
+              "description": "Fasteners",
+              "quantity": 10,
+              "unitPrice": 35.0,
+              "amount": 999.0
+            }
           ],
           "carefulRead": [
-            { "description": "Structural steel beams", "quantity": 4, "unitPrice": 175.0, "amount": 700.0 },
-            { "description": "Galvanized fasteners (box)", "quantity": 10, "unitPrice": 35.0, "amount": 350.0 }
+            {
+              "description": "Structural steel beams",
+              "quantity": 4,
+              "unitPrice": 175.0,
+              "amount": 700.0
+            },
+            {
+              "description": "Galvanized fasteners (box)",
+              "quantity": 10,
+              "unitPrice": 35.0,
+              "amount": 350.0
+            }
           ],
           "confidence": 0.4
         },
-        "lineItemsTotal": { "firstRead": 1050.0, "carefulRead": 1050.0, "confidence": 0.4 },
-        "total": { "firstRead": 1200.0, "carefulRead": 1050.0, "confidence": 0.4 }
+        "lineItemsTotal": {
+          "firstRead": 1050.0,
+          "carefulRead": 1050.0,
+          "confidence": 0.4
+        },
+        "total": {
+          "firstRead": 1200.0,
+          "carefulRead": 1050.0,
+          "confidence": 0.4
+        }
       }
     },
     {
       "id": "blocked",
-      "label": "Blocked — fails first read, a closer look confirms the problem",
+      "label": "Blocked - fails first read, a closer look confirms the problem",
       "fields": {
-        "invoiceNumber": { "firstRead": null, "carefulRead": null, "confidence": 0.2 },
-        "vendor": { "firstRead": "Unregistrd Consultng", "carefulRead": "Unregistered Consulting LLC", "confidence": 0.35 },
-        "invoiceDate": { "firstRead": "2026-12-25", "carefulRead": "2026-12-25", "confidence": 0.3 },
-        "dueDate": { "firstRead": null, "carefulRead": null, "confidence": 0.25 },
-        "currency": { "firstRead": "USD", "carefulRead": "USD", "confidence": 0.85 },
+        "invoiceNumber": {
+          "firstRead": null,
+          "carefulRead": null,
+          "confidence": 0.2
+        },
+        "vendor": {
+          "firstRead": "Unregistrd Consultng",
+          "carefulRead": "Unregistered Consulting LLC",
+          "confidence": 0.35
+        },
+        "invoiceDate": {
+          "firstRead": "2026-12-25",
+          "carefulRead": "2026-12-25",
+          "confidence": 0.3
+        },
+        "dueDate": {
+          "firstRead": null,
+          "carefulRead": null,
+          "confidence": 0.25
+        },
+        "currency": {
+          "firstRead": "USD",
+          "carefulRead": "USD",
+          "confidence": 0.85
+        },
         "lineItems": {
           "firstRead": [
-            { "description": "Consulting hours", "quantity": 20, "unitPrice": 85.0, "amount": 1700.0 }
+            {
+              "description": "Consulting hours",
+              "quantity": 20,
+              "unitPrice": 85.0,
+              "amount": 1700.0
+            }
           ],
           "carefulRead": [
-            { "description": "Consulting hours", "quantity": 20, "unitPrice": 85.0, "amount": 1700.0 }
+            {
+              "description": "Consulting hours",
+              "quantity": 20,
+              "unitPrice": 85.0,
+              "amount": 1700.0
+            }
           ],
           "confidence": 0.35
         },
-        "lineItemsTotal": { "firstRead": 1400.0, "carefulRead": 1400.0, "confidence": 0.3 },
-        "total": { "firstRead": 1200.0, "carefulRead": 1200.0, "confidence": 0.3 }
+        "lineItemsTotal": {
+          "firstRead": 1400.0,
+          "carefulRead": 1400.0,
+          "confidence": 0.3
+        },
+        "total": {
+          "firstRead": 1200.0,
+          "carefulRead": 1200.0,
+          "confidence": 0.3
+        }
       }
     }
   ]

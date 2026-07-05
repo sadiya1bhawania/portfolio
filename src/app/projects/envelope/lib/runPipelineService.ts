@@ -21,11 +21,11 @@ export interface RunInput {
   sampleId?: DemoSampleId;
   /** present when the user dropped/uploaded a file and its text was read client-side */
   documentText?: string;
-  /** display name for the log — the uploaded file's name, or the sample's label */
+  /** display name for the log - the uploaded file's name, or the sample's label */
   documentName?: string;
 }
 
-// extract — the one model-backed stage. AI infers field values + confidence;
+// extract - the one model-backed stage. AI infers field values + confidence;
 // everything downstream treats those as data, not as instructions.
 async function* runExtractStage(input: RunInput, out: { fields?: ExtractedFields }): AsyncGenerator<RunEvent> {
   const sample = input.sampleId ? getDemoSample(input.sampleId) : undefined;
@@ -47,7 +47,7 @@ async function* runExtractStage(input: RunInput, out: { fields?: ExtractedFields
       }
     }
   } catch {
-    // Gemini call itself failed (missing key, network, etc.) — never break the pipeline.
+    // Gemini call itself failed (missing key, network, etc.) - never break the pipeline.
     finalFields = fallback;
     usedFallback = true;
   }
@@ -56,7 +56,7 @@ async function* runExtractStage(input: RunInput, out: { fields?: ExtractedFields
   yield { stage: "extract", status: "done", fields: out.fields, usedFallback };
 }
 
-// load_policy — pure lookup + formatting, no inference. Reads whatever was
+// load_policy - pure lookup + formatting, no inference. Reads whatever was
 // last activated on /configure and reports it plus this session's tally.
 // Exported: reused by the demo's richer pipeline (lib/demoPipelineService.ts).
 export function* runLoadPolicyStage(out: { policy?: Policy }): Generator<RunEvent> {
@@ -64,7 +64,7 @@ export function* runLoadPolicyStage(out: { policy?: Policy }): Generator<RunEven
 
   const policy = getActivePolicy();
   if (!policy) {
-    yield { stage: "load_policy", status: "error", error: "No active policy — configure one first." };
+    yield { stage: "load_policy", status: "error", error: "No active policy - configure one first." };
     return;
   }
 
@@ -75,7 +75,7 @@ export function* runLoadPolicyStage(out: { policy?: Policy }): Generator<RunEven
   yield { stage: "load_policy", status: "done", policySummary: summary, counts: getCounts() };
 }
 
-// evaluate — deterministic rule engine. Runs only the two rules the active
+// evaluate - deterministic rule engine. Runs only the two rules the active
 // policy turned on, against the fields extract() produced.
 async function* runEvaluateStage(policy: Policy, fields: ExtractedFields, out: { results?: RuleResult[] }): AsyncGenerator<RunEvent> {
   yield { stage: "evaluate", status: "active" };
@@ -100,7 +100,7 @@ async function* runEvaluateStage(policy: Policy, fields: ExtractedFields, out: {
   yield { stage: "evaluate", status: "done", results };
 }
 
-// decide — pure branch, no model call. All rules pass -> commit; any fail ->
+// decide - pure branch, no model call. All rules pass -> commit; any fail ->
 // escalate, carrying the failed rules along for act() to act on.
 // Exported: reused by the demo's richer pipeline (lib/demoPipelineService.ts).
 export function* runDecideStage(
@@ -116,7 +116,7 @@ export function* runDecideStage(
   yield { stage: "decide", status: "done", branch, failedRules };
 }
 
-// act — executes the branch decide() already fixed. Gemini is only ever
+// act - executes the branch decide() already fixed. Gemini is only ever
 // consulted to word the escalation email; it cannot flip commit <-> escalate.
 // Exported: reused by the demo's richer pipeline (lib/demoPipelineService.ts).
 export async function* runActStage(
@@ -158,10 +158,10 @@ export async function* runActStage(
   };
 }
 
-// log — appends this run to the in-memory session ledger that /log reads.
+// log - appends this run to the in-memory session ledger that /log reads.
 // Exported: reused by the demo's richer pipeline (lib/demoPipelineService.ts),
 // which is the only caller that ever passes outcome "resolved_by_ai" or
-// aiReviewFired: true — the standalone pipeline has no ai_review stage.
+// aiReviewFired: true - the standalone pipeline has no ai_review stage.
 export function* runLogStage(
   policy: Policy,
   documentName: string,

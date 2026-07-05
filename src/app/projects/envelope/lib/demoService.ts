@@ -34,7 +34,7 @@ function renderLineItems(items: unknown): string {
     .join("\n");
 }
 
-// extract only ever sees the firstRead layer — carefulRead is what ai_review
+// extract only ever sees the firstRead layer - carefulRead is what ai_review
 // draws on later, never what the initial Gemini pass reads.
 export function renderDemoDocumentText(sample: DemoSample): string {
   const f = sample.fields;
@@ -62,7 +62,7 @@ export function renderDemoDocumentText(sample: DemoSample): string {
 }
 
 // If Gemini's extraction can't be parsed, fall back to the sample's own
-// firstRead values — same layer extract() would otherwise have produced.
+// firstRead values - same layer extract() would otherwise have produced.
 export function getDemoFallbackFields(sample: DemoSample): ExtractedFields {
   const fields: ExtractedFields = {};
   for (const [key, spec] of Object.entries(sample.fields)) {
@@ -75,7 +75,7 @@ const CAREFUL_READ_CONFIDENCE = 0.95;
 
 // ai_review's only real effect: swap the specific fields implicated by the
 // failed rules over to the sample's carefulRead layer, with a bumped
-// confidence reflecting the closer look. Purely deterministic — no model
+// confidence reflecting the closer look. Purely deterministic - no model
 // call decides this, and it never touches fields that didn't fail.
 export function applyCarefulRead(sample: DemoSample, fields: ExtractedFields, fieldNames: string[]): ExtractedFields {
   const next: ExtractedFields = { ...fields };

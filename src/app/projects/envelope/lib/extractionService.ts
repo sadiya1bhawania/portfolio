@@ -9,7 +9,7 @@ export interface FieldValue {
 
 export type ExtractedFields = Record<string, FieldValue>;
 
-// One generic financial-document schema — every sample (uploaded or fixed)
+// One generic financial-document schema - every sample (uploaded or fixed)
 // is treated as this shape, no per-document-type branching.
 export const EXPECTED_FIELDS: string[] = [
   "invoiceNumber",

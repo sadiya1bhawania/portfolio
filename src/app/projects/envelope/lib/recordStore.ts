@@ -9,7 +9,7 @@ export interface CommittedRecord {
   clicks: number;
 }
 
-// In-memory only, per the batch scope — resets on server restart, no DB yet.
+// In-memory only, per the batch scope - resets on server restart, no DB yet.
 const records: CommittedRecord[] = [];
 
 export function commitRecord(fields: ExtractedFields): CommittedRecord {

@@ -1,4 +1,4 @@
-// Deterministic rule engine — no model calls. This is the "code enforces"
+// Deterministic rule engine - no model calls. This is the "code enforces"
 // half of the extract/evaluate boundary: AI infers field values, this file
 // decides pass/fail against them.
 import type { RuleId, RuleParams, ValueSanityParams } from "./policyTypes";
@@ -157,7 +157,7 @@ export interface DecideResult {
   failedRules: RuleResult[];
 }
 
-// decide — pure branch on evaluate's output. Never touches the model: a
+// decide - pure branch on evaluate's output. Never touches the model: a
 // document commits only if every active rule passed, full stop.
 export function decide(results: RuleResult[]): DecideResult {
   const failedRules = results.filter((r) => !r.pass);

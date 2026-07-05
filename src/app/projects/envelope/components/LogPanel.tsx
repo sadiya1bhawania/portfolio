@@ -1,6 +1,6 @@
 "use client";
 
-// TODO(sadie): phase-two hook — this log is where a future layer would learn
+// TODO(sadie): phase-two hook - this log is where a future layer would learn
 // the human's fix actions (what got escalated, what a person actually changed)
 // to propose new rule boundaries automatically instead of waiting to be configured.
 // TODO(sadie): swap in-memory session state for real persistence before this

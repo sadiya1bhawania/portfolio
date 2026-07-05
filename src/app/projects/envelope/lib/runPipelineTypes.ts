@@ -1,4 +1,4 @@
-// "ai_review" only ever fires in the demo's richer pipeline (lib/demoPipelineService.ts) —
+// "ai_review" only ever fires in the demo's richer pipeline (lib/demoPipelineService.ts) -
 // the standalone /run pipeline never emits it, so RUN_STAGE_ORDER (used by the
 // standalone page's RunStageRail) deliberately excludes it.
 export type RunStage = "extract" | "load_policy" | "evaluate" | "ai_review" | "decide" | "act" | "log";
@@ -76,7 +76,7 @@ export interface RunEvent {
   commitStatus?: "committed" | "escalated";
   clicks?: number;
   recordId?: string;
-  /** act stage, escalate path — composed for preview, never sent */
+  /** act stage, escalate path - composed for preview, never sent */
   emailSubject?: string;
   emailBody?: string;
   escalateTo?: string;

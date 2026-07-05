@@ -37,7 +37,7 @@ interface ActOutcome {
 }
 
 function formatFieldValue(value: unknown): string {
-  if (value === null || value === undefined) return "—";
+  if (value === null || value === undefined) return "-";
   if (typeof value === "object") return JSON.stringify(value);
   return String(value);
 }
@@ -345,7 +345,7 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
                 <span style={{ color: r.pass ? "var(--copper)" : "var(--brick)" }}>{r.pass ? "✓" : "✗"}</span>
                 <span>
                   <span style={{ color: "var(--ink)" }}>{RULES.find((rule) => rule.id === r.rule)?.label ?? r.rule}</span>
-                  <span style={{ color: "var(--muted)" }}> — {r.detail}</span>
+                  <span style={{ color: "var(--muted)" }}> - {r.detail}</span>
                 </span>
               </div>
             ))}
@@ -353,7 +353,7 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
         </div>
       )}
 
-      {/* Final outcome, once act() has run — reuses the two-path card pattern. */}
+      {/* Final outcome, once act() has run - reuses the two-path card pattern. */}
       {branch && actOutcome && actOutcome.commitStatus === "committed" && (
         <div className="mt-6">
           <CommitOutcomeCard
@@ -386,7 +386,7 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
             </p>
             {usedFallback && (
               <p className="text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}>
-                Gemini output couldn&apos;t be parsed — showing the sample&apos;s known values.
+                Gemini output couldn&apos;t be parsed - showing the sample&apos;s known values.
               </p>
             )}
           </div>

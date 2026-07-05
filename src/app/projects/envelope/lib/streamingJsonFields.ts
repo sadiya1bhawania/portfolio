@@ -62,7 +62,7 @@ export function scanField(buffer: string, fieldName: string): FieldScanResult | 
     return null;
   }
 
-  // primitive: number, null, true, false — ends at the next unescaped delimiter
+  // primitive: number, null, true, false - ends at the next unescaped delimiter
   const rest = buffer.slice(start);
   const delim = rest.match(/[,}\]]/);
   if (!delim || delim.index === undefined) return null;

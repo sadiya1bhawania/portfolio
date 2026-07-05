@@ -19,7 +19,7 @@ const TABS: { id: Tab; label: string; blurb: string }[] = [
   {
     id: "run",
     label: "Run",
-    blurb: "Pick a document. Watch the agent extract, check it against your rules, and fix or escalate — you only step in if it can't.",
+    blurb: "Pick a document. Watch the agent extract, check it against your rules, and fix or escalate - you only step in if it can't.",
   },
   {
     id: "log",

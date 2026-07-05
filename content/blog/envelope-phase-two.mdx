@@ -1,0 +1,52 @@
+---
+title: "Envelope phase two: proposing boundaries without recreating the rubber stamp"
+slug: "envelope-phase-two"
+date: "2026-07-04"
+excerpt: "An interactive design piece (an in-build prototype, not a shipped system) exploring how an AI could propose new policy boundaries by watching the corrections a human already makes, without turning approval into a rubber stamp. The only numbers in the demo are hard-coded sample data, never measured results."
+tags: ["ai-agents", "human-in-the-loop", "envelope", "architecture", "safety"]
+project: "envelope-phase-two"
+---
+
+**This is an interactive design piece, an in-build prototype of an interaction, not a shipped production system.** Nothing here has run against real traffic. The walkthrough is built against one hard-coded sample log, and every number in it, the $10,000 cap, the $11,500 raised cap, the 2-approval fast streak, is sample data chosen to make the interaction legible, not a measured result from anywhere. Treat every figure in the demo as an example, never as a metric.
+
+This is an interactive design piece (an in-build prototype running on hard-coded sample data, not a shipped system). It's the second half of Envelope. Phase one let a human set boundaries once and had AI commit documents that stayed inside them, escalating only the ones that didn't. Phase two asks a harder question: when a human fixes an escalation, can the system learn a boundary from that fix, without quietly turning approval back into a rubber stamp?
+
+## The problem: per-action approval degrades
+
+Ask a human to approve every AI action and the approval stops meaning anything. It's well documented: normalization of deviance, alarm fatigue. The tenth identical prompt gets the same reflexive yes as the first, and the yes is now worthless. Phase one's answer was to move the human upstream: you define the boundaries once, the AI operates autonomously inside them, and a person only ever sees what the code couldn't clear. The human does judgment, not data entry.
+
+Phase two extends that argument one step. Writing boundaries by hand is itself work. What if the system watched how you corrected the exceptions it escalated, and proposed new boundaries from what it saw you doing repeatedly? The promise is fewer rules written by hand. The trap is obvious: if the AI proposes a boundary and you wave it through, you've rebuilt the rubber stamp one level up. This piece is mostly about not doing that.
+
+## Not every human fix teaches (the four correction types; only waivers + rule-adjustments)
+
+The naive version logs a diff ("human changed X to Y") and proposes rules from diffs. It's wrong, because it can't tell two very different events apart. If the model misread $15,000 as $1,500 and the human corrected it, the rule was never the problem; the extraction was. Learning a boundary there means inventing policy from a typo. But if a rule fired correctly on a correct extraction and the human overrode it anyway, that override is the human telling you something about the boundary.
+
+So phase two types every correction. Four kinds: extraction fixes (misreads), waivers (override of a correctly-firing rule), rule adjustments (a commit that implies a different threshold), and rejections. Only waivers and rule adjustments teach. The rest are logged and inert. In the demo you can see the excluded misread sitting right next to the signals that count: logged, visibly, and ignored.
+
+## Evidence sets the scope (narrowest shared feature; narrow before widening)
+
+Once you have teaching signals, the question is how far to generalize from them. The rule I settled on: a proposal is only ever as broad as the evidence. Cluster corrections by the rule they overrode, then scope the proposal to the narrowest feature all of them share. Three waivers that happen to all be the same vendor become "exempt that vendor," not "relax the rule for everyone." If the overrides share nothing but the rule itself, there's no honest scope, so the system proposes nothing and just flags the rule as possibly miscalibrated.
+
+The count alone can lie, so every proposal shows its denominator: three out of four is a pattern, three out of three hundred is noise, and you should be the one to tell the difference. Numeric changes get special suspicion, because a raised cap admits an open range of amounts you've never seen, where a vendor exemption admits a bounded, knowable set. So the system narrows before it widens: it only proposes moving a number when no category explains the overrides, and when it does, the proposed value is exactly the largest amount you already waived, no buffer, with the newly-admitted band shown to you as a cost, not hidden.
+
+## Approval that resists becoming a reflex (un-enforced default; friction ∝ blast radius)
+
+You can't beat approval fatigue by adding an approval gate; the gate is the thing that rots. So the fixes are structural. The default is that a proposal does nothing until you approve it: ignore it and the original rule keeps firing and matching documents keep escalating, exactly as before. Neglect costs you more manual review; it never silently auto-passes anything. That's the correct direction for the failure mode to point.
+
+Approval isn't a bare yes/no either. Every proposal is framed as a change to a rule you already set (a diff against a boundary you recognize, never a rule from nowhere), and you can narrow it, shrinking it to just the slice your evidence actually covered. You can't narrow without reading the evidence, which is the point. And the friction scales with the blast radius: a bounded vendor exemption is a quiet, easy approve; an open-ended cap change surfaces more evidence and asks more of you.
+
+## The system watches its own operator (the speed bump)
+
+Phase two already watches how humans fix documents. The last move is to let it watch how humans approve proposals, too. If you approve a run of low-stakes proposals fast, without ever narrowing one, and then a high-stakes one comes up, the system pauses you: it asks you to look at one real document before you can approve. Slow down anywhere, or narrow one anywhere, and it stays silent. A careful person never feels it; only an unbroken fast streak trips it.
+
+I want to be honest about what this is and isn't. No UI stops a determined rubber-stamper; claiming otherwise would be exactly the hype this project exists to cut. The goal isn't to make rubber-stamping impossible; it's to make the system degradation-resistant and fully auditable. Every approval writes a rule in your name, with its evidence and your action attached, and that record follows the rule into every future run it touches. Even a careless yes leaves a trail that's visible and reversible.
+
+## What's built vs. what's a seam
+
+What's actually built: the whole review loop as an interactive piece. The detection is deterministic TypeScript: code decides what gets proposed and at what scope, the model decides nothing. The three sample proposals, the real click-timing, and the speed bump all run off your actual behavior in the demo, not a script.
+
+What's a seam, marked TODO(sadie) in the code: the model's role is to phrase a detected pattern into rule language and nothing else: that call is stubbed with a deterministic fallback and not yet wired live (gemini-3.1-flash-lite, same client pattern as the rest of Envelope). The scope-picker UI for narrowing registers intent and resets the streak but doesn't yet let you choose the narrowed bound. The denominators are hard-coded sample values, not derived from real logs. And the larger next step (proposing boundaries from live observed behavior rather than a fixed sample log) is scoped but not built. Every number in this piece is demo data; none of it is a measured result.
+
+## Back to the project
+
+Open the interactive walkthrough: [Envelope · Phase two](/projects/envelope/phase-two). It builds on [Envelope](/projects/envelope), the extraction & confidence-scoring pipeline this proposes boundaries for.

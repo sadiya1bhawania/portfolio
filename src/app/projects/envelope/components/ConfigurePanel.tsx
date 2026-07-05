@@ -121,7 +121,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
       }
       const [leastRecent, ...rest] = prev;
       setEvictionNote(
-        `"${ruleLabel(leastRecent)}" was deactivated to make room for "${ruleLabel(id)}" — only two rules may run at once.`
+        `"${ruleLabel(leastRecent)}" was deactivated to make room for "${ruleLabel(id)}" - only two rules may run at once.`
       );
       return [...rest, id];
     });
@@ -283,7 +283,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
           style={{ borderColor: "var(--border)", fontFamily: "var(--font-body)" }}
         />
         <p className="text-[11px] mt-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
-          Simulated only — no email is actually sent.
+          Simulated only - no email is actually sent.
         </p>
       </section>
 

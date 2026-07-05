@@ -68,6 +68,52 @@ export default function ProjectsPage() {
             className="text-[11px] uppercase tracking-wide mb-2"
             style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
           >
+            AI Systems · In-build prototype
+          </p>
+          <h2
+            className="text-xl font-medium mb-3"
+            style={{ fontFamily: "var(--font-head)" }}
+          >
+            Envelope · Phase two - boundary proposals
+          </h2>
+          <p
+            className="text-sm leading-relaxed mb-5 flex-1"
+            style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}
+          >
+            An interactive design piece exploring how an AI could propose new policy
+            boundaries by watching the corrections a human already makes - without
+            turning approval into a rubber stamp. Not a shipped system: an in-build
+            prototype of the interaction, not the pipeline.
+          </p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/projects/envelope/phase-two"
+              className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium text-white"
+              style={{ background: "var(--copper)", fontFamily: "var(--font-body)" }}
+            >
+              Open design piece →
+            </Link>
+          </div>
+          <p
+            className="text-[11px] mt-4"
+            style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}
+          >
+            Builds on:{" "}
+            <Link href="/projects/envelope" className="underline" style={{ color: "var(--copper-dark)" }}>
+              Envelope
+            </Link>{" "}
+            , the extraction &amp; confidence-scoring pipeline this proposes boundaries for.
+          </p>
+        </article>
+
+        <article
+          className="rounded-lg border p-6 flex flex-col"
+          style={{ borderColor: "var(--border)", background: "#fff" }}
+        >
+          <p
+            className="text-[11px] uppercase tracking-wide mb-2"
+            style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
+          >
             AI Systems
           </p>
           <h2
