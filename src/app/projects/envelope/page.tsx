@@ -1,5 +1,3 @@
-// TODO(sadie): confirm whether this ships as its own route or gets a Products-page entry too.
-
 import Link from "next/link";
 
 export default function EnvelopePage() {

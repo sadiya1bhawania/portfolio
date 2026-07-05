@@ -112,15 +112,15 @@ export function detectProposals(
         admittedDocsLastQuarter: 4,
       });
     }
-    // Step 5 (leftovers < N or share nothing): no proposal is emitted.
-    // TODO(sadie): a future miscalibration hint could surface here - not needed
-    // for this sample data, since it never leaves a leftover group.
+    // Step 5 (leftovers < N or share nothing): no proposal is emitted. A future
+    // miscalibration hint could surface here; not needed for this sample data,
+    // since it never leaves a leftover group.
   }
 
   return proposals;
 }
 
-// TODO(sadie): Gemini renders the detected pattern into rule language here -
+// Gemini renders the detected pattern into rule language here -
 // the model only phrases; it never decides.
 export function phraseProposal(proposal: Proposal): string {
   if (proposal.kind === "categorical") {

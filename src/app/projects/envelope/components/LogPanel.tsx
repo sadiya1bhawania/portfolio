@@ -1,10 +1,10 @@
 "use client";
 
-// TODO(sadie): phase-two hook - this log is where a future layer would learn
-// the human's fix actions (what got escalated, what a person actually changed)
-// to propose new rule boundaries automatically instead of waiting to be configured.
-// TODO(sadie): swap in-memory session state for real persistence before this
-// is demo-stable across a server restart.
+// This log is the phase-one source a learning layer would read from - see
+// EnvelopePhaseTwo, which proposes rule boundaries from exactly this kind of
+// fix/escalation history (currently against a hard-coded sample log, not this one).
+// In-memory session state by design: this is a portfolio demo, not a service
+// with users, so history resets on server restart rather than persisting.
 
 import { useEffect, useState } from "react";
 import Link from "next/link";

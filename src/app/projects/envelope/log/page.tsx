@@ -1,5 +1,5 @@
-// TODO(sadie): swap in-memory session state for real persistence before this is
-// interview-demo-stable across a browser refresh.
+// In-memory session state by design: this is a portfolio demo, not a service
+// with users, so history resets on server restart rather than persisting.
 
 import Link from "next/link";
 import { getHistory } from "../lib/runHistory";

@@ -6,6 +6,7 @@ export interface LogEntry {
   actor: string;
   failedRule: { name: string; param: number };
   extractedValue: number;
+  correctedValue?: number;
   correctionType: CorrectionType;
   humanOutcome: string;
   docFeatures: {
@@ -115,6 +116,7 @@ export const log: LogEntry[] = [
     actor: "Sadie",
     failedRule: amountCap,
     extractedValue: 15000,
+    correctedValue: 1500,
     correctionType: "extraction_fix",
     humanOutcome: "corrected",
     docFeatures: { vendor: "Meridian", docType: "invoice", currency: "USD", date: "2025-06-18" },

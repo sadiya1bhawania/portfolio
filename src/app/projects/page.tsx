@@ -98,7 +98,7 @@ export default function ProjectsPage() {
             </Link>
           </div>
         </article>
-        
+
         <article
           className="rounded-lg border p-6 flex flex-col"
           style={{ borderColor: "var(--border)", background: "#fff" }}
@@ -173,7 +173,14 @@ export default function ProjectsPage() {
               className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium text-white"
               style={{ background: "var(--copper)", fontFamily: "var(--font-body)" }}
             >
-              Open design piece →
+              Open demo →
+            </Link>
+            <Link
+              href="/blog/envelope-phase-two"
+              className="text-sm hover:underline"
+              style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
+            >
+              Engineering notes →
             </Link>
           </div>
           <p
@@ -292,7 +299,7 @@ export default function ProjectsPage() {
           </p>
         </article>
 
-        
+
       </div>
     </main>
   );

@@ -45,7 +45,7 @@ I want to be honest about what this is and isn't. No UI stops a determined rubbe
 
 What's actually built: the whole review loop as an interactive piece. The detection is deterministic TypeScript: code decides what gets proposed and at what scope, the model decides nothing. The three sample proposals, the real click-timing, and the speed bump all run off your actual behavior in the demo, not a script.
 
-What's a seam, marked TODO(sadie) in the code: the model's role is to phrase a detected pattern into rule language and nothing else: that call is stubbed with a deterministic fallback and not yet wired live (gemini-3.1-flash-lite, same client pattern as the rest of Envelope). The scope-picker UI for narrowing registers intent and resets the streak but doesn't yet let you choose the narrowed bound. The denominators are hard-coded sample values, not derived from real logs. And the larger next step (proposing boundaries from live observed behavior rather than a fixed sample log) is scoped but not built. Every number in this piece is demo data; none of it is a measured result.
+What's a seam: the model's role is to phrase a detected pattern into rule language and nothing else: that call is stubbed with a deterministic fallback and not yet wired live (gemini-3.1-flash-lite, same client pattern as the rest of Envelope). The scope-picker UI for narrowing registers intent and resets the streak but doesn't yet let you choose the narrowed bound. The denominators are hard-coded sample values, not derived from real logs. And the larger next step (proposing boundaries from live observed behavior rather than a fixed sample log) is scoped but not built. Every number in this piece is demo data; none of it is a measured result.
 
 ## Back to the project
 

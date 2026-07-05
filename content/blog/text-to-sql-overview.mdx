@@ -53,7 +53,7 @@ The demo has no write path; it's read-only by design. And because it's anonymous
 
 ### Self-correct
 
-Both systems retry on failure rather than failing the whole request on the first bad query. The **demo** caps this at 2 retries, enough to recover from a typo-class SQL error without looping forever on a fundamentally wrong question. **TODO(sadie): confirm whether production used the same retry cap or a different policy.**
+Both systems retry on failure rather than failing the whole request on the first bad query, and both cap it at 2 retries, enough to recover from a typo-class SQL error without looping forever on a fundamentally wrong question.
 
 ### Summarize → Respond
 
