@@ -1,0 +1,32 @@
+---
+title: "How I built the RAG vs OKF demo, and what I faked"
+slug: "rag-vs-okf-build-notes"
+date: "2026-07-05"
+excerpt: "The two pipelines, the no embeddings trick on the OKF side, and an honest table of what the demo fakes versus what production would do."
+tags: ["OKF", "RAG", "LLM", "demo", "AI infers code enforces"]
+project: "rag-vs-okf"
+---
+
+The demo runs two pipelines over the same set of documents and shows both working side by side. Here is how each side works, what I did to keep it free and fast, and where I was honest about the shortcuts.
+
+The RAG side is the standard approach. Load the documents, split them into chunks, turn each chunk into a vector with an embedding model, and store those vectors. When you ask a question, turn the question into a vector too, find the chunks that are most similar, and hand them to the model to write an answer. On screen it shows which chunks it pulled and how well each one matched.
+
+The OKF side is where the interesting choice sits. When you ask a question, the model does not read every concept file, and it does not use embeddings at all. Instead it looks at only the title and description of each file, picks the ones it needs, then reads those files and any files they link to, and answers. No vector search anywhere on this side. I chose this on purpose, because it proves the real claim of OKF. If your knowledge is organized well, a short title and description is enough to know what to read, so you never have to guess by similarity.
+
+Now the honest part, because a demo that hides its shortcuts is not worth much.
+
+To keep the demo free and fast, I pre-baked the expensive steps. The OKF concept files were generated once, offline, and committed as plain files. The document embeddings for the RAG side were computed once, offline, and cached. So when you use the demo, the only live AI cost per question is writing the answer on each side, plus one small cheap call on the OKF side to pick which files to read. Everything else is either loaded from cache or done in plain code, no AI needed.
+
+Here is what the demo does versus what a real production version would do:
+
+1. OKF concept files. Demo generates them once offline and ships them as static files. Production generates them live from the company's own documents.
+2. Embeddings. Demo embeds the sample documents once and caches the result. Production embeds live as documents are added or changed.
+3. Documents. Demo uses a fixed set of made up company documents. Production uses the company's own connected folder.
+4. Human review of concept files. Demo does not include it, it only mentions it. Production adds a review step before a generated file becomes a source of truth, especially before anything gets written back.
+5. Refreshing. Demo never changes, so nothing re-runs. Production reacts to a changed document by re-embedding on the RAG side and rewriting a single file on the OKF side.
+
+That last row is worth sitting with, because it is a real difference and not a marketing line. When one fact changes, RAG has to re-embed the chunks that held it, while OKF just rewrites one file. Same idea, very different cost to keep fresh.
+
+One design note that ties back to how I think about building with AI. On the OKF side, the model only ever suggests which files to read and writes the final answer. It never decides the knowledge itself. The knowledge lives in files that a person can read and correct. The model infers, the files and the plain code enforce. That split is the same one I use everywhere, and it is the reason I trust this demo to be honest about its own limits.
+
+So the one honest sentence for the whole build: the demo pre-bakes the slow steps so it runs free and fast, and in production those same steps run live on your own documents.

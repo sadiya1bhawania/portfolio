@@ -1,0 +1,57 @@
+---
+title: "RAG vs OKF: two ways to answer questions over your documents"
+slug: "rag-vs-okf-hub"
+date: "2026-07-05"
+excerpt: "A fair, hands-on comparison of retrieval by chunks (RAG) versus retrieval by curated concepts (OKF), built as a live demo you can watch."
+tags: ["RAG", "OKF", "LLM", "retrieval", "AI infers, code enforces"]
+project: "rag-vs-okf"
+---
+
+There is a post going around that says RAG is dead because Google launched something called OKF. That is not true, and the gap between what the post claims and what actually happened is the whole reason I built this.
+
+OKF is real. Google Cloud published the Open Knowledge Format on June 12, 2026. But it does not kill RAG. The two solve different halves of the same problem, and the honest version of the story is more useful than the hype version.
+
+So I built a demo. Same set of company documents, two pipelines answering the same question side by side. One uses RAG. One uses OKF. You can watch each one work and see exactly why they answer the way they do.
+
+## The short version
+
+RAG figures out knowledge at the moment you ask. It chops your documents into small chunks, and for each question it searches for the chunks that look most similar to the question, then hands those to the model to write an answer.
+
+OKF figures out knowledge ahead of time. It reads your documents once and writes them into clean concept files, one idea per file, linked together. When you ask a question, the model reads the right concept files instead of searching through raw text.
+
+The one line I would give someone: RAG retrieves relevant text, OKF retrieves structured knowledge. They are not rivals. An OKF bundle can even become a better source for a RAG system.
+
+## What OKF fixes about RAG
+
+The clearest example is a scattered fact. Say the meaning of "revenue" is spread across three documents. RAG has to find all the right chunks and hope it got them all. If it misses one, the answer is incomplete. OKF writes revenue into one reviewed file, so there is nothing to reassemble and nothing to miss.
+
+There is more, and I go through it properly in the honest scorecard post. The short list: RAG has to guess at the relationships between ideas, while OKF writes those links down. RAG rediscovers the same knowledge on every question, while an OKF file is written once and stays put. And definitions like "what counts as revenue" are human decisions, which similarity search is bad at and a curated file is good at.
+
+## What OKF cannot do that RAG can
+
+This is the part the hype posts skip. OKF needs someone to curate the concept files. RAG does not. OKF only knows what has been written down, so anything not yet turned into a concept is invisible. And OKF does not handle a giant pile of messy documents well, because you cannot hand write a concept for every one of a hundred thousand PDFs. RAG does that out of the box.
+
+So the fair summary is that OKF organizes knowledge before retrieval, and RAG retrieves at scale. Different jobs.
+
+## Why I compared them on documents
+
+The sharpest difference shows up on documents, not database schemas. Documents are where knowledge gets scattered, duplicated, and stale, which is exactly what OKF is meant to fix. It is also a real product shape: a company connects its folder and asks questions about its own material. So the comparison is honest and the thing is useful.
+
+## What the demo actually does
+
+Both pipelines eat the same fixed set of documents for a made up company. You ask one of a few set questions, and both sides stream their work as it happens.
+
+The RAG side shows which chunks it retrieved and how well each one matched. The OKF side shows which concept files it chose and which linked files it followed. Then you get both answers next to each other.
+
+I designed the documents so a few questions each prove one point. One question has its answer scattered, where OKF does better. One asks about a relationship between two ideas, where OKF walks a link instead of guessing. And one asks about a small detail, where OKF can come up empty and RAG wins. That last one is not a weakness I hid. It is the point. A demo that only shows the happy path is not honest.
+
+## The deeper posts
+
+This is the front door. If you want to go further:
+
+- [What OKF actually is, in plain terms, and where the idea came from.](/blog/rag-vs-okf-explainer)
+- [The honest scorecard, the full pros and cons on both sides.](/blog/rag-vs-okf-scorecard)
+- [How I built the demo and what I faked to keep it free and fast.](/blog/rag-vs-okf-build-notes)
+- [The bug that proved the whole point, a real thing that broke and taught the idea in one concrete example.](/blog/rag-vs-okf-the-bug)
+
+If you only read one of the deeper posts, read the last one. It is the most memorable, because it actually happened while I was building this.

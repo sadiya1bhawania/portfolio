@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "rag-vs-okf:embed-corpus": "tsx src/app/rag-vs-okf/scripts/embed-corpus.ts",
+    "rag-vs-okf:build-okf": "tsx src/app/rag-vs-okf/scripts/build-okf.ts"
   },
   "dependencies": {
     "@google/genai": "^2.9.0",
@@ -30,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
+    "tsx": "^4.23.0",
     "typescript": "^5"
   }
 }

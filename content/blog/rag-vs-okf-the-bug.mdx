@@ -1,0 +1,54 @@
+---
+title: "The bug that proved the point: how one merged file broke OKF"
+slug: "rag-vs-okf-the-bug"
+date: "2026-07-05"
+excerpt: "A real thing that broke while building the RAG vs OKF demo, and how it teaches the whole idea of OKF in one concrete example."
+tags: ["OKF", "LLM", "retrieval", "one concept per file", "debugging"]
+project: "rag-vs-okf"
+---
+
+While building the RAG vs OKF demo, I hit a bug that turned out to be the best explanation of OKF I could ask for. I did not plan it. It just happened, and once I understood it, the whole idea clicked.
+
+Here is the story.
+
+## What I saw
+
+I asked both pipelines the same question: "What is the support SLA?"
+
+RAG answered correctly. It said the support team responds to critical tickets within 4 business hours.
+
+OKF said it did not have that information.
+
+That looked wrong. I knew the fact was in the documents. So why did the side that is supposed to be more organized come up empty?
+
+## What was actually happening
+
+The support SLA fact lived inside a concept file called operations.md. The body of that file clearly stated the 4 business hour SLA. So the knowledge was there. The problem was that OKF never opened the file.
+
+To understand why, you need one detail about how my OKF pipeline picks files. When you ask a question, the model does not read every concept file. That would be slow and expensive. Instead it looks at just the title and description of each file, and picks the ones it thinks it needs. It never sees the body during this step. I chose this on purpose, because it proves you do not need similarity search when your knowledge is organized well. The title and description alone should be enough.
+
+That is where it broke. The file was titled "Office and Support." Its description talked about the office location and support. But the file held two different ideas at once: the office address, and the support SLA. Because the file was really about two things, its title and description did a weak job of describing either one. When the model scanned the descriptions looking for the SLA, this file did not stand out clearly enough, so it got skipped.
+
+## The real cause
+
+The root cause was not the selection step. It was the file. operations.md had merged two concepts into one. Office location and support SLA are different ideas, and they ended up in the same file.
+
+OKF has one simple rule that I had quietly broken: one concept per file. When you put two ideas in one file, the title and description have to cover both, so they cover neither one well. And since the model picks files using only those descriptions, a muddy description means the right file gets missed.
+
+So the bug was not really a bug in my code. It was a design smell in my knowledge. The build step lumped two things together, and everything downstream got shaky because of it.
+
+## The fix
+
+The fix was to split operations.md into two clean files. One concept for the office location. One concept for the support SLA, with a description that plainly says it covers the support response time. After that, the selection step found it every time, because now there was a file whose whole reason to exist was the SLA.
+
+## Why this is the whole point of OKF
+
+This one bug shows both the promise and the catch of OKF in a single example.
+
+The promise: when concepts are clean, the model can find the right knowledge just by reading short descriptions. No searching, no guessing, no hoping it grabbed the right chunks.
+
+The catch: OKF is only as good as the curation. The moment two ideas get squished into one file, the thing that made OKF reliable stops being reliable. Clean files in, clean answers out. Messy files in, missed answers out.
+
+RAG does not care about any of this, because it searches the raw text and would have found the words "support SLA" wherever they sat. That is a real strength of RAG, and I am not going to pretend otherwise. But it is also why RAG guesses more and OKF, done right, guesses less.
+
+The lesson I took from it: the hard part of OKF is not the code. It is writing down your knowledge one clean idea at a time. Get that right and it is very good. Get lazy and it quietly fails in a way that looks like a bug but is really a filing problem.

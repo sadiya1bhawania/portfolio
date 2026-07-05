@@ -1,0 +1,25 @@
+---
+title: "What OKF actually is, in plain terms"
+slug: "rag-vs-okf-explainer"
+date: "2026-07-05"
+excerpt: "A simple explanation of the Open Knowledge Format, its small set of rules, and where the idea came from."
+tags: ["OKF", "LLM", "retrieval", "one concept per file"]
+project: "rag-vs-okf"
+---
+
+OKF stands for Open Knowledge Format. Google Cloud published it on June 12, 2026. It is an open, vendor neutral way to store what your company knows, written as a folder of plain markdown files. That is the whole thing. It is a format, not a service, not a platform, not a database.
+
+The rules are small on purpose:
+
+1. One idea per file. Each markdown file covers a single concept.
+2. A little block of metadata at the top of each file, written in YAML. In version 0.1 the only required field is the type. The rest, like title, description, tags, source, and a timestamp, are optional but useful.
+3. Files link to each other, so related ideas are connected on purpose instead of left for a machine to guess.
+4. The whole folder lives in version control, so every change is reviewed and dated.
+
+If you have used Obsidian or Notion, the shape will feel familiar. OKF just agrees on the conventions so a set of notes written by one team can be read by another team's AI agent without any translation.
+
+Where did the idea come from? It did not appear out of nowhere. It formalizes an idea Andrej Karpathy shared in a gist in April 2026, which he called an LLM Wiki. His point was that traditional RAG rediscovers knowledge from raw documents every single time you ask a question, and nothing is ever saved. If instead a model slowly builds and maintains a clean wiki, knowledge becomes something you keep and improve, not something you rebuild on every query.
+
+Here is the one line I would repeat to someone who has never heard of it. OKF is a standard way to write down what your company knows, one idea per file, so both people and AI agents read from the same single source of truth.
+
+That is really all it is. The power is not in the format being clever. The power is in the format being boring, shared, and easy to read.

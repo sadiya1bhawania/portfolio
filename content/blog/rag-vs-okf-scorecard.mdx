@@ -1,0 +1,31 @@
+---
+title: "The honest scorecard: what RAG and OKF each do well"
+slug: "rag-vs-okf-scorecard"
+date: "2026-07-05"
+excerpt: "A fair look at the problems OKF fixes about RAG, and the problems RAG handles that OKF does not."
+tags: ["OKF", "RAG", "LLM", "retrieval", "comparison"]
+project: "rag-vs-okf"
+---
+
+The loud version of this topic says RAG is dead and OKF replaces it. That is not right. They solve different halves of the same problem. Here is the fair version, both sides.
+
+The one idea to hold onto first. RAG figures out knowledge at the moment you ask, by searching raw text for chunks that look similar to your question. OKF figures out knowledge ahead of time, by writing it into clean concept files you read directly.
+
+What OKF fixes about RAG:
+
+1. Scattered facts. If the meaning of revenue is spread across ten documents, RAG has to find the right chunks and hope it got them all. OKF puts revenue in one file, so there is nothing to reassemble.
+2. Guessed relationships. RAG pulls fragments by similarity, so the links between ideas usually have to be inferred. OKF writes the links down, so an agent can follow them on purpose.
+3. Nothing sticks. RAG rediscovers the same knowledge on every question. An OKF file is written once, corrected once, and stays put until someone updates it.
+4. Definitions are decisions, not similar text. What counts as revenue is a human choice. Similarity search is bad at this, because the best answer is not the most similar looking chunk, it is the one someone decided on. OKF stores the decision.
+
+What RAG does that OKF cannot:
+
+1. RAG needs no curation. Someone has to write and maintain every OKF concept file. RAG just ingests raw documents with no authoring step. OKF trades work up front for accuracy later.
+2. OKF only knows what has been written down. Anything not yet turned into a concept is invisible. RAG can still surface the messy stuff nobody curated.
+3. OKF struggles with huge messy piles. You cannot hand write a concept for each of a hundred thousand PDFs. RAG chunks and retrieves at that scale without complaint.
+4. OKF is not retrieval by itself. It is only a format. For a small bundle you can hand the whole thing to the model. For a large one you still need something to search it, which could even be RAG running on top of the OKF files.
+5. It is early. OKF is version 0.1 with thin tooling. RAG is mature with a big ecosystem.
+
+So the honest summary is simple. OKF is not a RAG killer. OKF organizes knowledge before retrieval happens, and a good OKF bundle can even become an excellent source for a RAG system. One structures knowledge, the other retrieves it. Used together they cover more than either does alone.
+
+If you want the single sentence for a room full of engineers: RAG retrieves relevant text, OKF retrieves structured knowledge, and pretending one erases the other just means you will build the wrong thing.

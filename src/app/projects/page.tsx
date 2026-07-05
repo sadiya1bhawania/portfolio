@@ -31,6 +31,47 @@ export default function ProjectsPage() {
             className="text-xl font-medium mb-3"
             style={{ fontFamily: "var(--font-head)" }}
           >
+            RAG vs OKF
+          </h2>
+          <p
+            className="text-sm leading-relaxed mb-5 flex-1"
+            style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}
+          >
+            Compares two ways of answering questions over the same company documents:
+            retrieval by chunks versus retrieval by curated concepts.
+          </p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/rag-vs-okf"
+              className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium text-white"
+              style={{ background: "var(--copper)", fontFamily: "var(--font-body)" }}
+            >
+              Open demo →
+            </Link>
+            <Link
+              href="/blog/rag-vs-okf-hub"
+              className="text-sm hover:underline"
+              style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
+            >
+              Engineering blog →
+            </Link>
+          </div>
+        </article>
+        
+        <article
+          className="rounded-lg border p-6 flex flex-col"
+          style={{ borderColor: "var(--border)", background: "#fff" }}
+        >
+          <p
+            className="text-[11px] uppercase tracking-wide mb-2"
+            style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
+          >
+            AI Systems
+          </p>
+          <h2
+            className="text-xl font-medium mb-3"
+            style={{ fontFamily: "var(--font-head)" }}
+          >
             Envelope
           </h2>
           <p
@@ -209,6 +250,8 @@ export default function ProjectsPage() {
             , the same instinct, years later, observing an AI pipeline instead.
           </p>
         </article>
+
+        
       </div>
     </main>
   );
