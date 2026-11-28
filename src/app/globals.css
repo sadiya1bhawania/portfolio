@@ -49,6 +49,15 @@
   --code-ink: #161616;
   --code-accent: #7c4a23;
 
+  --activity-0: color-mix(in srgb, #e7ddd0 70%, #fbfaf7);
+  --activity-1: color-mix(in srgb, #e0a463 35%, #fbfaf7);
+  --activity-2: #e0a463;
+  --activity-3: #b5703c;
+  --activity-4: #7c4a23;
+  --pill-bg: #161616;
+  --pill-ink: #fbfaf7;
+  --pill-line: #161616;
+
   /* Text-to-SQL demo palette. */
   --tts-indigo: #4f46e5;
   --tts-indigo-strong: #4338ca;
@@ -107,6 +116,15 @@
   --code-bg: color-mix(in srgb, #fbfaf7 6%, #161616);
   --code-ink: color-mix(in srgb, #fbfaf7 88%, #161616);
   --code-accent: #e0a463;
+
+  --activity-0: color-mix(in srgb, #fbfaf7 8%, #161616);
+  --activity-1: color-mix(in srgb, #e0a463 24%, #161616);
+  --activity-2: color-mix(in srgb, #e0a463 46%, #161616);
+  --activity-3: color-mix(in srgb, #e0a463 72%, #161616);
+  --activity-4: #e0a463;
+  --pill-bg: color-mix(in srgb, #fbfaf7 4%, #0d0d0d);
+  --pill-ink: #fbfaf7;
+  --pill-line: color-mix(in srgb, #e0a463 55%, #161616);
 
   --tts-indigo: #a5b4fc;
   --tts-indigo-strong: #c7d2fe;

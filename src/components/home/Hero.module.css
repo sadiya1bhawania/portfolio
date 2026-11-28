@@ -3,7 +3,6 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  min-height: 820px;
   background: var(--paper);
   color: var(--ink);
 }
@@ -18,12 +17,13 @@
 
 .inner {
   position: relative;
-  max-width: 1240px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 72px 32px;
+  padding: 40px 32px;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  align-items: center;
+  text-align: center;
 }
 
 .eyebrow {
@@ -57,7 +57,6 @@
 }
 
 .heading {
-  max-width: 1150px;
   margin: 24px 0 0;
   font-family: var(--font-head);
   font-weight: var(--weight-medium);
@@ -90,38 +89,8 @@
   transform-origin: left;
 }
 
-/* A single line: the lead, then a window exactly one line tall. */
-.rotator {
+.activity {
   margin-top: 20px;
-  font-family: var(--font-head);
-  font-size: var(--type-h3);
-  font-weight: var(--weight-medium);
-  line-height: var(--leading-rotator);
-  letter-spacing: var(--tracking-normal);
-  white-space: nowrap;
-}
-
-.rotatorLead {
-  margin-right: 8px;
-  color: var(--muted);
-}
-
-.window {
-  display: inline-block;
-  height: 1.25em;
-  overflow: hidden;
-  vertical-align: bottom;
-}
-
-.track {
-  display: block;
-}
-
-.track > span {
-  display: block;
-  height: 1.25em;
-  overflow: hidden;
-  line-height: var(--leading-rotator);
 }
 
 .highlight {
@@ -129,7 +98,7 @@
 }
 
 .line {
-  max-width: 720px;
+  max-width: 640px;
   margin: 24px 0 0;
   font-size: var(--type-body);
   line-height: var(--leading-body);
@@ -139,6 +108,7 @@
 .actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 16px;
   margin-top: 32px;
@@ -194,7 +164,6 @@
 }
 
 .replay {
-  align-self: flex-start;
   margin-top: 16px;
   padding: 0;
   border: 0;
@@ -211,13 +180,6 @@
   outline-offset: 2px;
 }
 
-/* Reduced motion rests on the last rotator word. */
-@media (prefers-reduced-motion: reduce) {
-  .track {
-    transform: translateY(-66.6667%); /* 5th of 6 lines */
-  }
-}
-
 /* Starting state for GSAP, so nothing shows before the timeline runs. */
 @media (prefers-reduced-motion: no-preference) {
   .hero [data-in] {
@@ -230,11 +192,7 @@
 }
 
 @media (max-width: 639.98px) {
-  .hero {
-    min-height: 0;
-  }
-
   .inner {
-    padding: 48px 16px;
+    padding: 32px 16px;
   }
 }

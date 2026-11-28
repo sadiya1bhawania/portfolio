@@ -208,7 +208,7 @@ export default function IntroScene({ onDone }: IntroSceneProps) {
               {'render(<Hero title="builds itself" />)'}
             </span>
             <span className={styles.typed} data-line>
-              {'render(<Pipeline gate="evals" />)'}
+              {'render(<Pipeline gate="safety" />)'}
             </span>
             <span className={styles.typed} data-line>
               {'render(<Systems hover="what broke" />)'}
