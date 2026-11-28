@@ -6,7 +6,7 @@ import { CustomEase } from "gsap/CustomEase";
 import { gsap, useGSAP } from "../motion/SmoothScroll";
 import StreamField from "../motion/StreamField";
 import { useReducedMotion } from "../motion/useReducedMotion";
-import ActivityStrip from "./ActivityStrip";
+import AgentLog from "./AgentLog";
 import IntroScene, { replayIntro } from "./IntroScene";
 import styles from "./Hero.module.css";
 
@@ -25,13 +25,13 @@ const WORDS: [string, number][] = [
 const ACCENT_FROM = 4;
 
 // When the headline has finished revealing, whether or not the intro played first.
-const STRIP_AT = 1.5;
+const LOG_AT = 1.5;
 
 export default function Hero() {
   // Counts IntroScene's onDone calls; each one (re)starts the hero.
   const [run, setRun] = useState(0);
-  // The run whose strip has started filling; it empties again as soon as a replay begins a new run.
-  const [filledRun, setFilledRun] = useState(0);
+  // The run whose log has started; a replay begins a new run, which clears the log again.
+  const [loggedRun, setLoggedRun] = useState(0);
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
 
@@ -55,8 +55,8 @@ export default function Hero() {
 
       rise("eyebrow", 0, 0.6, easeOut);
       WORDS.forEach(([, at], i) => rise(`word${i}`, at, 0.7, wordEase));
-      rise("strip", 1, 0.5, easeOut);
-      tl.call(() => setFilledRun(run), undefined, STRIP_AT);
+      rise("log", 1, 0.5, easeOut);
+      tl.call(() => setLoggedRun(run), undefined, LOG_AT);
       rise("line", 1.2, 0.7, easeOut);
       rise("actions", 1.4, 0.7, easeOut);
       tl.fromTo(q("[data-underline]"), { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: easeOut }, 1.2);
@@ -115,8 +115,8 @@ export default function Hero() {
             </span>
           </h1>
 
-          <div className={styles.activity} data-in="strip">
-            <ActivityStrip key={run} filling={run > 0 && filledRun === run} />
+          <div className={styles.log} data-in="log">
+            <AgentLog key={run} running={run > 0 && loggedRun === run} />
           </div>
 
           <p className={styles.line} data-in="line">

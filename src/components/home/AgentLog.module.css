@@ -1,0 +1,158 @@
+/* A terminal, so it is dark in both themes. Colors are the --term-* tokens. */
+.card {
+  --line-delay: 650ms;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--term-line);
+  border-radius: 14px;
+  background: var(--term-bg);
+  box-shadow: 0 10px 40px var(--shadow);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--term-ink);
+  text-align: left;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--term-line);
+  font-size: var(--type-label);
+  color: var(--term-muted);
+}
+
+.dots {
+  display: flex;
+  gap: 5px;
+}
+
+.dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--term-dot);
+}
+
+.dots i:last-child {
+  background: var(--term-copper);
+}
+
+.question {
+  margin-left: auto;
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+}
+
+.line {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: var(--leading-body);
+}
+
+.time,
+.arrow {
+  flex-shrink: 0;
+  color: var(--term-muted);
+}
+
+.body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 10px;
+  min-width: 0;
+}
+
+.dim {
+  color: var(--term-muted);
+}
+
+.pill {
+  padding: 0 8px;
+  border: 1px solid var(--term-line);
+  border-radius: 999px;
+  font-size: var(--type-label);
+  white-space: nowrap;
+  color: var(--term-muted);
+}
+
+.mark {
+  margin-left: auto;
+  padding-left: 4px;
+  color: var(--term-copper);
+}
+
+/* The blocked query is a fail state. */
+.fail .body,
+.fail .mark {
+  color: var(--term-fail);
+}
+
+.fail .pill {
+  border-color: var(--term-fail);
+  color: var(--term-fail);
+}
+
+.cursor {
+  margin-left: 4px;
+  color: var(--term-copper);
+}
+
+/* Every line is laid out from the start, so the card never changes height. */
+@media (prefers-reduced-motion: no-preference) {
+  .line {
+    opacity: 0;
+  }
+
+  .running .line {
+    animation: appear 0.3s ease-out forwards;
+    animation-delay: calc(var(--line) * var(--line-delay));
+  }
+
+  .cursor {
+    animation: blink 1s step-end infinite;
+  }
+}
+
+/* Moved with `top`: a held transform left Chrome failing to paint one of the check marks. */
+@keyframes appear {
+  from {
+    opacity: 0;
+    top: 6px;
+  }
+  to {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .card {
+    font-size: var(--type-fine);
+  }
+
+  .question {
+    display: none;
+  }
+
+  .header,
+  .lines {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+}
