@@ -89,7 +89,8 @@
   transform-origin: left;
 }
 
-.activity {
+.log {
+  width: min(560px, 100%);
   margin-top: 20px;
 }
 
