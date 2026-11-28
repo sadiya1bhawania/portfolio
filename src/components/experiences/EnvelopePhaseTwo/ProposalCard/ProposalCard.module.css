@@ -46,8 +46,8 @@
 .blastLow,
 .blastHigh {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   padding: 4px 10px;
   border-radius: 999px;
@@ -72,8 +72,8 @@
 
 .narrowedPill {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   padding: 4px 10px;
   border-radius: 999px;
@@ -84,15 +84,16 @@
 
 .statement {
   font-family: var(--font-head);
-  font-size: 20px;
-  font-weight: 500;
+  font-size: var(--type-h3);
+  font-weight: var(--weight-medium);
   color: var(--ink);
   margin: 0;
+  line-height: var(--leading-h3);
 }
 
 .reasoning {
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: var(--type-small);
   color: var(--muted);
   margin: 0;
 }
@@ -116,15 +117,15 @@
 
 .monoLabel {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
 }
 
 .currentRuleText {
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: var(--type-small);
   color: var(--ink);
   margin: 2px 0 0;
   overflow-wrap: break-word;
@@ -132,7 +133,7 @@
 
 .setByYou {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: var(--type-fine);
   color: var(--muted);
   margin: 0 0 4px;
 }
@@ -146,8 +147,8 @@
 
 .proposedRuleText {
   font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 500;
+  font-size: var(--type-small);
+  font-weight: var(--weight-medium);
   color: var(--copper-dark);
   margin: 2px 0 0;
   overflow-wrap: break-word;
@@ -172,7 +173,7 @@
 
 .admitsMessage {
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: var(--type-small);
   color: var(--ink);
   margin: 0;
   overflow-wrap: break-word;
@@ -180,7 +181,7 @@
 
 .admitsSub {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: var(--type-fine);
   color: var(--muted);
   margin: 0;
 }
@@ -201,7 +202,7 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: var(--type-small);
   border-radius: 6px;
   padding: 10px 16px;
   cursor: pointer;
@@ -209,7 +210,7 @@
 
 .approve,
 .reviewSample {
-  font-weight: 500;
+  font-weight: var(--weight-medium);
   color: var(--paper);
   background: var(--copper);
   border: none;
@@ -273,15 +274,15 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
 }
 
 .pausedMessage {
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: var(--type-small);
   color: var(--ink);
   margin: 0;
   overflow-wrap: break-word;
@@ -289,7 +290,7 @@
 
 .footer {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: var(--type-fine);
   color: var(--muted);
   border-top: 1px solid var(--border);
   padding-top: 12px;

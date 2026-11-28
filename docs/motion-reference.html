@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sadiya Bhawania · Redesign</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=IBM+Plex+Sans:wght@400;500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#0b0b0c}
+a{color:#d4935c}a:hover{color:#f0b483}
+@keyframes rise{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:none}}
+@keyframes caret{50%{opacity:0}}
+@keyframes scan{0%{transform:translateX(-100%)}100%{transform:translateX(400%)}}
+@keyframes dash{to{stroke-dashoffset:-500}}
+@keyframes cycle{0%,16%{transform:translateY(0)}20%,36%{transform:translateY(-20%)}40%,56%{transform:translateY(-40%)}60%,76%{transform:translateY(-60%)}80%,96%{transform:translateY(-80%)}100%{transform:translateY(0)}}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(212,147,92,.6)}100%{box-shadow:0 0 0 14px rgba(212,147,92,0)}}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes bar{from{width:0}to{width:100%}}
+.w{display:inline-block;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes type{from{max-width:0}to{max-width:52ch}}@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}@keyframes bob{to{transform:translateY(1.5px)}}@keyframes zoom{to{transform:scale(2.4);opacity:0}}
+.t{display:block;white-space:nowrap;overflow:hidden;animation:type .6s steps(36) both}
+.chip{cursor:pointer;transition:all .2s}.chip:hover{border-color:#d4935c;color:#f2ede6}
+.flip .back{opacity:0;transform:translateY(8px);transition:all .35s ease}
+.flip:hover .back,.flip:focus-within .back{opacity:1;transform:none}
+.flip:hover{border-color:#d4935c}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div style="background: #0b0b0c; color: #f2ede6; font-family: 'IBM Plex Sans', sans-serif">
+
+<div style="max-width: 1240px; margin: 0 auto; padding: 24px 32px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; font-family: 'IBM Plex Mono', monospace; font-size: 13px">
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700">Sadiya Bhawania<span style="color: #d4935c">.</span></span>
+<span style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px"><span style="color: #a8a097">currently: senior swe @ knowtex · building gen ui in the open</span><button onClick="{{replay}}" style="background: transparent; border: 1px solid #3a332d; color: #d4935c; border-radius: 999px; padding: 8px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; cursor: pointer">↺ replay intro</button></span>
+</div>
+
+<header style="position: relative; overflow: hidden; min-height: 820px">
+<svg aria-hidden="true" viewBox="0 0 1440 760" preserveAspectRatio="none" style="position: absolute; inset: 0; width: 100%; height: 100%">
+<g fill="none" stroke="#d4935c" stroke-width="1" opacity="0.14"><path d="M-50 120 C 400 60, 700 300, 1490 220"></path><path d="M-50 380 C 300 520, 900 200, 1490 420"></path><path d="M-50 660 C 500 560, 900 720, 1490 560"></path><path d="M-50 260 C 600 440, 800 80, 1490 120"></path></g>
+<g fill="none" stroke="#d4935c" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2 46" opacity="0.8">
+<path d="M-50 120 C 400 60, 700 300, 1490 220" style="animation: dash 9s linear infinite"></path>
+<path d="M-50 380 C 300 520, 900 200, 1490 420" style="animation: dash 12s linear infinite"></path>
+<path d="M-50 660 C 500 560, 900 720, 1490 560" style="animation: dash 10s linear infinite"></path>
+<path d="M-50 260 C 600 440, 800 80, 1490 120" style="animation: dash 14s linear infinite"></path>
+</g>
+<path d="M-50 380 C 300 520, 900 200, 1490 420" fill="none" stroke="#e25b45" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 480" style="animation: dash 6s linear infinite"></path>
+</svg>
+<sc-if value="{{hero}}" hint-placeholder-val="{{ true }}">
+<div style="position: relative; max-width: 1240px; margin: 0 auto; padding: 72px 32px 72px; display: flex; flex-direction: column; gap: 30px">
+<div style="display: flex; align-items: center; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #a8a097; animation: rise .6s ease-out both"><span style="width: 8px; height: 8px; border-radius: 50%; background: #d4935c; animation: ping 1.6s infinite"></span>system online · building in the open</div>
+<h1 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 112px; line-height: 0.95; letter-spacing: -0.04em; max-width: 1150px">
+<span class="w" style="animation-delay: .1s">This</span> <span class="w" style="animation-delay: .2s">site</span> <span class="w" style="animation-delay: .3s">builds</span> <span class="w" style="animation-delay: .45s; color: #d4935c; position: relative">itself<span aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 6px; height: 6px; background: #d4935c; transform-origin: left; animation: draw .8s 1.2s ease-out both"></span></span> <span class="w" style="animation-delay: .6s">while</span> <span class="w" style="animation-delay: .7s">you</span> <span class="w" style="animation-delay: .8s">watch.</span>
+</h1>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; font-family: 'Space Grotesk', sans-serif; font-size: 44px; font-weight: 600; letter-spacing: -0.02em; animation: rise .7s 1s ease-out both">
+<span style="color: #a8a097">Today it's</span>
+<span style="display: inline-block; height: 1.15em; overflow: hidden; vertical-align: bottom">
+<span style="display: flex; flex-direction: column; animation: cycle 10s 1.5s cubic-bezier(.7,0,.2,1) infinite">
+<span style="height: 1.15em">retrieval.</span><span style="height: 1.15em">eval gates.</span><span style="height: 1.15em">safety rails.</span><span style="height: 1.15em; color: #d4935c">generative UI.</span><span style="height: 1.15em">what's next.</span>
+</span>
+</span>
+</div>
+<p style="margin: 0; font-size: 22px; line-height: 1.5; color: #f2ede6; max-width: 720px; animation: rise .7s 1.2s ease-out both">Retrieval, safety gates, and interfaces that build themselves are <span style="color: #d4935c">just the beginning.</span> I'm here for whatever's harder.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; animation: rise .7s 1.4s ease-out both">
+<a href="#demo" style="display: inline-flex; align-items: center; gap: 12px; background: #d4935c; color: #0b0b0c; font-weight: 500; font-size: 16px; padding: 16px 26px 16px 18px; border-radius: 999px; text-decoration: none"><span style="width: 28px; height: 28px; border-radius: 50%; background: #0b0b0c; display: flex; align-items: center; justify-content: center; animation: ping 1.6s infinite"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="#d4935c"></path></svg></span>Watch it build</a>
+<a href="#work" style="color: #a8a097; font-family: 'IBM Plex Mono', monospace; font-size: 13px; text-decoration: none">or hover the work ↓</a>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{intro}}" hint-placeholder-val="{{ false }}">
+<div aria-label="Intro: the site builds itself" style="position: absolute; inset: 0; z-index: 5; background: #070708; transform-origin: 50% 30%; animation: zoom 1.2s 5.4s cubic-bezier(.7,0,.3,1) both">
+<div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: min(1100px, 86%); height: 470px; border: 1px solid #3a332d; border-radius: 18px; background: #0e0d0f; box-shadow: 0 0 140px rgba(212,147,92,.14); overflow: hidden; display: flex">
+<div style="flex: 1 1 50%; padding: 26px 28px; display: flex; flex-direction: column; gap: 14px; font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #cfc8bf; border-right: 1px solid #2a2520; min-width: 0">
+<div style="display: flex; gap: 7px; margin-bottom: 8px" aria-hidden="true"><span style="width: 10px; height: 10px; border-radius: 50%; background: #3a332d"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #3a332d"></span><span style="width: 10px; height: 10px; border-radius: 50%; background: #d4935c"></span></div>
+<span class="t" style="animation-delay: .4s"><span style="color: #d4935c">const</span> site = await agent.plan(sadie)</span>
+<span class="t" style="animation-delay: 1s">render(&lt;Hero title="builds itself" /&gt;)</span>
+<span class="t" style="animation-delay: 1.6s">render(&lt;Pipeline gate="evals" /&gt;)</span>
+<span class="t" style="animation-delay: 2.2s">render(&lt;Systems hover="what broke" /&gt;)</span>
+<span class="t" style="animation-delay: 2.8s"><span style="color: #d4935c">deploy</span>({ motion: true })</span>
+</div>
+<div style="flex: 1 1 50%; padding: 26px 28px; background: #0b0b0c; display: flex; flex-direction: column; gap: 16px; min-width: 0" aria-hidden="true">
+<div style="height: 14px; width: 100%; border-radius: 4px; background: #1d1a1c; animation: pop .4s .6s both"></div>
+<div style="height: 38px; width: 92%; border-radius: 6px; background: #f2ede6; animation: pop .4s 1.2s both"></div>
+<div style="height: 38px; width: 64%; border-radius: 6px; background: #d4935c; animation: pop .4s 1.35s both"></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; animation: pop .4s 1.8s both"><span style="width: 18px; height: 18px; border-radius: 50%; border: 2px solid #d4935c"></span><span style="flex: 1; height: 2px; background: #3a332d; margin: 0 6px"></span><span style="width: 18px; height: 18px; border-radius: 50%; border: 2px solid #d4935c"></span><span style="flex: 1; height: 2px; background: #3a332d; margin: 0 6px"></span><span style="width: 18px; height: 18px; border-radius: 50%; background: #a23b2c"></span><span style="flex: 1; height: 2px; background: #3a332d; margin: 0 6px"></span><span style="width: 18px; height: 18px; border-radius: 50%; background: #d4935c"></span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; flex: 1">
+<div style="border-radius: 8px; background: #1d1a1c; animation: pop .4s 2.4s both"></div><div style="border-radius: 8px; background: #1d1a1c; animation: pop .4s 2.5s both"></div><div style="border-radius: 8px; background: #1d1a1c; animation: pop .4s 2.6s both"></div><div style="border-radius: 8px; background: #d4935c; animation: pop .4s 2.7s both"></div>
+</div>
+<div style="align-self: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #d4935c; border: 1px solid #d4935c; border-radius: 999px; padding: 4px 10px; animation: pop .4s 3.2s both">✓ deployed</div>
+</div>
+<div style="position: absolute; inset: 0; background: rgba(11,11,12,.94); display: flex; align-items: center; justify-content: center; padding: 40px; animation: rise .8s 3.6s both">
+<span style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 68px; line-height: 1; letter-spacing: -0.03em; text-align: center; max-width: 900px">This site builds <span style="color: #d4935c">itself</span> while you watch.</span>
+</div>
+</div>
+<svg aria-hidden="true" viewBox="0 0 600 340" style="position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: min(600px, 70%)">
+<rect x="0" y="300" width="600" height="40" fill="#141215"></rect>
+<rect x="140" y="150" width="320" height="160" rx="8" fill="#1c1a1e" stroke="#d4935c" stroke-opacity=".5"></rect>
+<g fill="#d4935c" opacity=".7"><rect x="160" y="172" width="120" height="5" rx="2"></rect><rect x="160" y="186" width="180" height="5" rx="2"></rect><rect x="160" y="200" width="90" height="5" rx="2"></rect></g>
+<g style="animation: bob .18s ease-in-out infinite alternate">
+<path d="M178 340 C 186 270, 240 226, 300 222 C 360 226, 414 270, 422 340 Z" fill="#050506" stroke="#d4935c" stroke-opacity=".45" stroke-width="1.5"></path>
+<rect x="288" y="172" width="24" height="54" fill="#050506"></rect>
+<ellipse cx="300" cy="132" rx="38" ry="50" fill="#050506" stroke="#d4935c" stroke-opacity=".45" stroke-width="1.5"></ellipse>
+<path d="M300 60 C 262 60, 248 98, 251 140 C 253 168, 241 190, 246 216 C 250 240, 235 256, 241 282 C 254 294, 272 286, 284 294 C 294 300, 306 300, 316 294 C 328 286, 346 294, 359 282 C 365 256, 350 240, 354 216 C 359 190, 347 168, 349 140 C 352 98, 338 60, 300 60 Z" fill="#0d0907" stroke="#d4935c" stroke-opacity=".5" stroke-width="1.5"></path>
+<g fill="none" stroke-linecap="round">
+<path d="M275 88 C 264 138, 272 180, 262 220 C 256 250, 264 268, 260 286" stroke="#7a4a2b" stroke-width="3.5" opacity=".85"></path>
+<path d="M300 68 C 294 128, 306 190, 297 250 C 294 270, 300 286, 299 296" stroke="#5e3820" stroke-width="3" opacity=".8"></path>
+<path d="M325 90 C 337 140, 328 180, 340 222 C 344 250, 337 268, 341 284" stroke="#9c6a40" stroke-width="2.5" opacity=".85"></path>
+<path d="M287 78 C 279 120, 288 160, 279 200 C 275 224, 281 246, 276 268" stroke="#9c6a40" stroke-width="1.8" opacity=".6"></path>
+<path d="M313 76 C 319 122, 312 168, 319 206 C 324 232, 318 252, 322 272" stroke="#7a4a2b" stroke-width="2" opacity=".7"></path>
+</g>
+</g>
+</svg>
+<span class="t" style="position: absolute; left: 32px; bottom: 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #a8a097; animation-delay: .1s">~/portfolio $ claude build --live</span>
+<button onClick="{{skip}}" style="position: absolute; right: 32px; bottom: 22px; background: transparent; border: 1px solid #3a332d; color: #a8a097; border-radius: 999px; padding: 10px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; cursor: pointer">skip intro →</button>
+</div>
+</sc-if>
+</header>
+
+<section id="demo" aria-label="Generative UI demo" style="max-width: 1240px; margin: 0 auto; padding: 8px 32px 96px">
+<div style="border: 1px solid #2a2520; border-radius: 24px; background: #111012; overflow: hidden">
+<div style="padding: 24px; border-bottom: 1px solid #2a2520; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 14px; background: #0b0b0c; border: 1px solid #3a332d; border-radius: 14px; padding: 18px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 17px">
+<span style="color: #d4935c">›</span><span>{{query}}</span><span style="color: #d4935c; animation: caret 1s steps(1) infinite">▍</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="3">
+<sc-if value="{{c.selected}}" hint-placeholder-val="{{ false }}"><button class="chip" onClick="{{c.pick}}" style="background: #d4935c; color: #0b0b0c; border: 1px solid #d4935c; border-radius: 999px; padding: 12px 18px; font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{c.label}}</button></sc-if>
+<sc-if value="{{c.idle}}" hint-placeholder-val="{{ true }}"><button class="chip" onClick="{{c.pick}}" style="background: transparent; color: #a8a097; border: 1px solid #3a332d; border-radius: 999px; padding: 12px 18px; font-family: 'IBM Plex Mono', monospace; font-size: 13px">{{c.label}}</button></sc-if>
+</sc-for>
+</div>
+</div>
+
+<div style="position: relative; padding: 32px 24px; min-height: 360px">
+<div style="position: absolute; top: 0; left: 0; width: 25%; height: 2px; background: #d4935c; animation: scan 1.2s ease-in-out" aria-hidden="true"></div>
+
+<sc-if value="{{isSystems}}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="height: 2px; background: #2a2520; border-radius: 2px; margin-bottom: 24px; overflow: hidden"><div style="height: 2px; background: #d4935c; animation: bar 5s linear both"></div></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px">
+<div style="background: #18161a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 8px; animation: rise .5s .1s ease-out both"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #d4935c">RETRIEVE</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">RAG vs OKF</span><span style="font-size: 14px; color: #a8a097">Two retrieval strategies, raced live.</span></div>
+<div style="background: #18161a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 8px; animation: rise .5s .25s ease-out both"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #d4935c">GENERATE + GATE</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">X2SQL</span><span style="font-size: 14px; color: #a8a097">English to SQL. Nothing runs unvalidated.</span></div>
+<div style="background: #18161a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 8px; animation: rise .5s .4s ease-out both"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #d4935c">HUMAN GATE</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">Envelope</span><span style="font-size: 14px; color: #a8a097">Learns new rules from human corrections.</span></div>
+<div style="background: #18161a; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 8px; animation: rise .5s .55s ease-out both"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #d4935c">RESEARCH</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600">World Models</span><span style="font-size: 14px; color: #a8a097">JEPA, explained interactively.</span></div>
+</div>
+</sc-if>
+
+<sc-if value="{{isEvals}}" hint-placeholder-val="{{ false }}">
+<div aria-hidden="true" style="height: 2px; background: #2a2520; border-radius: 2px; margin-bottom: 24px; overflow: hidden"><div style="height: 2px; background: #d4935c; animation: bar 5s linear both"></div></div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<div style="flex: 2 1 420px; background: #18161a; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 14px; animation: rise .5s .1s ease-out both">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #d4935c">EVAL RUN · synthetic</span>
+<div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding: 10px 0; border-bottom: 1px solid #2a2520"><span>SQL is read-only</span><span style="color: #d4935c">✓ pass</span></div>
+<div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding: 10px 0; border-bottom: 1px solid #2a2520"><span>Answer cites retrieved rows</span><span style="color: #d4935c">✓ pass</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding: 10px 0"><span>No invented columns</span><span style="background: #a23b2c; color: #fff; padding: 4px 10px; border-radius: 999px; font-size: 12px">✗ fail · blocked</span></div>
+</div>
+<div style="flex: 1 1 260px; background: #d4935c; color: #0b0b0c; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; animation: rise .5s .3s ease-out both">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">MY RULE</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; line-height: 1.1">Models propose. Checks decide.</span>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isBuilding}}" hint-placeholder-val="{{ false }}">
+<div aria-hidden="true" style="height: 2px; background: #2a2520; border-radius: 2px; margin-bottom: 24px; overflow: hidden"><div style="height: 2px; background: #d4935c; animation: bar 5s linear both"></div></div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: stretch">
+<div style="flex: 1 1 300px; display: flex; flex-direction: column; gap: 10px; justify-content: center; animation: rise .5s .1s ease-out both">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #d4935c">NOW BUILDING · OPEN SOURCE</span>
+<span style="font-family: 'Space Grotesk', sans-serif; font-size: 40px; font-weight: 700; line-height: 1.05">Gen UI engine</span>
+<span style="font-size: 16px; color: #cfc8bf; line-height: 1.6">An agent connected to your component library. Every answer comes back as real UI. You're using a preview of it right now.</span>
+</div>
+<div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 14px">
+<div style="background: #18161a; border-radius: 12px; padding: 16px; animation: rise .5s .25s ease-out both">1 · request <span style="color: #a8a097">"What is she building now?"</span></div>
+<div style="background: #18161a; border-radius: 12px; padding: 16px; animation: rise .5s .4s ease-out both">2 · agent picks <span style="color: #d4935c">Heading, Text, StepList</span></div>
+<div style="background: #18161a; border-radius: 12px; padding: 16px; animation: rise .5s .55s ease-out both">3 · props validated against schema <span style="color: #d4935c">✓</span></div>
+<div style="background: #f2ede6; color: #0b0b0c; border-radius: 12px; padding: 16px; animation: rise .5s .7s ease-out both">4 · rendered: this panel</div>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div style="padding: 14px 24px; border-top: 1px solid #2a2520; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #a8a097">
+<span>rendered by gen-ui · scripted preview · {{autoLabel}}</span><span>eval gate <span style="color: #d4935c">✓ passed</span></span>
+</div>
+</div>
+</section>
+
+<section id="work" style="max-width: 1240px; margin: 0 auto; padding: 64px 32px; display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 64px; line-height: 1; letter-spacing: -0.03em; max-width: 720px">Built to <span style="color: #d4935c">find out.</span></h2>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #a8a097">hover a card →</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 16px">
+<a href="#" class="flip" style="position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 320px; padding: 28px; border: 1px solid #2a2520; border-radius: 20px; background: #111012; color: #f2ede6; text-decoration: none; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="align-self: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; background: #d4935c; color: #0b0b0c; padding: 4px 10px; border-radius: 999px">PRODUCTION</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 600">X2SQL</span></div>
+<span style="font-size: 14px; color: #a8a097">Text to SQL · validated · streamed</span>
+<div class="back" style="position: absolute; inset: 0; background: #d4935c; color: #0b0b0c; padding: 28px; display: flex; flex-direction: column; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">THE QUESTION</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 600; line-height: 1.2">Can text-to-SQL be safe enough for real users?</span></div>
+<span style="font-size: 15px">Try it live →</span>
+</div>
+</a>
+<a href="#" class="flip" style="position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 320px; padding: 28px; border: 1px solid #2a2520; border-radius: 20px; background: #111012; color: #f2ede6; text-decoration: none; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="align-self: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; border: 1px solid #3a332d; color: #d4935c; padding: 4px 10px; border-radius: 999px">EXPERIMENT · PHASE 2</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 600">Envelope</span></div>
+<span style="font-size: 14px; color: #a8a097">Policy-driven human-in-the-loop</span>
+<div class="back" style="position: absolute; inset: 0; background: #d4935c; color: #0b0b0c; padding: 28px; display: flex; flex-direction: column; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">THE QUESTION</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 600; line-height: 1.2">What if policy, not a human, handled the routine calls?</span></div>
+<span style="font-size: 15px">See both phases →</span>
+</div>
+</a>
+<a href="#" class="flip" style="position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 320px; padding: 28px; border: 1px solid #2a2520; border-radius: 20px; background: #111012; color: #f2ede6; text-decoration: none; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="align-self: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; border: 1px solid #3a332d; color: #d4935c; padding: 4px 10px; border-radius: 999px">EXPERIMENT</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 600">RAG vs OKF</span></div>
+<span style="font-size: 14px; color: #a8a097">Northwind corpus · 4 test scenarios</span>
+<div class="back" style="position: absolute; inset: 0; background: #d4935c; color: #0b0b0c; padding: 28px; display: flex; flex-direction: column; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">THE QUESTION</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 600; line-height: 1.2">Is vector search always the right retrieval?</span></div>
+<span style="font-size: 15px">See the race →</span>
+</div>
+</a>
+<a href="#" class="flip" style="position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 320px; padding: 28px; border: 1px solid #2a2520; border-radius: 20px; background: #111012; color: #f2ede6; text-decoration: none; overflow: hidden">
+<div style="display: flex; flex-direction: column; gap: 12px"><span style="align-self: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; border: 1px solid #3a332d; color: #d4935c; padding: 4px 10px; border-radius: 999px">RESEARCH</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 600">World Models</span></div>
+<span style="font-size: 14px; color: #a8a097">JEPA · live model calls</span>
+<div class="back" style="position: absolute; inset: 0; background: #d4935c; color: #0b0b0c; padding: 28px; display: flex; flex-direction: column; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 10px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">THE QUESTION</span><span style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 600; line-height: 1.2">What comes after LLMs?</span></div>
+<span style="font-size: 15px">Explore →</span>
+</div>
+</a>
+</div>
+</section>
+
+<section style="max-width: 1240px; margin: 0 auto; padding: 64px 32px; display: flex; flex-wrap: wrap; gap: 48px">
+<div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 14px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #d4935c">/ lab log</span>
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 48px; line-height: 1.02; letter-spacing: -0.03em">What I'm reading, building, and breaking.</h2>
+</div>
+<div style="flex: 2 1 560px; display: flex; flex-direction: column">
+<div style="display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 22px 0; border-top: 1px solid #2a2520"><span style="width: 110px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #d4935c">BUILDING</span><span style="flex: 1 1 300px; font-size: 18px">Gen UI engine, open source. Agent → component library → UI.</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 22px 0; border-top: 1px solid #2a2520"><span style="width: 110px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #d4935c">READING</span><span style="flex: 1 1 300px; font-size: 18px">AI evals, Hamel Husain. How to measure an LLM failing before users do.</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 22px 0; border-top: 1px solid #2a2520"><span style="width: 110px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #d4935c">STUDYING</span><span style="flex: 1 1 300px; font-size: 18px">World models and JEPA. What comes after next-token prediction.</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 22px 0; border-top: 1px solid #2a2520; border-bottom: 1px solid #2a2520"><span style="width: 110px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #d4935c">SHIPPING</span><span style="flex: 1 1 300px; font-size: 18px">Clinician AI at Knowtex.</span></div>
+</div>
+</section>
+
+<footer style="max-width: 1240px; margin: 0 auto; padding: 96px 32px 112px; display: flex; flex-direction: column; gap: 28px">
+<h2 style="margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 88px; line-height: 0.95; letter-spacing: -0.04em">Follow the <span style="color: #d4935c">build.</span></h2>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="https://www.linkedin.com/in/sadiyabhawania" style="background: #d4935c; color: #0b0b0c; font-weight: 500; padding: 15px 26px; border-radius: 999px; text-decoration: none">Read the notes →</a>
+<a href="https://www.linkedin.com/in/sadiyabhawania" style="border: 1px solid #3a332d; color: #f2ede6; padding: 15px 26px; border-radius: 999px; text-decoration: none">Say hi on LinkedIn</a>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3200}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { mode: 'systems', auto: true, intro: true, hero: false }; }
+  startIntro() {
+    clearTimeout(this.t1); clearTimeout(this.t2);
+    this.setState({ intro: true, hero: false });
+    this.t1 = setTimeout(() => this.setState({ hero: true }), 5700);
+    this.t2 = setTimeout(() => this.setState({ intro: false }), 6700);
+  }
+  skipIntro() { clearTimeout(this.t1); clearTimeout(this.t2); this.setState({ intro: false, hero: true }); }
+  componentDidMount() {
+    this.startIntro();
+    const order = ['systems', 'evals', 'building'];
+    this.timer = setInterval(() => {
+      if (!this.state.auto) return;
+      const i = order.indexOf(this.state.mode);
+      this.setState({ mode: order[(i + 1) % order.length] });
+    }, 5000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); clearTimeout(this.t1); clearTimeout(this.t2); }
+  renderVals() {
+    const m = this.state.mode;
+    const defs = [
+      { id: 'systems', label: 'Show me her systems', q: 'Show me what Sadiya has built' },
+      { id: 'evals', label: 'How does she think about evals?', q: 'How does she think about evals?' },
+      { id: 'building', label: 'What is she building now?', q: 'What is she building now?' }
+    ];
+    const cur = defs.find((d) => d.id === m);
+    return {
+      query: cur.q,
+      intro: this.state.intro,
+      hero: this.state.hero,
+      replay: () => this.startIntro(),
+      skip: () => this.skipIntro(),
+      autoLabel: this.state.auto ? 'autoplay on' : 'you are driving',
+      isSystems: m === 'systems',
+      isEvals: m === 'evals',
+      isBuilding: m === 'building',
+      chips: defs.map((d) => ({ label: d.label, selected: d.id === m, idle: d.id !== m,pick: () => this.setState({ mode: d.id, auto: false }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

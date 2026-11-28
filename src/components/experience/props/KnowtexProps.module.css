@@ -1,0 +1,47 @@
+/* Every color derives from the tokens in globals.css. */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 196px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--line-base) 60%, var(--paper));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+  box-shadow: 0 10px 40px var(--shadow);
+  font-family: var(--font-head);
+  font-size: 15px;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.card svg {
+  color: var(--accent);
+}
+
+.wordmark {
+  position: absolute;
+  bottom: calc(var(--floor) - 15px);
+  left: 16px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: min(230px, 15vw);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  color: var(--copper);
+  transform-origin: 0 100%;
+  pointer-events: none;
+}
+
+@media (max-width: 639.98px) {
+  .card {
+    gap: 6px;
+    padding: 12px 14px;
+  }
+
+  .wordmark {
+    bottom: calc(var(--floor) - 6px);
+    font-size: 22vw;
+  }
+}

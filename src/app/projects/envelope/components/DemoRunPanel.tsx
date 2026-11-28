@@ -40,7 +40,7 @@ function ResultList({ results }: { results: RuleResultSummary[] }) {
   return (
     <div className="space-y-1.5">
       {results.map((r, i) => (
-        <div key={`${r.rule}-${i}`} className="flex items-start gap-2 text-[13px]" style={{ fontFamily: "var(--font-mono)" }}>
+        <div key={`${r.rule}-${i}`} className="flex items-start gap-2 type-mono" style={{ fontFamily: "var(--font-mono)" }}>
           <span style={{ color: r.pass ? "var(--copper)" : "var(--brick)" }}>{r.pass ? "✓" : "✗"}</span>
           <span>
             <span style={{ color: "var(--ink)" }}>{ruleLabel(r.rule)}</span>
@@ -196,7 +196,7 @@ export default function DemoRunPanel({
     <div>
       <section className="mb-8">
         <h2
-          className="text-[13px] uppercase tracking-wide mb-3"
+          className="type-mono uppercase track-fine mb-3"
           style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
         >
           Pick a document
@@ -216,16 +216,16 @@ export default function DemoRunPanel({
                 className="rounded-lg border p-4 text-left transition-colors"
                 style={{
                   borderColor: active ? "var(--copper)" : "var(--border)",
-                  background: active ? "var(--copper-light)" : "#fff",
+                  background: active ? "var(--copper-light)" : "var(--surface)",
                 }}
               >
                 <p
-                  className="text-base font-medium mb-1 capitalize"
+                  className="type-body weight-medium mb-1 capitalize"
                   style={{ fontFamily: "var(--font-head)", color: active ? "var(--copper-dark)" : "inherit" }}
                 >
                   {sample.id}
                 </p>
-                <p className="text-[12px]" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
+                <p className="type-fine" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
                   {sample.label.replace(/^\w+\s*-\s*/, "")}
                 </p>
               </button>
@@ -238,14 +238,14 @@ export default function DemoRunPanel({
         type="button"
         disabled={!sampleId || isRunning}
         onClick={submitRun}
-        className="inline-flex items-center px-5 py-2.5 rounded-md text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed mb-8"
+        className="inline-flex items-center px-5 py-2.5 rounded-md type-small weight-medium text-[var(--on-accent)] disabled:opacity-40 disabled:cursor-not-allowed mb-8"
         style={{ background: "var(--copper)", fontFamily: "var(--font-body)" }}
       >
         {isRunning ? "Running…" : "Run pipeline"}
       </button>
 
       {error && (
-        <div className="mb-6 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+        <div className="mb-6 rounded-lg bg-[var(--brick-light)] border border-[var(--brick)] px-3 py-2 type-small text-[var(--brick-dark)]">
           {error}
           {error.includes("No active policy") && (
             <>
@@ -259,20 +259,20 @@ export default function DemoRunPanel({
       )}
 
       {isConnecting && (
-        <p className="mb-3 text-sm" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <p className="mb-3 type-small" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
           Connecting…
         </p>
       )}
 
       {!sampleId && !isRunning && (
-        <p className="text-sm" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
+        <p className="type-small" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
           Pick Clean, Recoverable, or Blocked, then run it.
         </p>
       )}
 
       {liveResults.length > 0 && !secondPassResults && !actOutcome && (
-        <div className="rounded-2xl border p-4 mb-6" style={{ borderColor: "var(--border)", background: "#fff" }}>
-          <p className="text-[11px] uppercase tracking-wide mb-3" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <div className="rounded-2xl border p-4 mb-6" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+          <p className="type-label uppercase track-fine mb-3" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
             {firstPassResults.length > 0 ? "Re-evaluating" : "Evaluating"}
           </p>
           <ResultList results={liveResults} />
@@ -280,8 +280,8 @@ export default function DemoRunPanel({
       )}
 
       {firstPassResults.length > 0 && (
-        <div className="rounded-2xl border p-4 mb-6" style={{ borderColor: "var(--border)", background: "#fff" }}>
-          <p className="text-[11px] uppercase tracking-wide mb-3" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <div className="rounded-2xl border p-4 mb-6" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+          <p className="type-label uppercase track-fine mb-3" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
             First read
           </p>
           <ResultList results={firstPassResults} />
@@ -290,15 +290,15 @@ export default function DemoRunPanel({
 
       {resolutionNote && (
         <div className="rounded-2xl border p-4 mb-6" style={{ borderColor: "var(--border)", background: "var(--copper-light)" }}>
-          <p className="text-[13px]" style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}>
+          <p className="type-mono" style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}>
             {resolutionNote}
           </p>
         </div>
       )}
 
       {secondPassResults && (
-        <div className="rounded-2xl border p-4 mb-6" style={{ borderColor: "var(--border)", background: "#fff" }}>
-          <p className="text-[11px] uppercase tracking-wide mb-3" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <div className="rounded-2xl border p-4 mb-6" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+          <p className="type-label uppercase track-fine mb-3" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
             After AI review
           </p>
           <ResultList results={secondPassResults} />

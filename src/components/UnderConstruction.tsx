@@ -1,11 +1,8 @@
 import styles from "./UnderConstruction.module.css";
 
-export default function UnderConstruction({ section }: { section: string }) {
+export default function UnderConstruction() {
   return (
     <section className={styles.wrap} role="status" aria-live="polite">
-      <p className={styles.kicker}>/ {section.toUpperCase()}</p>
-      <h1 className={styles.heading}>Under construction</h1>
-
       <div className={styles.rig} aria-hidden="true">
         <div className={styles.ring} />
         <div className={styles.core} />

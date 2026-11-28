@@ -6,23 +6,7 @@
   justify-content: center;
   text-align: center;
   gap: 28px;
-  padding: 96px 24px;
-  min-height: 60vh;
-}
-
-.kicker {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-  margin: 0;
-}
-
-.heading {
-  font-family: var(--font-head);
-  font-size: clamp(26px, 4.5vw, 40px);
-  font-weight: 500;
-  margin: 0;
+  padding: 32px 24px 96px;
 }
 
 .rig {
@@ -46,7 +30,7 @@
     transparent 360deg
   );
   animation: spin 1.6s linear infinite;
-  mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 4px));
 }
 
 .core {
@@ -79,7 +63,7 @@
 
 .terminal {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--type-mono);
   color: var(--copper-dark);
 }
 
@@ -105,7 +89,7 @@
   font-family: var(--font-body);
   color: var(--muted);
   max-width: 380px;
-  line-height: 1.6;
+  line-height: var(--leading-body);
   margin: 0;
 }
 

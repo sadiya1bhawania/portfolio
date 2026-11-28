@@ -41,16 +41,17 @@
 
 .title {
   font-family: var(--font-head);
-  font-size: 18px;
-  font-weight: 500;
+  font-size: var(--type-h3);
+  font-weight: var(--weight-medium);
   margin: 0;
+  line-height: var(--leading-h3);
 }
 
 .blurb {
   font-family: var(--font-body);
   color: var(--muted);
   max-width: 300px;
-  line-height: 1.6;
+  line-height: var(--leading-body);
   margin: 0;
 }
 

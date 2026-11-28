@@ -29,27 +29,27 @@ function RuleToggle({
         className="w-full flex items-center gap-3 rounded-lg border px-4 py-3 pr-10 text-left transition-colors"
         style={{
           borderColor: active ? "var(--copper)" : "var(--border)",
-          background: active ? "var(--copper-light)" : "#fff",
+          background: active ? "var(--copper-light)" : "var(--surface)",
         }}
       >
         <span
-          className="flex items-center justify-center w-6 h-6 rounded-full text-[11px] shrink-0"
+          className="flex items-center justify-center w-6 h-6 rounded-full type-label shrink-0"
           style={{
             fontFamily: "var(--font-mono)",
             background: active ? "var(--copper)" : "var(--border)",
-            color: active ? "#fff" : "var(--muted)",
+            color: active ? "var(--on-accent)" : "var(--muted)",
           }}
         >
           {index}
         </span>
         <span
-          className="text-[13px] flex-1"
+          className="type-mono flex-1"
           style={{ fontFamily: "var(--font-mono)", color: active ? "var(--copper-dark)" : "var(--muted)" }}
         >
           {label}
         </span>
         <span
-          className="text-[11px] uppercase tracking-wide"
+          className="type-label uppercase track-fine"
           style={{ fontFamily: "var(--font-mono)", color: active ? "var(--copper-dark)" : "var(--muted)" }}
         >
           {active ? "On" : "Off"}
@@ -61,12 +61,12 @@ function RuleToggle({
           type="button"
           aria-label={`What does "${label}" check?`}
           aria-describedby={`rule-tooltip-${index}`}
-          className="flex items-center justify-center w-5 h-5 rounded-full text-[10px] focus:outline-none focus-visible:ring-2"
+          className="flex items-center justify-center w-5 h-5 rounded-full type-label focus:outline-none focus-visible:ring-2"
           style={{
             fontFamily: "var(--font-mono)",
             color: "var(--muted)",
             border: "1px solid var(--border)",
-            background: "#fff",
+            background: "var(--surface)",
           }}
         >
           i
@@ -74,13 +74,13 @@ function RuleToggle({
         <span
           id={`rule-tooltip-${index}`}
           role="tooltip"
-          className="pointer-events-none absolute right-0 top-full z-10 mt-2 w-64 rounded-md border px-3 py-2 text-[12px] leading-relaxed opacity-0 invisible transition-opacity group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible"
+          className="pointer-events-none absolute right-0 top-full z-10 mt-2 w-64 rounded-md border px-3 py-2 type-fine lead-body opacity-0 invisible transition-opacity group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible"
           style={{
             fontFamily: "var(--font-body)",
-            background: "#fff",
+            background: "var(--surface)",
             borderColor: "var(--border)",
             color: "var(--ink)",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+            boxShadow: "0 4px 12px var(--shadow)",
           }}
         >
           {description}
@@ -153,7 +153,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
       <section className="mb-10">
         <div className="flex items-baseline justify-between mb-3">
           <h2
-            className="text-[13px] uppercase tracking-wide"
+            className="type-mono uppercase track-fine"
             style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
           >
             Rules ({activeRules.length}/{MAX_ACTIVE_RULES} active)
@@ -162,7 +162,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
 
         {evictionNote && (
           <p
-            className="text-[12px] mb-3 rounded-md px-3 py-2"
+            className="type-fine mb-3 rounded-md px-3 py-2"
             style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)", background: "var(--copper-light)" }}
           >
             {evictionNote}
@@ -187,7 +187,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
                     className="mt-2 ml-9 flex flex-wrap gap-3 rounded-lg border p-3"
                     style={{ borderColor: "var(--border)" }}
                   >
-                    <label className="flex flex-col gap-1 text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+                    <label className="flex flex-col gap-1 type-label" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
                       Min
                       <input
                         type="number"
@@ -198,11 +198,11 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
                             valueSanity: { ...p.valueSanity, min: e.target.value === "" ? null : Number(e.target.value) },
                           }))
                         }
-                        className="rounded-md border px-2 py-1 text-sm"
+                        className="rounded-md border px-2 py-1 type-small"
                         style={{ borderColor: "var(--border)", fontFamily: "var(--font-body)" }}
                       />
                     </label>
-                    <label className="flex flex-col gap-1 text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+                    <label className="flex flex-col gap-1 type-label" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
                       Max
                       <input
                         type="number"
@@ -213,11 +213,11 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
                             valueSanity: { ...p.valueSanity, max: e.target.value === "" ? null : Number(e.target.value) },
                           }))
                         }
-                        className="rounded-md border px-2 py-1 text-sm"
+                        className="rounded-md border px-2 py-1 type-small"
                         style={{ borderColor: "var(--border)", fontFamily: "var(--font-body)" }}
                       />
                     </label>
-                    <label className="flex flex-col gap-1 text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+                    <label className="flex flex-col gap-1 type-label" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
                       As of date
                       <input
                         type="date"
@@ -228,7 +228,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
                             valueSanity: { ...p.valueSanity, asOfDate: e.target.value },
                           }))
                         }
-                        className="rounded-md border px-2 py-1 text-sm"
+                        className="rounded-md border px-2 py-1 type-small"
                         style={{ borderColor: "var(--border)", fontFamily: "var(--font-body)" }}
                       />
                     </label>
@@ -240,7 +240,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
                     className="mt-2 ml-9 flex items-center gap-3 rounded-lg border p-3"
                     style={{ borderColor: "var(--border)" }}
                   >
-                    <label className="flex flex-col gap-1 text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+                    <label className="flex flex-col gap-1 type-label" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
                       Confidence threshold (0–1)
                       <input
                         type="number"
@@ -254,7 +254,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
                             confidenceFloor: { threshold: Number(e.target.value) },
                           }))
                         }
-                        className="w-28 rounded-md border px-2 py-1 text-sm"
+                        className="w-28 rounded-md border px-2 py-1 type-small"
                         style={{ borderColor: "var(--border)", fontFamily: "var(--font-body)" }}
                       />
                     </label>
@@ -269,7 +269,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
       {/* Escalation */}
       <section className="mb-10">
         <h2
-          className="text-[13px] uppercase tracking-wide mb-3"
+          className="type-mono uppercase track-fine mb-3"
           style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
         >
           Escalate to
@@ -279,10 +279,10 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
           value={escalateTo}
           onChange={(e) => setEscalateTo(e.target.value)}
           placeholder="reviewer@example.com"
-          className="w-full max-w-sm rounded-md border px-3 py-2 text-sm"
+          className="w-full max-w-sm rounded-md border px-3 py-2 type-small"
           style={{ borderColor: "var(--border)", fontFamily: "var(--font-body)" }}
         />
-        <p className="text-[11px] mt-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <p className="type-label mt-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
           Simulated only - no email is actually sent.
         </p>
       </section>
@@ -291,7 +291,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
         type="button"
         disabled={!canActivate}
         onClick={handleActivate}
-        className="inline-flex items-center px-5 py-2.5 rounded-md text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed"
+        className="inline-flex items-center px-5 py-2.5 rounded-md type-small weight-medium text-[var(--on-accent)] disabled:opacity-40 disabled:cursor-not-allowed"
         style={{ background: "var(--copper)", fontFamily: "var(--font-body)" }}
       >
         Activate policy
@@ -299,7 +299,7 @@ export default function ConfigurePanel({ onActivated }: ConfigurePanelProps) {
 
       {activatedPolicy && (
         <div
-          className="mt-6 rounded-lg border p-4 text-[13px]"
+          className="mt-6 rounded-lg border p-4 type-mono"
           style={{ borderColor: "var(--border)", background: "var(--copper-light)", fontFamily: "var(--font-mono)" }}
         >
           Policy activated with rules {activatedPolicy.activeRules.map(ruleLabel).join(" + ")}. Escalations go to{" "}

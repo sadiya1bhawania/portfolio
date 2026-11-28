@@ -1,0 +1,75 @@
+/* Layout from docs/motion-reference.html. Every color derives from the tokens in globals.css. */
+.section {
+  --line: color-mix(in srgb, var(--line-base) 40%, var(--paper));
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 64px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+}
+
+.intro {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: var(--type-eyebrow);
+  color: var(--muted);
+  letter-spacing: var(--tracking-eyebrow);
+  font-weight: var(--weight-regular);
+  text-transform: uppercase;
+}
+
+.heading {
+  margin: 0;
+  font-size: var(--type-h2);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-h2);
+  letter-spacing: var(--tracking-normal);
+}
+
+.rows {
+  flex: 2 1 560px;
+  min-width: 0;
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+
+.row dt {
+  width: 110px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--accent);
+}
+
+.row dd {
+  flex: 1 1 260px;
+  margin: 0;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+  color: var(--body-copy);
+}
+
+@media (max-width: 639.98px) {
+  .section {
+    padding: 48px 16px;
+    gap: 32px;
+  }
+
+  .rows {
+    flex-basis: 100%;
+  }
+}

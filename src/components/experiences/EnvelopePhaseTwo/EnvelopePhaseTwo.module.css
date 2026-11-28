@@ -20,16 +20,17 @@
 
 .title {
   font-family: var(--font-head);
-  font-size: clamp(22px, 4vw, 30px);
-  font-weight: 500;
+  font-size: var(--type-h2);
+  font-weight: var(--weight-medium);
   margin: 0;
   color: var(--ink);
+  line-height: var(--leading-h2);
 }
 
 .label {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-fine);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
   white-space: nowrap;
@@ -44,8 +45,8 @@
 
 .writeupLink {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   color: var(--copper-dark);
   white-space: nowrap;
 }
@@ -61,8 +62,8 @@
 
 .resetButton {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
   background: transparent;
@@ -106,8 +107,8 @@
 
 .columnLabel {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
 }

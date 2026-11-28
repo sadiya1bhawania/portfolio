@@ -1,0 +1,246 @@
+/* Every color derives from the tokens in globals.css. */
+.helmet {
+  fill: var(--copper-hi);
+  stroke: var(--line-base);
+  stroke-width: 1.5;
+}
+
+.ridge {
+  fill: var(--copper);
+}
+
+.beret {
+  fill: var(--copper);
+  stroke: var(--line-base);
+  stroke-width: 1.5;
+}
+
+.beretBand {
+  fill: none;
+  stroke: var(--line-base);
+  stroke-width: 3;
+}
+
+.tag {
+  fill: var(--paper);
+  stroke: var(--muted);
+}
+
+.tagBand {
+  fill: var(--copper);
+}
+
+.tagHello {
+  fill: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-weight: 500;
+}
+
+.tagName {
+  fill: var(--ink);
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.laptop {
+  display: block;
+  width: 150px;
+  height: 100px;
+}
+
+.lidShell,
+.base {
+  fill: var(--muted);
+}
+
+.screen {
+  fill: color-mix(in srgb, var(--ink) 4%, var(--paper));
+}
+
+.codeRules {
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.megaphone {
+  display: block;
+  width: 170px;
+  height: 110px;
+}
+
+.horn {
+  fill: var(--paper);
+  stroke: var(--muted);
+}
+
+.mouth,
+.grip {
+  fill: var(--copper-hi);
+}
+
+.handle {
+  fill: var(--muted);
+}
+
+.sound {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.tablet {
+  width: 250px;
+  padding: 8px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--ink) 18%, var(--paper));
+  box-shadow: 0 10px 40px var(--shadow);
+}
+
+.glass {
+  border: 1px solid var(--card-line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 190px;
+  overflow: hidden;
+  padding: 12px 14px;
+  border-radius: 11px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.tabletTitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.demo {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.demo span {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--copper-light);
+}
+
+.demo .picked {
+  border-color: var(--copper);
+}
+
+.comps {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.compsLabel {
+  color: var(--muted);
+}
+
+/* The "You" marker sits above the bar, the ticks hang below it. */
+.range {
+  position: relative;
+  height: 52px;
+  margin: 0 4px;
+}
+
+.rangeBar {
+  position: absolute;
+  top: 24px;
+  right: 0;
+  left: 0;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  transform-origin: 0 50%;
+}
+
+.tick,
+.you {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  translate: -50% 0;
+}
+
+.tick {
+  top: 22px;
+  gap: 4px;
+}
+
+.tick i {
+  width: 2px;
+  height: 12px;
+  background: var(--muted);
+}
+
+.you {
+  top: 2px;
+}
+
+.you span {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--copper);
+  color: var(--paper);
+  font-weight: 500;
+}
+
+.you i {
+  width: 12px;
+  height: 12px;
+  margin-top: 5px;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  background: var(--copper);
+}
+
+.over {
+  align-self: flex-end;
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--copper);
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+  font-size: 11px;
+}
+
+.contact svg {
+  flex-shrink: 0;
+  color: var(--copper);
+}
+
+.contact div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.yellowPages {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--copper-light);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--copper-dark);
+}

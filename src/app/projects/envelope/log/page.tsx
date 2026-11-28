@@ -14,22 +14,19 @@ export default function EnvelopeLogPage() {
 
   return (
     <main className="max-w-[820px] mx-auto px-6 py-16">
-      <p
-        className="text-[12px] tracking-wide mb-4"
-        style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}
-      >
+      <p className="eyebrow-text mb-4">
         <Link href="/projects/envelope" className="hover:underline">
           / PROJECTS / ENVELOPE
         </Link>{" "}
         / LOG
       </p>
       <h1
-        className="text-[clamp(24px,4vw,34px)] font-medium mb-2"
+        className="type-h2 weight-medium mb-2"
         style={{ fontFamily: "var(--font-head)" }}
       >
         Run log
       </h1>
-      <p className="text-sm leading-relaxed mb-8" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
+      <p className="type-small lead-body mb-8" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
         Every document run through the pipeline this session, most recent first -
         which two rules were active, whether each passed, and what happened as a result.
       </p>
@@ -39,7 +36,7 @@ export default function EnvelopeLogPage() {
       </div>
 
       {history.length === 0 ? (
-        <p className="text-sm" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
+        <p className="type-small" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
           No runs yet. Activate a policy and process a document to see it here.{" "}
           <Link href="/projects/envelope/configure" className="underline" style={{ color: "var(--copper-dark)" }}>
             Configure a policy →

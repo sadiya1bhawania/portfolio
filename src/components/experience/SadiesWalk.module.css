@@ -1,0 +1,467 @@
+/* Layout from docs/sadies-walk-reference.html. Every color derives from the tokens in globals.css. */
+.root {
+  --line: color-mix(in srgb, var(--line-base) 40%, var(--paper));
+  --line-strong: color-mix(in srgb, var(--line-base) 60%, var(--paper));
+  --soft: color-mix(in srgb, var(--ink) 65%, var(--paper));
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.anchor {
+  scroll-margin-top: 72px; /* sticky NavBar */
+}
+
+.stage {
+  --s: 1;
+  --floor: 59px;
+  position: relative;
+  height: 720px;
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.rail {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 18px 32px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.brand {
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+.rail ol {
+  display: flex;
+  gap: 8px;
+}
+
+.pill {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  color: var(--soft);
+  cursor: pointer;
+}
+
+.pill[aria-current="step"] {
+  border-color: var(--accent);
+  background: var(--copper-hi);
+  color: var(--on-copper);
+}
+
+.pill:focus-visible,
+.play:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.wordmark {
+  position: absolute;
+  bottom: calc(var(--floor) - 15px);
+  left: -12px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 230px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  color: var(--wordmark);
+  opacity: var(--wordmark-alpha);
+}
+
+.ground {
+  position: absolute;
+  right: 0;
+  bottom: var(--floor);
+  left: 0;
+  height: 1px;
+  background: var(--line);
+}
+
+/* Frames are 700x1100 with soles on y=1060, so the soles sit 20px above the box bottom. */
+.figure {
+  position: absolute;
+  bottom: calc(var(--floor) - 20px * var(--s));
+  width: 350px;
+  height: 550px;
+  scale: var(--s);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  filter: var(--figure-shadow);
+}
+
+.figure img,
+.overlay {
+  position: absolute;
+  inset: 0;
+  width: 350px;
+  max-width: none;
+  height: 550px;
+}
+
+.text {
+  position: absolute;
+  top: 88px;
+  right: 4%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(470px, 38%);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.title {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  font-family: var(--font-head);
+  font-size: 22px;
+  color: var(--soft);
+}
+
+.divider {
+  height: 1px;
+  margin: 6px 0;
+  background: var(--line);
+}
+
+.beatLabel {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--soft);
+}
+
+.caption {
+  min-height: 96px;
+  font-size: 22px;
+  line-height: 1.45;
+}
+
+.bullets {
+  padding-left: 20px;
+  list-style: disc;
+  font-size: 22px;
+  line-height: 1.45;
+}
+
+.bullets li + li {
+  margin-top: 12px;
+}
+
+/* Bullets stand in for the caption, so its reserved height goes too. */
+.bulleted .caption {
+  display: none;
+}
+
+.bullets li::marker {
+  color: var(--accent);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--copper-hi);
+  color: var(--on-copper);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.achieved .card {
+  opacity: 1;
+  transform: none;
+}
+
+.cardLabel {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.cardHeadline {
+  font-family: var(--font-head);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.cardBody {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.controls {
+  position: absolute;
+  right: 24px;
+  bottom: 18px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--soft);
+}
+
+.play {
+  padding: 7px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.play:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.bar {
+  flex: 1;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+.bar div {
+  height: 2px;
+  background: var(--copper-hi);
+}
+
+.bounce {
+  animation: hint 1.2s ease-in-out infinite;
+}
+
+@keyframes hint {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* Short windows: shrink the stage so it fits under the 65px NavBar and the rail stays clickable. */
+@media (min-width: 640px) and (max-height: 784.98px) {
+  .stage {
+    --s: 0.85;
+    height: clamp(620px, calc(100svh - 65px), 720px);
+  }
+
+  .text {
+    top: 76px;
+    gap: 9px;
+  }
+
+  .title {
+    font-size: 44px;
+  }
+
+  .subtitle,
+  .caption,
+  .bullets {
+    font-size: 18px;
+  }
+
+  .divider {
+    margin: 2px 0;
+  }
+
+  .caption {
+    min-height: 78px;
+  }
+
+  .card {
+    gap: 6px;
+    padding: 14px;
+  }
+
+  .cardHeadline {
+    font-size: 24px;
+  }
+}
+
+/* Narrower desktops and tablets: shrink the figure and props to clear the text column. */
+@media (min-width: 640px) and (max-width: 1023.98px) {
+  .stage {
+    --s: 0.7;
+  }
+
+  .brand {
+    display: none;
+  }
+
+  .rail {
+    padding: 14px 16px;
+    font-size: 11px;
+  }
+
+  .rail ol {
+    overflow-x: auto;
+  }
+
+  .title {
+    font-size: 44px;
+  }
+
+  .subtitle,
+  .caption,
+  .bullets {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .stage {
+    --s: 0.7;
+    --floor: 195px;
+    height: 560px;
+  }
+
+  .brand {
+    display: none;
+  }
+
+  .rail {
+    padding: 10px 16px;
+    font-size: 11px;
+  }
+
+  .rail ol {
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .wordmark {
+    font-size: 110px;
+    bottom: calc(var(--floor) - 7px);
+  }
+
+  .text {
+    top: 369px;
+    right: 16px;
+    left: 16px;
+    gap: 3px;
+    width: auto;
+  }
+
+  .meta {
+    font-size: 11px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .beatLabel {
+    font-size: 11px;
+  }
+
+  .caption {
+    min-height: 0;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .bullets {
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .bullets li + li {
+    margin-top: 6px;
+  }
+
+  /* Bullets need the heading's space on the 560px stage. The rail still names the chapter. */
+  .bulleted :is(.title, .subtitle) {
+    display: none;
+  }
+
+  /* There is only room for one: the card takes over from the heading and caption. */
+  .card {
+    display: none;
+    gap: 3px;
+    padding: 9px 12px;
+  }
+
+  .achieved .card {
+    display: flex;
+  }
+
+  .achieved :is(.title, .subtitle, .beatLabel, .caption) {
+    display: none;
+  }
+
+  .cardLabel {
+    font-size: 11px;
+  }
+
+  .cardHeadline {
+    font-size: 22px;
+  }
+
+  .cardBody {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .controls {
+    right: 16px;
+    bottom: 8px;
+    left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

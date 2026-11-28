@@ -7,15 +7,17 @@
 
 .kicker {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--type-eyebrow);
   color: var(--muted);
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-eyebrow);
   margin: 0 0 6px;
+  font-weight: var(--weight-regular);
+  text-transform: uppercase;
 }
 
 .hint {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: var(--type-mono);
   color: var(--muted);
   margin: 0 0 36px;
 }
@@ -78,7 +80,7 @@
 
 .label {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--type-mono);
   color: var(--ink);
   white-space: nowrap;
 }
@@ -89,13 +91,13 @@
 
 .sub {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--type-label);
   color: var(--muted);
   white-space: nowrap;
 }
 
 .card {
-  background: #fff;
+  background: var(--surface);
   border: 0.5px solid var(--border);
   border-radius: 10px;
   min-height: 150px;
@@ -114,14 +116,15 @@
 
 .role {
   font-family: var(--font-head);
-  font-size: 19px;
-  font-weight: 500;
+  font-size: var(--type-h3);
+  font-weight: var(--weight-medium);
   margin: 0;
+  line-height: var(--leading-h3);
 }
 
 .range {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--type-fine);
   color: var(--muted);
   white-space: nowrap;
 }
@@ -135,7 +138,7 @@
 
 .tag {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--type-label);
   background: var(--copper-light);
   color: var(--copper-dark);
   padding: 4px 10px;
@@ -150,7 +153,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  line-height: 1.6;
+  line-height: var(--leading-body);
 }
 
 .resumeLink {
@@ -159,7 +162,7 @@
   gap: 4px;
   margin-top: 20px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--type-fine);
   color: var(--muted);
   text-decoration: none;
 }

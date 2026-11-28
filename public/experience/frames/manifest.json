@@ -1,0 +1,215 @@
+{
+  "contract": {
+    "canvas": [
+      700,
+      1100
+    ],
+    "css": [
+      350,
+      550
+    ],
+    "baseline": 1060,
+    "headX": 350
+  },
+  "walk": [
+    {
+      "file": "/experience/frames/walk_01.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    {
+      "file": "/experience/frames/walk_02.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    {
+      "file": "/experience/frames/walk_03.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    {
+      "file": "/experience/frames/walk_04.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    {
+      "file": "/experience/frames/walk_05.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    {
+      "file": "/experience/frames/walk_06.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    }
+  ],
+  "avalara": {
+    "spot": {
+      "file": "/experience/frames/av_02.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    "plan": {
+      "file": "/experience/frames/av_03.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    "build": {
+      "file": "/experience/frames/av_04.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    "reach": {
+      "file": "/experience/frames/av_07.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    "flip": {
+      "file": "/experience/frames/av_08.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    "morph": {
+      "file": "/experience/frames/av_09.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    },
+    "reveal": {
+      "file": "/experience/frames/av_10.png",
+      "w": 700,
+      "h": 1100,
+      "baseline": 1060,
+      "headX": 350
+    }
+  },
+  "poses": {
+    "front_pocket": {
+      "file": "/experience/frames/front_pocket.png",
+      "anchors": {
+        "faceCx": 165,
+        "faceTop": 110,
+        "faceBottom": 157,
+        "hands": [
+          {
+            "x": 188,
+            "y": 264
+          },
+          {
+            "x": 102,
+            "y": 329
+          }
+        ]
+      }
+    },
+    "front_present": {
+      "file": "/experience/frames/front_present.png",
+      "anchors": {
+        "faceCx": 169,
+        "faceTop": 108,
+        "faceBottom": 156,
+        "hands": [
+          {
+            "x": 268,
+            "y": 193
+          },
+          {
+            "x": 108,
+            "y": 328
+          }
+        ]
+      }
+    },
+    "front_wave": {
+      "file": "/experience/frames/front_wave.png",
+      "anchors": {
+        "faceCx": 174,
+        "faceTop": 104,
+        "faceBottom": 151,
+        "hands": [
+          {
+            "x": 236,
+            "y": 162
+          },
+          {
+            "x": 113,
+            "y": 322
+          }
+        ]
+      }
+    },
+    "ne_stand": {
+      "file": "/experience/frames/ne_stand.png",
+      "anchors": {
+        "faceCx": 189,
+        "faceTop": 122,
+        "faceBottom": 165,
+        "hands": [
+          {
+            "x": 133,
+            "y": 237
+          },
+          {
+            "x": 209,
+            "y": 275
+          }
+        ]
+      }
+    }
+  },
+  "northeastern": {
+    "ne_hold": {
+      "file": "/experience/frames/ne_hold.png"
+    },
+    "order": [
+      "ne_hold",
+      "ne_mid_grab",
+      "ne_lift",
+      "ne_mid_release",
+      "ne_toss"
+    ],
+    "ne_lift": {
+      "file": "/experience/frames/ne_lift.png"
+    },
+    "ne_cap": {
+      "file": "/experience/frames/ne_cap.png",
+      "x": 143,
+      "y": 125,
+      "w": 80,
+      "h": 62,
+      "note": "CSS px inside the 350x550 frame box, where the cap sits in ne_lift"
+    },
+    "ne_toss": {
+      "file": "/experience/frames/ne_toss.png"
+    },
+    "ne_mid_grab": {
+      "file": "/experience/frames/ne_mid_grab.png"
+    },
+    "ne_mid_release": {
+      "file": "/experience/frames/ne_mid_release.png"
+    }
+  }
+}

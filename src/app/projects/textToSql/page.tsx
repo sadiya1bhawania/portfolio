@@ -36,10 +36,10 @@ function makeId(): string {
 }
 
 function StagePill({ stage, status }: { stage: Stage; status?: Status }) {
-  const base = "px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wide font-medium";
+  const base = "px-2 py-0.5 rounded-full type-label uppercase track-fine weight-medium";
   if (status === "complete") {
     return (
-      <span className={`${base} bg-[var(--tts-indigo)] text-white`} style={{ fontFamily: "var(--font-mono)" }}>
+      <span className={`${base} bg-[var(--tts-indigo)] text-[var(--tts-on-indigo)]`} style={{ fontFamily: "var(--font-mono)" }}>
         {STAGE_LABEL[stage]}
       </span>
     );
@@ -47,7 +47,7 @@ function StagePill({ stage, status }: { stage: Stage; status?: Status }) {
   if (status === "active") {
     return (
       <span
-        className={`${base} bg-[var(--tts-amber)] text-[var(--tts-ink)] animate-pulse`}
+        className={`${base} bg-[var(--tts-amber)] text-[var(--tts-on-amber)] animate-pulse`}
         style={{ fontFamily: "var(--font-mono)" }}
       >
         {STAGE_LABEL[stage]}…
@@ -56,13 +56,13 @@ function StagePill({ stage, status }: { stage: Stage; status?: Status }) {
   }
   if (status === "error") {
     return (
-      <span className={`${base} bg-red-100 text-red-600`} style={{ fontFamily: "var(--font-mono)" }}>
+      <span className={`${base} bg-[var(--brick-light)] text-[var(--brick-dark)]`} style={{ fontFamily: "var(--font-mono)" }}>
         {STAGE_LABEL[stage]} failed
       </span>
     );
   }
   return (
-    <span className={`${base} bg-gray-100 text-gray-400`} style={{ fontFamily: "var(--font-mono)" }}>
+    <span className={`${base} bg-[var(--tts-paper)] text-[var(--tts-muted)]`} style={{ fontFamily: "var(--font-mono)" }}>
       {STAGE_LABEL[stage]}
     </span>
   );
@@ -78,7 +78,7 @@ function AnswerCard({
   onToggleRows: () => void;
 }) {
   return (
-    <div className="rounded-2xl border border-[var(--tts-border)] bg-white p-4 shadow-sm max-w-[42rem]">
+    <div className="rounded-2xl border border-[var(--tts-border)] bg-[var(--surface)] p-4 shadow-sm max-w-[42rem]">
       <div className="flex flex-wrap gap-1.5 mb-3">
         {STAGE_ORDER.map((stage) => (
           <StagePill key={stage} stage={stage} status={entry.stageStatus[stage]} />
@@ -86,19 +86,19 @@ function AnswerCard({
       </div>
 
       {entry.error && (
-        <div className="mb-3 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+        <div className="mb-3 rounded-lg bg-[var(--brick-light)] border border-[var(--brick)] px-3 py-2 type-small text-[var(--brick-dark)]">
           {entry.error}
         </div>
       )}
 
       {entry.summary && (
-        <p className="text-[15px] leading-relaxed text-[var(--tts-ink)]" style={{ fontFamily: "var(--font-body)" }}>
+        <p className="type-small lead-body text-[var(--tts-ink)]" style={{ fontFamily: "var(--font-body)" }}>
           {entry.summary}
         </p>
       )}
 
       {!entry.summary && !entry.error && entry.isStreaming && (
-        <p className="text-sm text-[var(--tts-muted)]" style={{ fontFamily: "var(--font-mono)" }}>
+        <p className="type-small text-[var(--tts-muted)]" style={{ fontFamily: "var(--font-mono)" }}>
           Working…
         </p>
       )}
@@ -109,7 +109,7 @@ function AnswerCard({
             <button
               type="button"
               onClick={onToggleSql}
-              className="text-[11px] uppercase tracking-wide font-medium px-2.5 py-1 rounded-full border border-[var(--tts-indigo)] text-[var(--tts-indigo)] hover:bg-[var(--tts-indigo)] hover:text-white transition-colors"
+              className="type-label uppercase track-fine weight-medium px-2.5 py-1 rounded-full border border-[var(--tts-indigo)] text-[var(--tts-indigo)] hover:bg-[var(--tts-indigo)] hover:text-[var(--tts-on-indigo)] transition-colors"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               {entry.showSql ? "Hide SQL" : "Show SQL"}
@@ -119,7 +119,7 @@ function AnswerCard({
             <button
               type="button"
               onClick={onToggleRows}
-              className="text-[11px] uppercase tracking-wide font-medium px-2.5 py-1 rounded-full border border-[var(--tts-amber)] text-[var(--tts-amber-dark)] hover:bg-[var(--tts-amber)] hover:text-[var(--tts-ink)] transition-colors"
+              className="type-label uppercase track-fine weight-medium px-2.5 py-1 rounded-full border border-[var(--tts-amber)] text-[var(--tts-amber-dark)] hover:bg-[var(--tts-amber)] hover:text-[var(--tts-on-amber)] transition-colors"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               {entry.showRows ? "Hide rows" : `Show rows${entry.rowCount ? ` (${entry.rowCount})` : ""}`}
@@ -130,7 +130,7 @@ function AnswerCard({
 
       {entry.showSql && entry.sql && (
         <pre
-          className="mt-3 rounded-lg bg-[var(--tts-ink)] text-[var(--tts-amber)] text-xs p-3 overflow-x-auto"
+          className="mt-3 rounded-lg bg-[var(--code-bg)] text-[var(--code-accent)] type-fine p-3 overflow-x-auto"
           style={{ fontFamily: "var(--font-mono)" }}
         >
           <code>{entry.sql}</code>
@@ -139,11 +139,11 @@ function AnswerCard({
 
       {entry.showRows && entry.rows && entry.rows.length > 0 && (
         <div className="mt-3 overflow-x-auto rounded-lg border border-[var(--tts-border)]">
-          <table className="w-full text-xs" style={{ fontFamily: "var(--font-mono)" }}>
+          <table className="w-full type-fine" style={{ fontFamily: "var(--font-mono)" }}>
             <thead>
               <tr className="bg-[var(--tts-indigo-50)]">
                 {(entry.columns ?? Object.keys(entry.rows[0])).map((col) => (
-                  <th key={col} className="text-left px-3 py-2 font-medium text-[var(--tts-indigo)] whitespace-nowrap">
+                  <th key={col} className="text-left px-3 py-2 weight-medium text-[var(--tts-indigo)] whitespace-nowrap">
                     {col}
                   </th>
                 ))}
@@ -162,7 +162,7 @@ function AnswerCard({
             </tbody>
           </table>
           {entry.rowCount !== undefined && entry.rowCount > entry.rows.length && (
-            <div className="px-3 py-1.5 text-[11px] text-[var(--tts-muted)] bg-[var(--tts-paper)]">
+            <div className="px-3 py-1.5 type-label text-[var(--tts-muted)] bg-[var(--tts-paper)]">
               Showing {entry.rows.length} of {entry.rowCount} rows
             </div>
           )}
@@ -278,46 +278,38 @@ export default function TextToSqlPage() {
 
   return (
     <div
-      className="flex"
+      className="flex flex-col md:flex-row"
       style={{
         height: "calc(100vh - 64px)",
-        "--tts-indigo": "#4f46e5",
-        "--tts-indigo-50": "#eef2ff",
-        "--tts-amber": "#f59e0b",
-        "--tts-amber-dark": "#92400e",
-        "--tts-ink": "#1e1b2e",
-        "--tts-paper": "#fafaff",
-        "--tts-border": "#e6e4f5",
-        "--tts-muted": "#7b7896",
-      } as React.CSSProperties}
+      }}
     >
       {/* Sidebar */}
-      <aside className="w-64 shrink-0 border-r border-[var(--tts-border)] bg-[var(--tts-indigo-50)]/60 flex flex-col">
+      <aside className="w-full md:w-64 shrink-0 border-b md:border-b-0 md:border-r border-[var(--tts-border)] bg-[var(--tts-indigo-50)]/60 flex flex-col">
         <div className="px-4 py-4 border-b border-[var(--tts-border)]">
-          <h1 className="text-sm font-bold text-[var(--tts-ink)]" style={{ fontFamily: "var(--font-head)" }}>
+          <h1 className="type-small weight-medium text-[var(--tts-ink)]" style={{ fontFamily: "var(--font-head)" }}>
             Text-to-SQL
           </h1>
-          <p className="text-[11px] text-[var(--tts-muted)] mb-2" style={{ fontFamily: "var(--font-mono)" }}>
+          <p className="type-label text-[var(--tts-muted)] mb-2" style={{ fontFamily: "var(--font-mono)" }}>
             Chinook demo · session history
           </p>
           <Link
             href="/blog"
-            className="text-[11px] text-[var(--tts-indigo)] hover:underline block mb-1"
+            className="type-label text-[var(--tts-indigo)] hover:underline block mb-1"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             Engineering notes →
           </Link>
           <Link
             href="/projects/cisco-agent-tracking"
-            className="text-[11px] text-[var(--tts-muted)] hover:underline block"
+            className="type-label text-[var(--tts-muted)] hover:underline block"
             style={{ fontFamily: "var(--font-mono)" }}
           >
             Related: agent tracking @ Cisco →
           </Link>
         </div>
-        <div className="flex-1 overflow-y-auto py-2">
+        <div className="hidden md:block flex-1 overflow-y-auto py-2">
           {entries.length === 0 ? (
-            <p className="px-4 py-3 text-xs text-[var(--tts-muted)]" style={{ fontFamily: "var(--font-mono)" }}>
+            <p className="px-4 py-3 type-fine text-[var(--tts-muted)]" style={{ fontFamily: "var(--font-mono)" }}>
               No questions yet.
             </p>
           ) : (
@@ -327,7 +319,7 @@ export default function TextToSqlPage() {
                   <button
                     type="button"
                     onClick={() => scrollToEntry(entry.id)}
-                    className="w-full text-left rounded-lg px-3 py-2 text-[12px] leading-snug text-[var(--tts-ink)] hover:bg-white border-l-2 border-transparent hover:border-[var(--tts-amber)] transition-colors truncate"
+                    className="w-full text-left rounded-lg px-3 py-2 type-fine lead-small text-[var(--tts-ink)] hover:bg-[var(--surface)] border-l-2 border-transparent hover:border-[var(--tts-amber)] transition-colors truncate"
                     style={{ fontFamily: "var(--font-body)" }}
                     title={entry.question}
                   >
@@ -341,7 +333,7 @@ export default function TextToSqlPage() {
       </aside>
 
       {/* Main chat pane */}
-      <section className="flex-1 flex flex-col bg-[var(--tts-paper)]">
+      <section className="flex-1 min-w-0 min-h-0 flex flex-col bg-[var(--tts-paper)]">
         <div className="px-6 pt-6">
           <PipelineStages events={entries[entries.length - 1]?.events ?? []} />
         </div>
@@ -349,12 +341,12 @@ export default function TextToSqlPage() {
           {entries.length === 0 && (
             <div className="max-w-2xl">
               <h2
-                className="text-2xl font-bold text-[var(--tts-ink)] mb-2"
+                className="type-h2 weight-medium text-[var(--tts-ink)] mb-2"
                 style={{ fontFamily: "var(--font-head)" }}
               >
                 Ask the Chinook database a question
               </h2>
-              <p className="text-sm text-[var(--tts-muted)] mb-4" style={{ fontFamily: "var(--font-body)" }}>
+              <p className="type-small text-[var(--tts-muted)] mb-4" style={{ fontFamily: "var(--font-body)" }}>
                 LLM turns your question into SQL, runs it read-only, and explains the result.
                 Every answer shows its work, toggle to see the generated SQL and raw rows.
               </p>
@@ -372,7 +364,7 @@ export default function TextToSqlPage() {
             >
               <div className="flex justify-end">
                 <div
-                  className="max-w-[36rem] rounded-2xl bg-[var(--tts-indigo)] text-white px-4 py-2.5 text-sm"
+                  className="max-w-[36rem] rounded-2xl bg-[var(--tts-indigo)] text-[var(--tts-on-indigo)] px-4 py-2.5 type-small"
                   style={{ fontFamily: "var(--font-body)" }}
                 >
                   {entry.question}
@@ -389,7 +381,7 @@ export default function TextToSqlPage() {
         </div>
 
         {/* Suggested questions + input */}
-        <div className="border-t border-[var(--tts-border)] bg-white px-6 py-4">
+        <div className="border-t border-[var(--tts-border)] bg-[var(--surface)] px-6 py-4">
           <div className="flex flex-wrap gap-2 mb-3">
             {SUGGESTED_QUESTIONS.map((q) => (
               <button
@@ -397,7 +389,7 @@ export default function TextToSqlPage() {
                 type="button"
                 disabled={isBusy}
                 onClick={() => submitQuestion(q)}
-                className="text-[12px] px-3 py-1.5 rounded-full border border-[var(--tts-amber)] text-[var(--tts-amber-dark)] bg-amber-50 hover:bg-[var(--tts-amber)] hover:text-[var(--tts-ink)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="type-fine px-3 py-1.5 rounded-full border border-[var(--tts-amber)] text-[var(--tts-amber-dark)] bg-[var(--tts-amber-50)] hover:bg-[var(--tts-amber)] hover:text-[var(--tts-on-amber)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{ fontFamily: "var(--font-mono)" }}
               >
                 {q}
@@ -417,13 +409,13 @@ export default function TextToSqlPage() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask a question about the Chinook music store…"
               disabled={isBusy}
-              className="flex-1 rounded-xl border border-[var(--tts-border)] px-4 py-2.5 text-sm text-[var(--tts-ink)] focus:outline-none focus:border-[var(--tts-indigo)] disabled:opacity-60"
+              className="flex-1 rounded-xl border border-[var(--tts-border)] px-4 py-2.5 type-small text-[var(--tts-ink)] focus:outline-none focus:border-[var(--tts-indigo)] disabled:opacity-60"
               style={{ fontFamily: "var(--font-body)" }}
             />
             <button
               type="submit"
               disabled={isBusy || !input.trim()}
-              className="rounded-xl bg-[var(--tts-indigo)] text-white px-5 py-2.5 text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-indigo-700 transition-colors"
+              className="rounded-xl bg-[var(--tts-indigo)] text-[var(--tts-on-indigo)] px-5 py-2.5 type-small weight-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--tts-indigo-strong)] transition-colors"
               style={{ fontFamily: "var(--font-mono)" }}
             >
               {isBusy ? "…" : "Ask"}

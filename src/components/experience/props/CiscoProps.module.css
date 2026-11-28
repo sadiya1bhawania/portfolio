@@ -1,0 +1,139 @@
+/* Every color derives from the tokens in globals.css. */
+.lanyard {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.badge {
+  fill: var(--paper);
+  stroke: var(--muted);
+}
+
+.badgeBand {
+  fill: var(--copper);
+}
+
+.badgeText {
+  fill: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 500;
+}
+
+.cup {
+  fill: var(--paper);
+  stroke: var(--muted);
+}
+
+.sleeve {
+  fill: var(--copper);
+}
+
+.lid {
+  fill: var(--copper-dark);
+}
+
+.panel {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--line-base) 60%, var(--paper));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--ink) 4%, var(--paper));
+  box-shadow: 0 10px 40px var(--shadow);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: color-mix(in srgb, var(--ink) 80%, var(--paper));
+}
+
+.monitor {
+  position: relative;
+  width: 280px;
+  height: 196px;
+}
+
+.sql,
+.table {
+  position: absolute;
+  inset: 0;
+  padding: 14px;
+}
+
+.sql {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  white-space: pre;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line-base) 40%, var(--paper));
+  color: var(--ink);
+}
+
+.live {
+  color: var(--accent);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--copper-hi);
+}
+
+.stub {
+  width: 90px;
+  height: 6px;
+  margin-left: auto;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--ink) 18%, var(--paper));
+}
+
+.proxies {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 230px;
+  padding: 12px 14px;
+}
+
+.coverage {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 230px;
+  padding: 12px 14px;
+}
+
+.coverageHead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--ink) 18%, var(--paper));
+}
+
+.fill {
+  height: 8px;
+  background: var(--copper-hi);
+}

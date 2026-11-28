@@ -1,153 +1,240 @@
+/* Layout from docs/motion-reference.html. Every color derives from the tokens in globals.css. */
 .hero {
+  position: relative;
+  overflow: hidden;
   width: 100%;
-  max-width: 1100px;
+  min-height: 820px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.streams {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 64px 24px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 40px;
+  padding: 72px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.eyebrow {
+  display: flex;
   align-items: center;
-}
-
-@media (min-width: 768px) {
-  .hero {
-    grid-template-columns: 1fr 1fr;
-    gap: 56px;
-  }
-}
-
-.kicker {
+  gap: 10px;
+  margin: 0;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--type-eyebrow);
   color: var(--muted);
-  letter-spacing: 0.04em;
-  margin: 0 0 16px;
+  letter-spacing: var(--tracking-eyebrow);
+  font-weight: var(--weight-regular);
+  text-transform: uppercase;
+}
+
+.pulse {
+  position: relative;
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--copper-hi);
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--copper-hi);
+  opacity: 0;
 }
 
 .heading {
+  max-width: 1150px;
+  margin: 24px 0 0;
   font-family: var(--font-head);
-  font-size: clamp(28px, 5vw, 44px);
-  font-weight: 500;
-  line-height: 1.15;
-  margin: 0 0 20px;
+  font-weight: var(--weight-medium);
+  font-size: var(--type-h1);
+  line-height: var(--leading-h1);
+  letter-spacing: var(--tracking-normal);
 }
 
-.paragraph {
-  font-family: var(--font-body);
+.word,
+.itself {
+  display: inline-block;
+}
+
+.itself {
+  position: relative;
+  color: var(--accent);
+}
+
+/*
+ * Space Grotesk's baseline sits 0.896em down a 1.1 line box (ascent .984, descent .292),
+ * so this starts the bar 4px below it, clear of the letters.
+ */
+.underline {
+  position: absolute;
+  top: calc(0.896em + 4px);
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--copper-hi);
+  transform-origin: left;
+}
+
+/* A single line: the lead, then a window exactly one line tall. */
+.rotator {
+  margin-top: 20px;
+  font-family: var(--font-head);
+  font-size: var(--type-h3);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-rotator);
+  letter-spacing: var(--tracking-normal);
+  white-space: nowrap;
+}
+
+.rotatorLead {
+  margin-right: 8px;
   color: var(--muted);
-  max-width: 390px;
-  line-height: 1.6;
-  margin: 0 0 28px;
+}
+
+.window {
+  display: inline-block;
+  height: 1.25em;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.track {
+  display: block;
+}
+
+.track > span {
+  display: block;
+  height: 1.25em;
+  overflow: hidden;
+  line-height: var(--leading-rotator);
+}
+
+.highlight {
+  color: var(--accent);
+}
+
+.line {
+  max-width: 720px;
+  margin: 24px 0 0;
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+  color: var(--body-copy);
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
 }
 
-.btnFilled {
-  font-family: var(--font-body);
-  background: var(--copper);
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-weight: 500;
-  text-decoration: none;
+.watch {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
+  padding: 16px 26px 16px 18px;
+  border-radius: 999px;
+  background: var(--copper-hi);
+  color: var(--on-copper);
+  font-size: var(--type-body);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
 }
 
-.btnFilled:focus-visible,
-.btnOutline:focus-visible,
-.btnGhost:focus-visible {
-  outline: 2px solid var(--copper);
+.playWrap {
+  position: relative;
+  width: 28px;
+  height: 28px;
+}
+
+/* The icon's ring sits on a copper button, so it stays visible outside the dark circle. */
+.playWrap .ring {
+  background: var(--light-card);
+}
+
+.play {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--on-copper);
+  fill: var(--copper-hi);
+}
+
+.hover {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.watch:focus-visible,
+.hover:focus-visible {
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-.btnOutline {
-  font-family: var(--font-body);
+.replay {
+  align-self: flex-start;
+  margin-top: 16px;
+  padding: 0;
+  border: 0;
   background: transparent;
-  color: var(--copper);
-  border: 1px solid var(--copper);
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-weight: 500;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-}
-
-.btnGhost {
   font-family: var(--font-mono);
-  background: transparent;
-  color: var(--ink);
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-weight: 500;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.card {
-  background: #161616;
-  border-radius: 10px;
-  padding: 24px;
-  font-family: var(--font-mono);
-  color: #e0b489;
-}
-
-.cardLabel {
-  font-size: 11px;
+  font-size: var(--type-label);
   color: var(--muted);
-  letter-spacing: 0.06em;
-  margin: 0 0 14px;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-.prompt {
-  font-size: 13px;
-  color: #f4ece4;
-  margin: 0 0 16px;
+.replay:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-.bullet {
-  color: var(--copper-hi);
+/* Reduced motion rests on the last rotator word. */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    transform: translateY(-66.6667%); /* 5th of 6 lines */
+  }
 }
 
-.codeBlock {
-  background: #262320;
-  color: #e0b489;
-  border-radius: 6px;
-  padding: 14px 16px;
-  font-size: 12.5px;
-  line-height: 1.7;
-  margin: 0 0 16px;
-  overflow-x: auto;
+/* Starting state for GSAP, so nothing shows before the timeline runs. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero [data-in] {
+    opacity: 0;
+  }
+
+  .underline {
+    transform: scaleX(0);
+  }
 }
 
-.codeBlock code {
-  white-space: pre;
-}
+@media (max-width: 639.98px) {
+  .hero {
+    min-height: 0;
+  }
 
-.statusRow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.chip {
-  background: rgba(34, 197, 94, 0.15);
-  color: #4ade80;
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 999px;
-}
-
-.streaming {
-  font-size: 12px;
-  color: var(--muted);
+  .inner {
+    padding: 48px 16px;
+  }
 }

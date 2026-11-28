@@ -70,7 +70,7 @@ const MILESTONES: Milestone[] = [
     label: "ELB US",
     sub: "2025–26",
     heading: "Sr. Software Engineer · ELB US",
-    range: "Sep 2025 – May 2026 · most recent",
+    range: "Sep 2025 – May 2026",
     tags: ["Agentic AI", "Text-to-SQL", "RAG", "Docker", "Redis"],
     bullets: [
       "Architected an agentic AI Q&A system routing between a text-to-SQL pipeline and document RAG for 150 employees.",
@@ -79,25 +79,24 @@ const MILESTONES: Milestone[] = [
     ],
   },
   {
-    id: "next",
-    label: "Next",
-    sub: "let's talk",
-    heading: "Open to what's next",
-    range: "2026 –",
-    tags: ["AI · Full-Stack"],
+    id: "knowtex",
+    label: "Knowtex",
+    sub: "2026–now",
+    heading: "Sr. Software Engineer · Knowtex",
+    range: "Aug 2026 – Present",
+    tags: ["Healthcare AI", "YC-backed", "San Francisco"],
     bullets: [
-      "Looking for my next role on a team building seriously with AI, startup or scaled.",
-      "Recruiters and founders, let's talk.",
+      "Shipped features across the clinical AI experience, including a streaming in-chart assistant, dictation built for clinical formats, source citations, and screen reader and 508 accessibility, and built shared components used across clinician products while shipping support and records-request tools with tighter access controls.",
     ],
   },
 ];
 
 export default function ExperienceTimeline() {
-  const [pinnedId, setPinnedId] = useState("elb");
+  const [pinnedId, setPinnedId] = useState("knowtex");
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const activeId = hoveredId ?? pinnedId;
-  const active = MILESTONES.find((m) => m.id === activeId) ?? MILESTONES[4];
+  const active = MILESTONES.find((m) => m.id === activeId) ?? MILESTONES[MILESTONES.length - 1];
 
   return (
     <section className={styles.section}>

@@ -1,0 +1,24 @@
+/* Sized and colored like the NavBar links, which have no hover style of their own. */
+.toggle {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  /* A comfortable hit area without moving anything around it. */
+  margin: -8px;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--copper);
+  outline-offset: -2px;
+}
+
+:global(html[data-theme="dark"]) .moon,
+:global(html[data-theme="light"]) .sun {
+  display: none;
+}

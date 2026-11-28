@@ -1,27 +1,140 @@
 @import "tailwindcss";
+@import "./type.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Every color in the site lives in the two theme blocks below.
+ * --ink is the text color and --paper the page background, in both themes.
+ * [data-island="light"] keeps a white card (and everything on it) in the light palette.
+ */
+:root[data-theme="light"],
+[data-island="light"] {
+  color-scheme: light;
 
   --ink: #161616;
   --paper: #fbfaf7;
-  --muted: #6f6a63;
-  --copper: #b5703c;
+  --surface: #ffffff;
+  --background: #ffffff;
+  --muted: color-mix(in srgb, #6f6a63 88%, #161616);
+  --border: #e7ddd0;
+
+  /* --copper passes 4.5:1 as text and under white text. --copper-hi is for big fills only. */
+  --copper: color-mix(in srgb, #b5703c 55%, #7c4a23);
   --copper-dark: #7c4a23;
   --copper-light: #f4e8dc;
   --copper-hi: #e0a463;
-  --border: #e7ddd0;
+  --accent: #7c4a23;
+  --on-accent: #ffffff;
+  --on-copper: #161616;
 
   /* Reserved for escalation/failure states only - everything else uses copper. */
   --brick: #9c3b2e;
   --brick-dark: #6e2a20;
   --brick-light: #f6e2de;
+  --on-brick: #ffffff;
+
+  --line-base: #7c4a23;
+  --line: color-mix(in srgb, #7c4a23 28%, #fbfaf7);
+  --light-card: #ffffff;
+  --card-line: #e7ddd0;
+  --shadow: rgba(0, 0, 0, 0.12);
+
+  --figure-shadow: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.12));
+  --wordmark: #161616;
+  --wordmark-alpha: 0.05;
+  --stream-color: #b5703c;
+  --stream-line-alpha: 0.1;
+  --stream-dot-alpha: 0.45;
+
+  --code-bg: #f4f1ec;
+  --code-ink: #161616;
+  --code-accent: #7c4a23;
+
+  /* Text-to-SQL demo palette. */
+  --tts-indigo: #4f46e5;
+  --tts-indigo-strong: #4338ca;
+  --tts-on-indigo: #ffffff;
+  --tts-indigo-50: #eef2ff;
+  --tts-indigo-line: #c7d2fe;
+  --tts-amber: #f59e0b;
+  --tts-on-amber: #1e1b2e;
+  --tts-amber-dark: #92400e;
+  --tts-amber-50: #fffbeb;
+  --tts-ink: #1e1b2e;
+  --tts-paper: #fafaff;
+  --tts-border: #e6e4f5;
+  --tts-muted: #65627f;
+  --tts-step: #e5e7eb;
+  --tts-step-line: #9ca3af;
+  --tts-step-ink: #374151;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --ink: #fbfaf7;
+  --paper: #161616;
+  --surface: color-mix(in srgb, #fbfaf7 5%, #161616);
+  --background: color-mix(in srgb, #fbfaf7 5%, #161616);
+  --muted: color-mix(in srgb, #fbfaf7 60%, #161616);
+  --border: color-mix(in srgb, #7c4a23 45%, #161616);
+
+  --copper: #e0a463;
+  --copper-dark: color-mix(in srgb, #e0a463 75%, #fbfaf7);
+  --copper-light: color-mix(in srgb, #e0a463 14%, #161616);
+  --copper-hi: #e0a463;
+  --accent: #e0a463;
+  --on-accent: #161616;
+  --on-copper: #161616;
+
+  --brick: color-mix(in srgb, #9c3b2e 60%, #f6e2de);
+  --brick-dark: color-mix(in srgb, #9c3b2e 25%, #f6e2de);
+  --brick-light: color-mix(in srgb, #9c3b2e 28%, #161616);
+  --on-brick: #161616;
+
+  --line-base: #7c4a23;
+  --line: color-mix(in srgb, #7c4a23 40%, #161616);
+  --light-card: #fbfaf7;
+  --card-line: transparent;
+  --shadow: rgba(0, 0, 0, 0.5);
+
+  --figure-shadow: drop-shadow(0 0 1px rgba(251, 250, 247, 0.45)) drop-shadow(0 0 26px rgba(224, 164, 99, 0.2));
+  --wordmark: #e0a463;
+  --wordmark-alpha: 0.06;
+  --stream-color: #e0a463;
+  --stream-line-alpha: 0.14;
+  --stream-dot-alpha: 0.8;
+
+  --code-bg: color-mix(in srgb, #fbfaf7 6%, #161616);
+  --code-ink: color-mix(in srgb, #fbfaf7 88%, #161616);
+  --code-accent: #e0a463;
+
+  --tts-indigo: #a5b4fc;
+  --tts-indigo-strong: #c7d2fe;
+  --tts-on-indigo: #161616;
+  --tts-indigo-50: #201f33;
+  --tts-indigo-line: #3b3a63;
+  --tts-amber: #f59e0b;
+  --tts-on-amber: #1e1b2e;
+  --tts-amber-dark: #fbbf24;
+  --tts-amber-50: #2a2215;
+  --tts-ink: #ececf6;
+  --tts-paper: #161616;
+  --tts-border: #34324a;
+  --tts-muted: #a3a0bd;
+  --tts-step: #34343a;
+  --tts-step-line: #71717a;
+  --tts-step-ink: #e4e4e7;
+}
+
+/* Light cards on a dark page. */
+[data-island="light"] {
+  --light-card: #ffffff;
+  --paper: #fbfaf7;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
   --font-sans: var(--font-body);
   --font-mono: var(--font-mono);
 }
@@ -43,7 +156,23 @@ h6 {
 
 .hl {
   background: var(--copper-hi);
-  color: var(--ink);
+  color: var(--on-copper);
   padding: 0 6px;
   border-radius: 3px;
+}
+
+/* Set by ThemeToggle for the length of a theme switch. */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      fill 0.25s ease,
+      stroke 0.25s ease,
+      box-shadow 0.25s ease !important;
+  }
 }

@@ -1,0 +1,64 @@
+/* Layout from docs/motion-reference.html. Every color derives from the tokens in globals.css. */
+.footer {
+  --line: color-mix(in srgb, var(--line-base) 40%, var(--paper));
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 96px 32px 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.heading {
+  margin: 0;
+  font-size: var(--type-h2);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-h2);
+  letter-spacing: var(--tracking-normal);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.filled,
+.outline {
+  padding: 15px 26px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.filled {
+  background: var(--copper-hi);
+  color: var(--on-copper);
+  font-weight: var(--weight-medium);
+}
+
+.outline {
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.filled:focus-visible,
+.outline:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 639.98px) {
+  .inner {
+    padding: 64px 16px 80px;
+  }
+}

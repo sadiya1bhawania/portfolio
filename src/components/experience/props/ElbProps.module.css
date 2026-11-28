@@ -1,0 +1,213 @@
+/* Every color derives from the tokens in globals.css. */
+.source,
+.code,
+.chat {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--line-base) 60%, var(--paper));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--ink) 4%, var(--paper));
+  box-shadow: 0 10px 40px var(--shadow);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: color-mix(in srgb, var(--ink) 80%, var(--paper));
+}
+
+.source {
+  width: 140px;
+  height: 90px;
+}
+
+.sourceHead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line-base) 40%, var(--paper));
+  color: var(--ink);
+}
+
+.sourceHead svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.sourceBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 11px 10px;
+}
+
+.sourceBody span {
+  height: 5px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--ink) 18%, var(--paper));
+}
+
+.sourceBody span:last-child {
+  width: 60%;
+}
+
+.bulb {
+  display: block;
+  width: 44px;
+  height: 52px;
+  overflow: visible;
+}
+
+.bulbGlass {
+  fill: color-mix(in srgb, var(--copper-hi) 65%, var(--light-card));
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.socket {
+  fill: var(--muted);
+}
+
+.rays {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.code {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 230px;
+  padding: 14px 12px;
+  white-space: pre;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 280px;
+  min-height: 330px;
+  padding: 12px;
+}
+
+.chatHead {
+  padding-bottom: 8px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line-base) 40%, var(--paper));
+  color: var(--ink);
+}
+
+.input {
+  margin-top: auto;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--line-base) 60%, var(--paper));
+  border-radius: 999px;
+}
+
+.question {
+  border: 1px solid var(--card-line);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.tag {
+  padding: 1px 7px;
+  border: 1px dashed var(--copper);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--copper);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.step {
+  padding: 5px 10px;
+  border: 1px solid color-mix(in srgb, var(--line-base) 60%, var(--paper));
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--ink) 40%, var(--paper));
+  transition: background 0.25s, color 0.25s;
+}
+
+.step.lit {
+  border-color: var(--accent);
+  background: var(--copper-hi);
+  color: var(--on-copper);
+}
+
+.sql {
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--paper);
+  font-size: 10px;
+  line-height: 1.7;
+  white-space: pre;
+  color: var(--accent);
+}
+
+.answer {
+  border: 1px solid var(--card-line);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 260px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: 0 10px 40px var(--shadow);
+  color: var(--ink);
+}
+
+.answerHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.row i {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+}
+
+.columns {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.citation {
+  align-self: flex-start;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--copper-light);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--copper-dark);
+}

@@ -29,16 +29,16 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--copper-dark);
 }
 
 .badge {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.03em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
   white-space: nowrap;
@@ -46,8 +46,8 @@
 
 .body {
   font-family: var(--font-body);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
   color: var(--ink);
   margin: 0;
   overflow-wrap: break-word;
@@ -56,8 +56,8 @@
 .resetButton {
   align-self: flex-start;
   font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--type-small);
+  font-weight: var(--weight-medium);
   color: var(--paper);
   background: var(--copper);
   border: none;

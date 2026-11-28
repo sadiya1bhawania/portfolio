@@ -25,7 +25,7 @@ function highlightBadValues(text: string, badValues: string[]) {
 
   return parts.map((part, i) =>
     unique.includes(part) ? (
-      <span key={i} style={{ color: "var(--brick)", fontWeight: 600 }}>
+      <span key={i} className="weight-medium" style={{ color: "var(--brick)" }}>
         {part}
       </span>
     ) : (
@@ -43,7 +43,7 @@ interface AuditLineProps {
 
 function AuditLine({ verb, actionAt, policyVersion, note }: AuditLineProps) {
   return (
-    <p className="text-[11px] mt-4" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+    <p className="type-label mt-4" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
       {verb} on behalf of Sadie{note ? `, ${note}` : ""} · {formatTimestamp(actionAt)} · policy v{policyVersion}
     </p>
   );
@@ -52,7 +52,7 @@ function AuditLine({ verb, actionAt, policyVersion, note }: AuditLineProps) {
 function RuleLine({ result, forceCheck }: { result: RuleResultSummary; forceCheck?: boolean }) {
   const pass = forceCheck ? true : result.pass;
   return (
-    <div className="flex items-start gap-2 text-[13px]" style={{ fontFamily: "var(--font-mono)" }}>
+    <div className="flex items-start gap-2 type-mono" style={{ fontFamily: "var(--font-mono)" }}>
       <span style={{ color: pass ? "var(--copper)" : "var(--brick)" }}>{pass ? "✓" : "✗"}</span>
       <span>
         <span style={{ color: "var(--ink)" }}>{ruleLabel(result.rule)}</span>
@@ -65,7 +65,7 @@ function RuleLine({ result, forceCheck }: { result: RuleResultSummary; forceChec
 function OutcomeBadge({ label, brick }: { label: string; brick?: boolean }) {
   return (
     <span
-      className="text-[10px] uppercase tracking-wide font-medium px-2 py-0.5 rounded-full text-white"
+      className="type-label uppercase track-fine weight-medium px-2 py-0.5 rounded-full text-[var(--on-accent)]"
       style={{ fontFamily: "var(--font-mono)", background: brick ? "var(--brick)" : "var(--copper)" }}
     >
       {label}
@@ -82,9 +82,9 @@ interface CommitOutcomeCardProps {
 
 export function CommitOutcomeCard({ ruleResults, clicks, actionAt, policyVersion }: CommitOutcomeCardProps) {
   return (
-    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
+    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
       <div className="flex items-center gap-3 mb-4">
-        <h3 className="text-base font-medium" style={{ fontFamily: "var(--font-head)" }}>
+        <h3 className="type-body weight-medium" style={{ fontFamily: "var(--font-head)" }}>
           Outcome
         </h3>
         <OutcomeBadge label="committed" />
@@ -97,7 +97,7 @@ export function CommitOutcomeCard({ ruleResults, clicks, actionAt, policyVersion
       </div>
 
       <div
-        className="rounded-lg px-3 py-2 text-[13px] font-medium"
+        className="rounded-lg px-3 py-2 type-mono weight-medium"
         style={{ fontFamily: "var(--font-mono)", background: "var(--copper-light)", color: "var(--copper-dark)" }}
       >
         Saved - {clicks} clicks
@@ -126,9 +126,9 @@ export function ResolvedByAiOutcomeCard({
   policyVersion,
 }: ResolvedByAiOutcomeCardProps) {
   return (
-    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
+    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
       <div className="flex items-center gap-3 mb-4">
-        <h3 className="text-base font-medium" style={{ fontFamily: "var(--font-head)" }}>
+        <h3 className="type-body weight-medium" style={{ fontFamily: "var(--font-head)" }}>
           Outcome
         </h3>
         <OutcomeBadge label="resolved by AI" />
@@ -142,16 +142,16 @@ export function ResolvedByAiOutcomeCard({
 
       {resolvedFieldChanges.length > 0 && (
         <div className="rounded-lg border p-3 mb-4" style={{ borderColor: "var(--border)" }}>
-          <p className="text-[11px] uppercase tracking-wide mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+          <p className="type-label uppercase track-fine mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
             Corrected on review
           </p>
           <div className="space-y-1">
             {resolvedFieldChanges.map((change) => (
-              <p key={change.field} className="text-[12px]" style={{ fontFamily: "var(--font-mono)" }}>
+              <p key={change.field} className="type-fine" style={{ fontFamily: "var(--font-mono)" }}>
                 <span style={{ color: "var(--ink)" }}>{change.field}</span>
                 <span style={{ color: "var(--brick)" }}> {formatValue(change.before)}</span>
                 <span style={{ color: "var(--muted)" }}> → </span>
-                <span style={{ color: "var(--copper-dark)", fontWeight: 600 }}>{formatValue(change.after)}</span>
+                <span className="weight-medium" style={{ color: "var(--copper-dark)" }}>{formatValue(change.after)}</span>
               </p>
             ))}
           </div>
@@ -159,7 +159,7 @@ export function ResolvedByAiOutcomeCard({
       )}
 
       <div
-        className="rounded-lg px-3 py-2 text-[13px] font-medium"
+        className="rounded-lg px-3 py-2 type-mono weight-medium"
         style={{ fontFamily: "var(--font-mono)", background: "var(--copper-light)", color: "var(--copper-dark)" }}
       >
         AI reviewed and corrected - human not needed
@@ -191,9 +191,9 @@ export function EscalateOutcomeCard({
   const badValues = failed.flatMap((r) => r.badValues);
 
   return (
-    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
+    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
       <div className="flex items-center gap-3 mb-4">
-        <h3 className="text-base font-medium" style={{ fontFamily: "var(--font-head)" }}>
+        <h3 className="type-body weight-medium" style={{ fontFamily: "var(--font-head)" }}>
           Outcome
         </h3>
         <OutcomeBadge label="escalated" brick />
@@ -206,23 +206,23 @@ export function EscalateOutcomeCard({
       </div>
 
       <div
-        className="rounded-lg px-3 py-2 text-[13px] font-medium mb-4"
+        className="rounded-lg px-3 py-2 type-mono weight-medium mb-4"
         style={{ fontFamily: "var(--font-mono)", background: "var(--brick-light)", color: "var(--brick-dark)" }}
       >
         Held - needs a human
       </div>
 
       <div className="rounded-lg border p-3 mb-1" style={{ borderColor: "var(--border)" }}>
-        <p className="text-[11px] mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <p className="type-label mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
           Composed for review - not sent.
         </p>
-        <p className="text-[12px] mb-1" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <p className="type-fine mb-1" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
           <strong style={{ color: "var(--ink)" }}>To:</strong> {escalateTo}
         </p>
-        <p className="text-[12px] mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <p className="type-fine mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
           <strong style={{ color: "var(--ink)" }}>Re:</strong> {highlightBadValues(emailSubject, badValues)}
         </p>
-        <p className="text-[13px] leading-relaxed whitespace-pre-wrap" style={{ fontFamily: "var(--font-body)" }}>
+        <p className="type-mono lead-body whitespace-pre-wrap" style={{ fontFamily: "var(--font-body)" }}>
           {highlightBadValues(emailBody, badValues)}
         </p>
       </div>

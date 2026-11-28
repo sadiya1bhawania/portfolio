@@ -5,13 +5,13 @@ type NodeState = "pending" | "active" | "done" | "fail-done";
 function nodeClasses(state: NodeState): string {
   switch (state) {
     case "done":
-      return "border-[var(--copper)] bg-[var(--copper)] text-white";
+      return "border-[var(--copper)] bg-[var(--copper)] text-[var(--on-accent)]";
     case "fail-done":
-      return "border-[var(--brick)] bg-[var(--brick)] text-white";
+      return "border-[var(--brick)] bg-[var(--brick)] text-[var(--on-accent)]";
     case "active":
       return "border-[var(--copper-hi)] bg-[var(--copper-light)] text-[var(--copper-dark)] ring-2 ring-[var(--copper-hi)] animate-pulse";
     default:
-      return "border-[var(--border)] bg-[#faf8f5] text-[var(--muted)]";
+      return "border-[var(--border)] bg-[var(--paper)] text-[var(--muted)]";
   }
 }
 
@@ -32,7 +32,7 @@ function outcomeNodeState(status: RunStatus | undefined, branch: "commit" | "esc
 function Node({ label, state }: { label: string; state: NodeState }) {
   return (
     <div
-      className={`rounded-lg border px-3 py-2 text-[12px] font-medium text-center ${nodeClasses(state)}`}
+      className={`rounded-lg border px-3 py-2 type-fine weight-medium text-center ${nodeClasses(state)}`}
       style={{ fontFamily: "var(--font-mono)" }}
     >
       {label}
@@ -43,7 +43,7 @@ function Node({ label, state }: { label: string; state: NodeState }) {
 function Arrow() {
   return (
     <div className="flex justify-center py-1" aria-hidden="true">
-      <span className="text-[var(--muted)] text-xs">↓</span>
+      <span className="text-[var(--muted)] type-fine">↓</span>
     </div>
   );
 }
@@ -62,7 +62,7 @@ export default function PipelineFlowchart({ stageStatus, branch, firstEvalFailed
   return (
     <div className="sticky top-6">
       <p
-        className="text-[11px] uppercase tracking-wide mb-3"
+        className="type-label uppercase track-fine mb-3"
         style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}
       >
         Pipeline
@@ -80,7 +80,7 @@ export default function PipelineFlowchart({ stageStatus, branch, firstEvalFailed
         <Node label="AI review" state={realNodeState(stageStatus.ai_review)} />
         {aiReviewFired && (
           <p
-            className="text-[10px] text-center mt-1 mb-1"
+            className="type-label text-center mt-1 mb-1"
             style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
           >
             ⟲ looped back to Evaluate
@@ -94,7 +94,7 @@ export default function PipelineFlowchart({ stageStatus, branch, firstEvalFailed
         <Node label="Log" state={outcomeNodeState(stageStatus.log, branch)} />
       </div>
 
-      <p className="text-[10px] mt-4" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+      <p className="type-label mt-4" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
         <span className="inline-block w-2 h-2 rounded-full mr-1 align-middle" style={{ background: "var(--copper)" }} />
         commit ·{" "}
         <span className="inline-block w-2 h-2 rounded-full mr-1 align-middle" style={{ background: "var(--brick)" }} />

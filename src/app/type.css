@@ -1,0 +1,109 @@
+/*
+ * The only place font sizes, weights, line heights and tracking are defined.
+ * Heading, eyebrow and body values are as measured on the original homepage.
+ */
+:root {
+  --type-h1: 44px;
+  --type-h2: 36px;
+  --type-h3: 24px;
+  --type-body: 17px;
+  --type-small: 14px;
+  --type-eyebrow: 13px; /* uppercase mono, muted */
+  --type-fine: 12px; /* small UI text and the NavBar links */
+  --type-mono: 13px;
+  --type-label: 11px;
+  --type-brand: 18px; /* the NavBar name */
+
+  --weight-regular: 400;
+  --weight-medium: 500; /* headings and buttons */
+  --weight-bold: 700; /* the NavBar name only */
+
+  --leading-h1: 1.1;
+  --leading-h2: 1.15;
+  --leading-h3: 1.25;
+  --leading-body: 1.6;
+  --leading-small: 1.43; /* text-sm: 20px */
+  --leading-code: 1.7;
+  --leading-rotator: 1.25;
+  --leading-none: 1;
+
+  --tracking-normal: normal;
+  --tracking-eyebrow: 0.08em;
+  --tracking-fine: 0.04em;
+  --tracking-label: 0.06em;
+
+  /* Body copy keeps the old hero paragraph's grey. */
+  --body-copy: #6f6a63;
+
+  /*
+   * Artwork, not text styles: lettering drawn inside illustrations, and the giant
+   * decorative wordmarks (aria-hidden). Scaling these to the text scale would break them.
+   */
+  --art-badge-tiny: 7px;
+  --art-badge-small: 8px;
+  --art-diagram: 9px;
+  --art-name-tag: 12px;
+  --art-cover: 16px;
+  --art-result-title: 18px;
+  --art-wordmark: 230px;
+  --art-wordmark-fluid: min(230px, 15vw);
+  --art-wordmark-mobile: 110px;
+  --art-wordmark-mobile-fluid: 22vw;
+}
+
+@media (max-width: 639.98px) {
+  :root {
+    --type-h1: 34px;
+    --type-h2: 28px;
+  }
+}
+
+:root[data-theme="dark"] {
+  --body-copy: var(--muted);
+}
+
+@layer base {
+  body {
+    font-size: var(--type-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-normal);
+  }
+}
+
+/* Class forms of the tokens, for JSX. */
+@layer components {
+  .type-h1 { font-size: var(--type-h1); line-height: var(--leading-h1); }
+  .type-h2 { font-size: var(--type-h2); line-height: var(--leading-h2); }
+  .type-h3 { font-size: var(--type-h3); line-height: var(--leading-h3); }
+  .type-body { font-size: var(--type-body); line-height: var(--leading-body); }
+  .type-small { font-size: var(--type-small); line-height: var(--leading-small); }
+  .type-mono { font-size: var(--type-mono); }
+  .type-fine { font-size: var(--type-fine); }
+  .type-label { font-size: var(--type-label); }
+  .type-brand { font-size: var(--type-brand); }
+  .eyebrow-text {
+    font-family: var(--font-mono);
+    font-size: var(--type-eyebrow);
+    font-weight: var(--weight-regular);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+}
+
+@layer utilities {
+  .weight-regular { font-weight: var(--weight-regular); }
+  .weight-medium { font-weight: var(--weight-medium); }
+  .weight-bold { font-weight: var(--weight-bold); }
+  .track-fine { letter-spacing: var(--tracking-fine); }
+  .lead-body { line-height: var(--leading-body); }
+  .lead-small { line-height: var(--leading-small); }
+}
