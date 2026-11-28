@@ -1,0 +1,17 @@
+/* --s (scale) and --floor (ground line) come from the stage. */
+.box {
+  position: absolute;
+  left: calc(var(--at) + var(--dx) * var(--s));
+  bottom: calc(var(--floor) + var(--up) * var(--s));
+  scale: var(--s);
+  transform-origin: 0 100%;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+@media (max-width: 639.98px) {
+  .box {
+    left: calc(var(--at) + var(--m-dx) * var(--s));
+    bottom: calc(var(--floor) + var(--m-up) * var(--s));
+  }
+}

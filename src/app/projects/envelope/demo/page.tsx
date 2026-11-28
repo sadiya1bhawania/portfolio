@@ -32,7 +32,7 @@ function StepCircle({ index, state }: { index: number; state: "done" | "active" 
   if (state === "done") {
     return (
       <span
-        className="flex items-center justify-center w-6 h-6 rounded-full text-[11px] text-white shrink-0"
+        className="flex items-center justify-center w-6 h-6 rounded-full type-label text-[var(--on-accent)] shrink-0"
         style={{ fontFamily: "var(--font-mono)", background: "var(--copper)" }}
       >
         ✓
@@ -41,11 +41,11 @@ function StepCircle({ index, state }: { index: number; state: "done" | "active" 
   }
   return (
     <span
-      className="flex items-center justify-center w-6 h-6 rounded-full text-[11px] shrink-0"
+      className="flex items-center justify-center w-6 h-6 rounded-full type-label shrink-0"
       style={{
         fontFamily: "var(--font-mono)",
         background: state === "active" ? "var(--copper)" : "var(--border)",
-        color: state === "active" ? "#fff" : "var(--muted)",
+        color: state === "active" ? "var(--on-accent)" : "var(--muted)",
       }}
     >
       {index}
@@ -73,18 +73,18 @@ export default function EnvelopeDemoPage() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "var(--paper)" }}>
       {/* Top bar: exit + tab-stepper */}
-      <header className="border-b" style={{ borderColor: "var(--border)", background: "#fff" }}>
+      <header className="border-b" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
         <div className="max-w-[1100px] mx-auto px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <Link
               href="/projects/envelope"
-              className="text-[12px]"
+              className="type-fine"
               style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}
             >
               ← Exit demo
             </Link>
             <p
-              className="text-[13px] font-medium"
+              className="type-mono weight-medium"
               style={{ fontFamily: "var(--font-head)" }}
             >
               Envelope
@@ -107,11 +107,10 @@ export default function EnvelopeDemoPage() {
                   >
                     <StepCircle index={i + 1} state={state} />
                     <span
-                      className="text-[13px]"
+                      className="type-mono"
                       style={{
                         fontFamily: "var(--font-mono)",
                         color: t.id === tab ? "var(--copper-dark)" : "var(--muted)",
-                        fontWeight: t.id === tab ? 600 : 400,
                       }}
                     >
                       {t.label}
@@ -122,14 +121,14 @@ export default function EnvelopeDemoPage() {
             })}
           </div>
 
-          <p className="text-sm mt-3" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
+          <p className="type-small mt-3" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
             {activeBlurb}
           </p>
         </div>
       </header>
 
       {/* Two-panel split */}
-      <div className="flex-1 max-w-[1100px] w-full mx-auto px-6 py-8 grid gap-8" style={{ gridTemplateColumns: "1fr 240px" }}>
+      <div className="flex-1 max-w-[1100px] w-full mx-auto px-6 py-8 grid grid-cols-[minmax(0,1fr)] md:grid-cols-[1fr_240px] gap-8">
         <main>
           {tab === "configure" && (
             <ConfigurePanel

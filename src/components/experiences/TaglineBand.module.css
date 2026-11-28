@@ -10,11 +10,12 @@
 .tagline {
   font-family: var(--font-head);
   font-style: italic;
-  font-size: 21px;
-  color: #fff;
+  font-size: var(--type-h3);
+  color: var(--on-accent);
   max-width: 720px;
   margin: 0;
-  line-height: 1.5;
+  line-height: var(--leading-h3);
+  font-weight: var(--weight-medium);
 }
 
 .tagline u {

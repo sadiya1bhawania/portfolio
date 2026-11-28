@@ -44,7 +44,7 @@ export default function LogPanel({ refreshKey, onConfigure }: LogPanelProps) {
 
   if (isLoading && !data) {
     return (
-      <p className="text-sm" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+      <p className="type-small" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
         Loading…
       </p>
     );
@@ -60,7 +60,7 @@ export default function LogPanel({ refreshKey, onConfigure }: LogPanelProps) {
       </div>
 
       {history.length === 0 ? (
-        <p className="text-sm" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
+        <p className="type-small" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
           No runs yet. Activate a policy and process a document to see it here.{" "}
           {onConfigure ? (
             <button

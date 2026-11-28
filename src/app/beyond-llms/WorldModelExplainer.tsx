@@ -389,14 +389,14 @@ export default function WorldModelExplainer() {
         <div className={styles.footLinks}>
           <Link
             href="/projects"
-            className="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium"
+            className="inline-flex items-center px-4 py-2 rounded-md type-small weight-medium"
             style={{ border: "1px solid var(--copper)", color: "var(--copper-dark)", fontFamily: "var(--font-body)" }}
           >
             Back to projects →
           </Link>
           <Link
             href="/blog/words-are-not-the-world"
-            className="text-sm hover:underline"
+            className="type-small hover:underline"
             style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
           >
             Read the write-up →

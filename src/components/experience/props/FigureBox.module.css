@@ -1,0 +1,11 @@
+/* Mirrors the figure's placement in SadiesWalk.module.css. Sits above the figure. */
+.box {
+  position: absolute;
+  z-index: 1;
+  bottom: calc(var(--floor) - 20px * var(--s));
+  width: 350px;
+  height: 550px;
+  scale: var(--s);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}

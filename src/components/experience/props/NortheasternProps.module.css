@@ -1,0 +1,25 @@
+.flash {
+  position: absolute;
+  inset: -40px -120px 0;
+  background: radial-gradient(
+    closest-side,
+    var(--light-card),
+    color-mix(in srgb, var(--copper-hi) 80%, var(--light-card)) 40%,
+    color-mix(in srgb, var(--copper-hi) 55%, transparent) 70%,
+    transparent
+  );
+}
+
+/* --apex: how high the cap climbs. 210 CSS px is 420px on the 700x1100 frame canvas. */
+.cap {
+  --apex: 210px;
+  position: absolute;
+  max-width: none;
+}
+
+/* The mobile stage has less headroom above the figure. */
+@media (max-width: 639.98px) {
+  .cap {
+    --apex: 30px;
+  }
+}

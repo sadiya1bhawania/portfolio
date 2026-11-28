@@ -4,6 +4,9 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import SmoothScroll from "../components/motion/SmoothScroll";
+import PageTransition from "../components/motion/PageTransition";
+import { THEME_SCRIPT } from "../components/theme/themeScript";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-head",
@@ -35,13 +38,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    // The head script may change data-theme before React hydrates.
+    <html lang="en" className="h-full antialiased" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body
         className={`${spaceGrotesk.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} min-h-full flex flex-col`}
       >
-        <NavBar />
-        {children}
-        <Footer />
+        <SmoothScroll>
+          <NavBar />
+          <PageTransition>{children}</PageTransition>
+          <Footer />
+        </SmoothScroll>
         <Analytics />
       </body>
     </html>

@@ -1,0 +1,315 @@
+/* Layout from docs/motion-reference.html. Every color derives from the tokens in globals.css. */
+.root {
+  --line: color-mix(in srgb, var(--line-base) 40%, var(--paper));
+  --block: color-mix(in srgb, var(--ink) 7%, var(--paper));
+  position: fixed;
+  inset: 0;
+  z-index: 100; /* above the sticky NavBar */
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: none;
+  background: var(--paper);
+  color: var(--ink);
+  transform-origin: 50% 30%;
+}
+
+.root[hidden] {
+  display: none;
+}
+
+.screen {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: min(1100px, 86%);
+  height: min(470px, calc(100% - 96px));
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 0 140px color-mix(in srgb, var(--copper-hi) 14%, transparent);
+}
+
+.code,
+.preview {
+  flex: 1 1 50%;
+  min-width: 0;
+  min-height: 0;
+  padding: 26px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.code {
+  gap: 14px;
+  border-right: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: color-mix(in srgb, var(--ink) 85%, var(--paper));
+}
+
+.dots {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 8px;
+}
+
+.dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--line);
+}
+
+.dots span:last-child {
+  background: var(--copper-hi);
+}
+
+.typed,
+.caption {
+  display: block;
+  max-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.preview {
+  gap: 16px;
+}
+
+/* Starting state for GSAP, so nothing shows before the timeline runs. */
+.preview [data-pop],
+.dim {
+  opacity: 0;
+}
+
+.navBlock {
+  height: 14px;
+  border-radius: 4px;
+  background: var(--block);
+}
+
+.titleBlock,
+.accentBlock {
+  height: 38px;
+  border-radius: 6px;
+}
+
+.titleBlock {
+  width: 92%;
+  background: var(--ink);
+}
+
+.accentBlock {
+  width: 64%;
+  background: var(--copper-hi);
+}
+
+.pipeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.node,
+.nodeFail,
+.nodeDone {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+
+.node {
+  border: 2px solid var(--accent);
+}
+
+.nodeFail {
+  background: var(--brick);
+}
+
+.nodeDone {
+  background: var(--copper-hi);
+}
+
+.link {
+  flex: 1;
+  height: 2px;
+  margin: 0 6px;
+  background: var(--line);
+}
+
+.cards {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cards div {
+  border-radius: 8px;
+  background: var(--block);
+}
+
+.cards div:last-child {
+  background: var(--copper-hi);
+}
+
+.deployed {
+  align-self: flex-start;
+  padding: 4px 10px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--type-fine);
+  color: var(--accent);
+}
+
+.dim {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* Her head starts 40% down the intro; the screen starts 48px down. */
+  padding: max(16px, calc(40dvh - 218px)) 40px 16px;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+}
+
+.headline {
+  max-width: 900px;
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: var(--weight-medium);
+  font-size: var(--type-h1);
+  line-height: var(--leading-h1);
+  letter-spacing: var(--tracking-normal);
+  text-align: center;
+}
+
+/*
+ * The artwork fills y 145-1451 of the 1536px canvas, so a box 70.6% of the intro tall draws her at 60%.
+ * The negative offset drops the 85px of empty canvas under the stool below the bottom edge.
+ */
+.figure {
+  --box: 70.6%;
+  position: absolute;
+  bottom: calc(var(--box) * -0.0553);
+  left: 50%;
+  height: var(--box);
+  aspect-ratio: 2 / 3;
+  translate: -50% 0;
+  filter: var(--figure-shadow);
+  pointer-events: none;
+}
+
+.figure img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  opacity: 0;
+}
+
+.figure img:first-child {
+  opacity: 1;
+}
+
+.caption {
+  position: absolute;
+  left: 32px;
+  bottom: 28px;
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--muted);
+}
+
+.skip {
+  position: absolute;
+  right: 32px;
+  bottom: 22px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--type-fine);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.skip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 639.98px) {
+  .screen {
+    top: 16px;
+    width: calc(100% - 32px);
+    height: min(520px, calc(100% - 128px));
+    flex-direction: column;
+  }
+
+  .code,
+  .preview {
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .code {
+    flex: 0 0 auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--type-label);
+  }
+
+  .titleBlock,
+  .accentBlock {
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .dim {
+    padding: 48px 16px 16px;
+  }
+
+  /* Raised to clear the caption and skip button, as the old figure was. */
+  .figure {
+    bottom: calc(88px - var(--box) * 0.0553);
+  }
+
+  .caption {
+    left: 16px;
+    bottom: 64px;
+  }
+
+  .skip {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No typing loop: only the resting, looking-up frame. */
+  .figure img {
+    opacity: 0;
+  }
+
+  .figure img:last-child {
+    opacity: 1;
+  }
+
+  .root {
+    display: none;
+  }
+}

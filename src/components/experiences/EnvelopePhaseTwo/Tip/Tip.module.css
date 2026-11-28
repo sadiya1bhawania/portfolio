@@ -50,12 +50,12 @@
   border-radius: 8px;
   padding: 10px 12px;
   font-family: var(--font-body);
-  font-size: 12.5px;
-  line-height: 1.5;
+  font-size: var(--type-mono);
+  line-height: var(--leading-body);
   color: var(--ink);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px var(--shadow);
   text-align: left;
-  font-weight: 400;
+  font-weight: var(--weight-regular);
   text-transform: none;
-  letter-spacing: normal;
+  letter-spacing: var(--tracking-normal);
 }

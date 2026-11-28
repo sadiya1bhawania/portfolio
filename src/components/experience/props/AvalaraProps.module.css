@@ -1,0 +1,278 @@
+/* Layout from docs/sadies-walk-reference.html. Every color derives from the tokens in globals.css. */
+.pile {
+  display: block;
+  width: 150px;
+  height: 225px;
+  transform-origin: 50% 100%;
+}
+
+.sheet {
+  fill: var(--paper);
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.cover {
+  fill: var(--background);
+  stroke: var(--muted);
+}
+
+.coverText {
+  fill: var(--ink);
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.coverRules {
+  stroke: var(--border);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.sticky {
+  fill: var(--copper-hi);
+}
+
+.bulb {
+  display: block;
+  width: 44px;
+  height: 52px;
+  overflow: visible;
+}
+
+.glass {
+  fill: color-mix(in srgb, var(--copper-hi) 65%, var(--light-card));
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.socket {
+  fill: var(--muted);
+}
+
+.rays {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.code,
+.engine,
+.result {
+  box-shadow: 0 10px 40px var(--shadow);
+}
+
+.code {
+  width: 230px;
+  border: 1px solid color-mix(in srgb, var(--line-base) 60%, var(--paper));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--ink) 4%, var(--paper));
+}
+
+.dots {
+  display: flex;
+  gap: 5px;
+  padding: 10px 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line-base) 40%, var(--paper));
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--line-base) 60%, var(--paper));
+}
+
+.dots span:last-child {
+  background: var(--copper-hi);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: pre;
+  color: color-mix(in srgb, var(--ink) 80%, var(--paper));
+}
+
+.lastLine {
+  color: var(--accent);
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  width: 170px;
+  height: 52px;
+  border: 2px solid color-mix(in srgb, var(--ink) 35%, var(--paper));
+  border-radius: 26px;
+  background: color-mix(in srgb, var(--ink) 12%, var(--paper));
+  transition: background 0.3s, border-color 0.3s, opacity 0.25s;
+}
+
+.switch.on {
+  border-color: var(--accent);
+  background: var(--copper-hi);
+  box-shadow: 0 0 30px color-mix(in srgb, var(--copper-hi) 45%, transparent);
+}
+
+.knob {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--light-card);
+  box-shadow: 0 1px 4px var(--shadow);
+  transition: left 0.3s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.on .knob {
+  left: 121px;
+}
+
+.switchText {
+  position: absolute;
+  left: 56px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 17px;
+  color: color-mix(in srgb, var(--ink) 80%, var(--paper));
+  transition: left 0.3s;
+}
+
+.on .switchText {
+  left: 18px;
+  color: var(--on-copper);
+}
+
+.engine {
+  width: 190px;
+  border: 1px solid var(--card-line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* The text column starts at 58% of the stage; keep the panel left of it on narrower windows. */
+@media (min-width: 640px) {
+  .engine.engine {
+    left: min(calc(var(--at) + var(--dx) * var(--s)), calc(57% - 190px * var(--s)));
+  }
+}
+
+.engine .dots {
+  border-color: var(--border);
+}
+
+.engine .dots span:not(:last-child) {
+  background: color-mix(in srgb, var(--border) 85%, var(--ink));
+}
+
+.engineBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+}
+
+.gear {
+  width: 54px;
+  height: 54px;
+}
+
+.gearTeeth {
+  fill: var(--copper-hi);
+}
+
+.gearHub {
+  fill: var(--paper);
+}
+
+.track {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: var(--border);
+}
+
+.fill {
+  height: 10px;
+  background: var(--copper-hi);
+}
+
+.engineText {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.paper {
+  display: block;
+  width: 34px;
+  height: 42px;
+  fill: var(--paper);
+  stroke: var(--muted);
+}
+
+.paper path {
+  stroke: var(--border);
+  stroke-width: 2.5;
+}
+
+.result {
+  border: 1px solid var(--card-line);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 240px;
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.resultHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--copper-hi);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.resultTitle {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.check {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.check span:first-child {
+  color: var(--copper);
+  font-weight: 700;
+}

@@ -6,8 +6,8 @@
 
 .label {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -51,15 +51,15 @@
 
 .rowMeta {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.03em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   color: var(--muted);
 }
 
 .statusPending {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.03em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -69,8 +69,8 @@
   align-items: center;
   gap: 4px;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.03em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--copper-dark);
 }
@@ -80,15 +80,15 @@
   align-items: center;
   gap: 4px;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.03em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--ink);
 }
 
 .statement {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: var(--type-mono);
   color: var(--ink);
   margin: 0;
   overflow-wrap: break-word;
@@ -123,8 +123,8 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -135,7 +135,7 @@
   flex-wrap: wrap;
   gap: 4px 8px;
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: var(--type-mono);
   color: var(--ink);
 }
 
@@ -154,7 +154,7 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: var(--type-mono);
   color: var(--ink);
 }
 
@@ -163,14 +163,14 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--type-mono);
+  font-weight: var(--weight-medium);
   color: var(--copper-dark);
 }
 
 .rhythmSub {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: var(--type-fine);
   color: var(--muted);
   margin: 0;
   overflow-wrap: break-word;

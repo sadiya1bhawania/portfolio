@@ -224,7 +224,7 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
           className="rounded-lg border-2 border-dashed p-8 text-center cursor-pointer transition-colors"
           style={{
             borderColor: isDragging ? "var(--copper)" : "var(--border)",
-            background: isDragging ? "var(--copper-light)" : "#fff",
+            background: isDragging ? "var(--copper-light)" : "var(--surface)",
           }}
         >
           <input
@@ -234,7 +234,7 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
             className="hidden"
             onChange={(e) => handleFiles(e.target.files)}
           />
-          <p className="text-sm" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
+          <p className="type-small" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
             {doc?.kind === "upload" ? (
               <>
                 Selected: <strong style={{ color: "var(--copper-dark)" }}>{doc.name}</strong>
@@ -249,7 +249,7 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
       {/* Sample docs */}
       <section className="mb-10">
         <h2
-          className="text-[13px] uppercase tracking-wide mb-3"
+          className="type-mono uppercase track-fine mb-3"
           style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}
         >
           Or use a sample
@@ -265,11 +265,11 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
                   setDoc(sample);
                   resetRunState();
                 }}
-                className="text-[12px] px-3 py-1.5 rounded-full border transition-colors"
+                className="type-fine px-3 py-1.5 rounded-full border transition-colors"
                 style={{
                   fontFamily: "var(--font-mono)",
                   borderColor: active ? "var(--copper)" : "var(--border)",
-                  background: active ? "var(--copper-light)" : "#fff",
+                  background: active ? "var(--copper-light)" : "var(--surface)",
                   color: active ? "var(--copper-dark)" : "var(--muted)",
                 }}
               >
@@ -284,14 +284,14 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
         type="button"
         disabled={!doc || isRunning}
         onClick={submitRun}
-        className="inline-flex items-center px-5 py-2.5 rounded-md text-sm font-medium text-white disabled:opacity-40 disabled:cursor-not-allowed mb-8"
+        className="inline-flex items-center px-5 py-2.5 rounded-md type-small weight-medium text-[var(--on-accent)] disabled:opacity-40 disabled:cursor-not-allowed mb-8"
         style={{ background: "var(--copper)", fontFamily: "var(--font-body)" }}
       >
         {isRunning ? "Running…" : "Run pipeline"}
       </button>
 
       {error && (
-        <div className="mb-6 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+        <div className="mb-6 rounded-lg bg-[var(--brick-light)] border border-[var(--brick)] px-3 py-2 type-small text-[var(--brick-dark)]">
           {error}
           {error.includes("No active policy") && (
             <>
@@ -305,7 +305,7 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
       )}
 
       {isConnecting && (
-        <p className="mb-3 text-sm" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <p className="mb-3 type-small" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
           Connecting…
         </p>
       )}
@@ -313,21 +313,21 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
       <RunStageRail stageStatus={displayStatus} />
 
       {!doc && !isRunning && (
-        <p className="mt-6 text-sm" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
+        <p className="mt-6 type-small" style={{ fontFamily: "var(--font-body)", color: "var(--muted)" }}>
           Upload a document, or try a sample.
         </p>
       )}
 
       {policySummary && (
-        <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
-          <p className="text-[11px] uppercase tracking-wide mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+          <p className="type-label uppercase track-fine mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
             Policy
           </p>
-          <p className="text-[13px] mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}>
+          <p className="type-mono mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}>
             {policySummary}
           </p>
           {sessionCounts && (
-            <p className="text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+            <p className="type-label" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
               This session so far: {sessionCounts.committed} committed, {sessionCounts.escalated} escalated.
             </p>
           )}
@@ -335,13 +335,13 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
       )}
 
       {ruleResults.length > 0 && !actOutcome && (
-        <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
-          <p className="text-[11px] uppercase tracking-wide mb-3" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+        <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+          <p className="type-label uppercase track-fine mb-3" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
             Rule evaluation
           </p>
           <div className="space-y-2">
             {ruleResults.map((r, i) => (
-              <div key={`${r.rule}-${i}`} className="flex items-start gap-2 text-[13px]" style={{ fontFamily: "var(--font-mono)" }}>
+              <div key={`${r.rule}-${i}`} className="flex items-start gap-2 type-mono" style={{ fontFamily: "var(--font-mono)" }}>
                 <span style={{ color: r.pass ? "var(--copper)" : "var(--brick)" }}>{r.pass ? "✓" : "✗"}</span>
                 <span>
                   <span style={{ color: "var(--ink)" }}>{RULES.find((rule) => rule.id === r.rule)?.label ?? r.rule}</span>
@@ -379,28 +379,28 @@ export default function RunPanel({ onStageStatusChange, onBranchChange, onRunCom
       )}
 
       {Object.keys(extractedFields).length > 0 && (
-        <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
+        <div className="mt-6 rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[11px] uppercase tracking-wide" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+            <p className="type-label uppercase track-fine" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
               Extracted fields
             </p>
             {usedFallback && (
-              <p className="text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}>
+              <p className="type-label" style={{ fontFamily: "var(--font-mono)", color: "var(--copper-dark)" }}>
                 Gemini output couldn&apos;t be parsed - showing the sample&apos;s known values.
               </p>
             )}
           </div>
           <div className="space-y-1.5">
             {Object.entries(extractedFields).map(([field, data]) => (
-              <div key={field} className="flex items-center justify-between text-[13px]" style={{ fontFamily: "var(--font-mono)" }}>
+              <div key={field} className="flex items-center justify-between type-mono" style={{ fontFamily: "var(--font-mono)" }}>
                 <span style={{ color: "var(--muted)" }}>{field}</span>
                 <span className="flex items-center gap-3">
                   <span style={{ color: "var(--copper-dark)" }}>{formatFieldValue(data.value)}</span>
                   <span
-                    className="text-[11px] px-1.5 py-0.5 rounded"
+                    className="type-label px-1.5 py-0.5 rounded"
                     style={{
-                      background: data.confidence >= 0.75 ? "var(--copper-light)" : "#fee2e2",
-                      color: data.confidence >= 0.75 ? "var(--copper-dark)" : "#b91c1c",
+                      background: data.confidence >= 0.75 ? "var(--copper-light)" : "var(--brick-light)",
+                      color: data.confidence >= 0.75 ? "var(--copper-dark)" : "var(--brick)",
                     }}
                   >
                     {(data.confidence * 100).toFixed(0)}%

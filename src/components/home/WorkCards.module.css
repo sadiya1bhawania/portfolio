@@ -1,0 +1,171 @@
+/* Layout from docs/motion-reference.html. Every color derives from the tokens in globals.css. */
+.section {
+  --line: color-mix(in srgb, var(--line-base) 40%, var(--paper));
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 64px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  scroll-margin-top: 72px; /* sticky NavBar */
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.heading {
+  max-width: 720px;
+  margin: 0;
+  font-size: var(--type-h2);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-h2);
+  letter-spacing: var(--tracking-normal);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: var(--type-mono);
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+  gap: 16px;
+}
+
+.card {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--ink) 3%, var(--paper));
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.front,
+.backBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.backBody {
+  gap: 10px;
+}
+
+.tag,
+.tagSolid {
+  align-self: flex-start;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+
+.tagSolid {
+  border-color: var(--accent);
+  background: var(--copper-hi);
+  color: var(--on-copper);
+}
+
+.name {
+  font-family: var(--font-head);
+  font-size: var(--type-h3);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-h3);
+}
+
+.summary {
+  font-size: var(--type-small);
+  color: var(--muted);
+}
+
+.back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  background: var(--copper-hi);
+  color: var(--on-copper);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.backLabel {
+  font-family: var(--font-mono);
+  font-size: var(--type-fine);
+}
+
+.question {
+  font-family: var(--font-head);
+  font-size: var(--type-h3);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-h3);
+}
+
+.cta {
+  font-size: var(--type-small);
+}
+
+.about {
+  font-size: var(--type-small);
+  line-height: var(--leading-small);
+}
+
+.card:focus-visible .back,
+.card[data-revealed] .back {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hover only where it exists, so a tap does not count as a hover. */
+@media (hover: hover) {
+  .card:hover {
+    border-color: var(--accent);
+  }
+
+  .card:hover .back {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .section {
+    padding: 48px 16px;
+  }
+}

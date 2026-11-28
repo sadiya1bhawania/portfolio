@@ -1,0 +1,78 @@
+.header {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.streams {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 72px 32px 40px;
+}
+
+.compact {
+  max-width: 744px; /* the 680px reading column plus its padding */
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--type-eyebrow);
+  color: var(--muted);
+  letter-spacing: var(--tracking-eyebrow);
+  font-weight: var(--weight-regular);
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: var(--type-h1);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-h1);
+  letter-spacing: var(--tracking-normal);
+  overflow-wrap: break-word;
+}
+
+.compact .title {
+  font-size: var(--type-h1);
+  line-height: var(--leading-h1);
+  letter-spacing: var(--tracking-normal);
+}
+
+.word {
+  display: inline-block;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+/* Starting state for GSAP, so words don't show before the timeline runs. */
+@media (prefers-reduced-motion: no-preference) {
+  .header [data-word] {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .streams {
+    display: none;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .inner {
+    padding: 48px 16px 28px;
+  }
+}

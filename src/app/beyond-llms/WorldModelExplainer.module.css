@@ -14,25 +14,27 @@
 /* hero */
 .label {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 16px;
+  font-weight: var(--weight-regular);
 }
 
 .title {
   font-family: var(--font-head);
-  font-size: clamp(28px, 5vw, 40px);
-  font-weight: 500;
+  font-size: var(--type-h1);
+  font-weight: var(--weight-medium);
   margin: 0 0 16px;
   color: var(--ink);
+  line-height: var(--leading-h1);
 }
 
 .lead {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
   color: var(--muted);
   max-width: 640px;
   margin: 0;
@@ -45,25 +47,27 @@
 
 .sectionLabel {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 12px;
+  font-weight: var(--weight-regular);
 }
 
 .sectionHeading {
   font-family: var(--font-head);
-  font-size: clamp(24px, 4vw, 34px);
-  font-weight: 500;
+  font-size: var(--type-h2);
+  font-weight: var(--weight-medium);
   margin: 0 0 16px;
   color: var(--ink);
+  line-height: var(--leading-h2);
 }
 
 .sectionIntro {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
   color: var(--muted);
   max-width: 640px;
   margin: 0 0 32px;
@@ -88,11 +92,12 @@
 }
 
 .demoCard {
-  background: var(--ink);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 24px;
   font-family: var(--font-mono);
-  color: var(--copper-light);
+  color: var(--code-ink);
   min-height: 220px;
   display: flex;
   flex-direction: column;
@@ -100,8 +105,8 @@
 }
 
 .demoCardLabel {
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 14px;
@@ -109,15 +114,15 @@
 
 .panelNote {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
   color: var(--muted);
   margin: 12px 0 0;
 }
 
 .panelNote strong {
   color: var(--ink);
-  font-weight: 600;
+  font-weight: var(--weight-medium);
 }
 
 .llm {
@@ -126,7 +131,9 @@
   align-items: center;
   gap: 8px;
   font-family: var(--font-head);
-  font-size: 20px;
+  font-size: var(--type-h3);
+  line-height: var(--leading-h3);
+  font-weight: var(--weight-medium);
 }
 
 .token {
@@ -142,7 +149,7 @@
 }
 
 .token.isLatest {
-  color: var(--copper-hi);
+  color: var(--code-accent);
 }
 
 .caret {
@@ -185,7 +192,7 @@
 
 .latentRing {
   fill: none;
-  stroke: var(--copper-hi);
+  stroke: var(--accent);
   stroke-width: 1.6;
   stroke-dasharray: 3 3;
   transition: cx 0.4s ease, cy 0.4s ease;
@@ -194,9 +201,9 @@
 
 .predLabel {
   font-family: var(--font-mono);
-  font-size: 9px;
-  fill: var(--copper-hi);
-  letter-spacing: 0.1em;
+  font-size: var(--art-diagram);
+  fill: var(--accent);
+  letter-spacing: var(--tracking-label);
   transition: x 0.4s ease, y 0.4s ease;
 }
 
@@ -210,8 +217,8 @@
 
 .pill {
   font-family: var(--font-mono);
-  font-size: 12px;
-  background: #fff;
+  font-size: var(--type-fine);
+  background: var(--surface);
   color: var(--copper-dark);
   border: 1px solid var(--copper);
   border-radius: 999px;
@@ -225,18 +232,18 @@
 
 .pill.isActive {
   background: var(--copper);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .arrow {
   color: var(--copper);
-  font-weight: 500;
+  font-weight: var(--weight-medium);
 }
 
 .loopCaption {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
   color: var(--muted);
   min-height: 1.6em;
   margin: 16px 0 0;
@@ -244,8 +251,8 @@
 
 .loopFoot {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
   color: var(--muted);
   max-width: 640px;
   margin: 32px 0 0;
@@ -254,8 +261,8 @@
 /* section three - try it widget */
 .banner {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
   color: var(--ink);
   background: var(--copper-light);
   border: 1px solid var(--copper);
@@ -278,8 +285,8 @@
 
 .pickerLabel {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--muted);
   margin: 0 0 12px;
@@ -297,7 +304,7 @@
 
 .chip {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--type-fine);
   color: var(--copper-dark);
   background: var(--copper-light);
   border: 1px solid var(--border);
@@ -312,7 +319,7 @@
 
 .chip.isOn {
   background: var(--copper);
-  color: #fff;
+  color: var(--on-accent);
   border-color: var(--copper);
 }
 
@@ -332,16 +339,16 @@
 
 .resultEmpty {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
   color: var(--muted);
   margin: auto 0;
 }
 
 .resultKind {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-fine);
   text-transform: uppercase;
   color: var(--copper-dark);
   margin: 0 0 10px;
@@ -349,9 +356,9 @@
 
 .resultPred {
   font-family: var(--font-head);
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.4;
+  font-size: var(--type-h3);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-h3);
   color: var(--ink);
   margin: 0 0 20px;
 }
@@ -364,8 +371,8 @@
 
 .gapTag {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.06em;
+  font-size: var(--type-label);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--brick);
   border: 1px solid var(--brick);
@@ -377,8 +384,8 @@
 
 .gapText {
   font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: var(--type-small);
+  line-height: var(--leading-body);
   color: var(--muted);
   margin: 0;
 }
@@ -390,8 +397,8 @@
 
 .footNote {
   font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.7;
+  font-size: var(--type-fine);
+  line-height: var(--leading-code);
   color: var(--muted);
   max-width: 660px;
   margin: 0 0 24px;

@@ -13,13 +13,13 @@ function outcomeLabel(outcome: RunHistoryEntry["outcome"]): string {
 
 export function SessionSummary({ counts }: { counts: { committed: number; resolvedByAi: number; escalated: number } }) {
   return (
-    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
-      <p className="text-[13px]" style={{ fontFamily: "var(--font-mono)" }}>
-        <span style={{ color: "var(--copper-dark)", fontWeight: 600 }}>{counts.committed} committed</span>
+    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
+      <p className="type-mono" style={{ fontFamily: "var(--font-mono)" }}>
+        <span className="weight-medium" style={{ color: "var(--copper-dark)" }}>{counts.committed} committed</span>
         <span style={{ color: "var(--muted)" }}> · </span>
-        <span style={{ color: "var(--copper-dark)", fontWeight: 600 }}>{counts.resolvedByAi} resolved by AI</span>
+        <span className="weight-medium" style={{ color: "var(--copper-dark)" }}>{counts.resolvedByAi} resolved by AI</span>
         <span style={{ color: "var(--muted)" }}> · </span>
-        <span style={{ color: "var(--brick-dark)", fontWeight: 600 }}>{counts.escalated} escalated</span>
+        <span className="weight-medium" style={{ color: "var(--brick-dark)" }}>{counts.escalated} escalated</span>
       </p>
     </div>
   );
@@ -28,18 +28,18 @@ export function SessionSummary({ counts }: { counts: { committed: number; resolv
 export function LedgerRow({ entry }: { entry: RunHistoryEntry }) {
   const isEscalated = entry.outcome === "escalated";
   return (
-    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "#fff" }}>
+    <div className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
       <div className="flex items-center justify-between gap-3 mb-3">
         <div>
-          <p className="text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+          <p className="type-label" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
             {formatTimestamp(entry.timestamp)}
           </p>
-          <p className="text-[15px] font-medium" style={{ fontFamily: "var(--font-head)" }}>
+          <p className="type-small weight-medium" style={{ fontFamily: "var(--font-head)" }}>
             {entry.documentName}
           </p>
         </div>
         <span
-          className="shrink-0 text-[10px] uppercase tracking-wide font-medium px-2 py-0.5 rounded-full text-white"
+          className="shrink-0 type-label uppercase track-fine weight-medium px-2 py-0.5 rounded-full text-[var(--on-accent)]"
           style={{ fontFamily: "var(--font-mono)", background: isEscalated ? "var(--brick)" : "var(--copper)" }}
         >
           {outcomeLabel(entry.outcome)}
@@ -48,18 +48,18 @@ export function LedgerRow({ entry }: { entry: RunHistoryEntry }) {
 
       <div className="space-y-1.5 mb-3">
         {entry.ruleResults.map((r, i) => (
-          <div key={`${r.rule}-${i}`} className="flex items-center gap-2 text-[13px]" style={{ fontFamily: "var(--font-mono)" }}>
+          <div key={`${r.rule}-${i}`} className="flex items-center gap-2 type-mono" style={{ fontFamily: "var(--font-mono)" }}>
             <span style={{ color: r.pass ? "var(--copper)" : "var(--brick)" }}>{r.pass ? "✓" : "✗"}</span>
             <span style={{ color: "var(--ink)" }}>{ruleLabel(r.rule)}</span>
           </div>
         ))}
       </div>
 
-      <p className="text-[11px] mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+      <p className="type-label mb-2" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
         AI review: {entry.aiReviewFired ? "fired" : "not triggered"}
       </p>
 
-      <p className="text-[11px]" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
+      <p className="type-label" style={{ fontFamily: "var(--font-mono)", color: "var(--muted)" }}>
         {outcomeLabel(entry.outcome)} on behalf of Sadie · {formatTimestamp(entry.timestamp)} · policy v{entry.policyVersion}
       </p>
     </div>

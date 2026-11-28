@@ -25,6 +25,7 @@
 *.pem
 .idea/
 .vscode/
+sadie-frames/
 
 # debug
 npm-debug.log*
@@ -43,3 +44,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
