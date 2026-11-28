@@ -6,7 +6,7 @@ const ROWS = [
   // TODO(sadie): book title placeholder. Confirm it; the displayed line stays as is until then.
   ["READING", "AI evals, Hamel Husain. How to measure an LLM failing before users do."],
   ["STUDYING", "World models and JEPA. What comes after next-token prediction."],
-  ["SHIPPING", "Clinician AI at Knowtex."],
+  ["SHIPPING", "Clinical AI at Knowtex."],
 ];
 
 export default function LabLog() {

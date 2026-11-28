@@ -189,7 +189,7 @@ export default function IntroScene({ onDone }: IntroSceneProps) {
         ref={rootRef}
         className={styles.root}
         role="region"
-        aria-label="Intro: the site builds itself"
+        aria-label="Intro: The model is the easy part."
         data-lenis-prevent
         suppressHydrationWarning
       >
@@ -205,10 +205,10 @@ export default function IntroScene({ onDone }: IntroSceneProps) {
               agent.plan(sadie)
             </span>
             <span className={styles.typed} data-line>
-              {'render(<Hero title="builds itself" />)'}
+              {'render(<Hero title="easy part." />)'}
             </span>
             <span className={styles.typed} data-line>
-              {'render(<Pipeline gate="evals" />)'}
+              {'render(<Pipeline gate="safety" />)'}
             </span>
             <span className={styles.typed} data-line>
               {'render(<Systems hover="what broke" />)'}
@@ -245,8 +245,7 @@ export default function IntroScene({ onDone }: IntroSceneProps) {
 
           <div className={styles.dim} data-headline>
             <p className={styles.headline}>
-              This site builds <span className={styles.accent}>itself</span>{" "}
-              while you watch.
+              The model is the <span className={styles.accent}>easy part.</span>
             </p>
           </div>
         </div>

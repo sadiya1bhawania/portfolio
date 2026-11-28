@@ -207,7 +207,7 @@ export default function GenUIDemo() {
         <div className={styles.footer}>
           <span>rendered by gen-ui · scripted preview · {autoplay ? "autoplay on" : "you are driving"}</span>
           <span>
-            eval gate <span className={styles.accent}>✓ passed</span>
+            evals <span className={styles.accent}>✓ passed</span>
           </span>
         </div>
       </div>
