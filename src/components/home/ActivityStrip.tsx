@@ -84,7 +84,7 @@ export default function ActivityStrip({ filling }: ActivityStripProps) {
         ))}
       </div>
 
-      <div className={styles.grid} role="img" aria-label={`Activity over the last ${weeks} weeks, ending today: what's next`}>
+      <div className={styles.grid} role="img" aria-label={`Activity over the last ${weeks} weeks, ending today: what's next (illustrative)`}>
         {Array.from({ length: weeks * 7 }, (_, i) => {
           const future = i > todayIndex;
           const cell = new Date(year, month, firstOffset + i);
@@ -107,6 +107,8 @@ export default function ActivityStrip({ filling }: ActivityStripProps) {
 
       <div className={styles.dates}>
         <span>{shortDate(start)}</span>
+        {/* The dates are real; the squares are a generated pattern, not contribution data. */}
+        <span>illustrative</span>
         <span>today · {shortDate(now)}</span>
       </div>
     </div>

@@ -14,14 +14,16 @@ gsap.registerPlugin(CustomEase);
 
 // Seconds, from docs/motion-reference.html.
 const WORDS: [string, number][] = [
-  ["This", 0.1],
-  ["site", 0.2],
-  ["builds", 0.3],
-  ["itself", 0.45],
-  ["while", 0.6],
-  ["you", 0.7],
-  ["watch.", 0.8],
+  ["The", 0.1],
+  ["model", 0.2],
+  ["is", 0.3],
+  ["the", 0.45],
+  ["easy", 0.6],
+  ["part.", 0.75],
 ];
+// The closing words that are set in copper and underlined.
+const ACCENT_FROM = 4;
+
 // When the headline has finished revealing, whether or not the intro played first.
 const STRIP_AT = 1.5;
 
@@ -92,16 +94,25 @@ export default function Hero() {
           </p>
 
           <h1 className={styles.heading}>
-            {WORDS.map(([word], i) => (
-              <span key={word}>
-                <span className={word === "itself" ? styles.itself : styles.word} data-in={`word${i}`}>
+            {WORDS.slice(0, ACCENT_FROM).map(([word], i) => (
+              <span key={i}>
+                <span className={styles.word} data-in={`word${i}`}>
                   {word}
-                  {word === "itself" && (
-                    <span className={styles.underline} data-underline aria-hidden="true" />
-                  )}
                 </span>{" "}
               </span>
             ))}
+            {/* One box, so the underline spans both words and they wrap together. */}
+            <span className={styles.accent}>
+              {WORDS.slice(ACCENT_FROM).map(([word], i) => (
+                <span key={word}>
+                  {i > 0 && " "}
+                  <span className={styles.word} data-in={`word${ACCENT_FROM + i}`}>
+                    {word}
+                  </span>
+                </span>
+              ))}
+              <span className={styles.underline} data-underline aria-hidden="true" />
+            </span>
           </h1>
 
           <div className={styles.activity} data-in="strip">
@@ -109,9 +120,8 @@ export default function Hero() {
           </div>
 
           <p className={styles.line} data-in="line">
-            Retrieval, safety gates, and interfaces that build themselves are{" "}
-            <span className={styles.highlight}>just the beginning.</span>{" "}
-            I&apos;m here for whatever&apos;s harder.
+            The hard part is everything around it: retrieval, safety gates, evals, and the interface the answer
+            lands in. <span className={styles.highlight}>That&apos;s the part I build.</span>
           </p>
 
           <div className={styles.actions} data-in="actions">
@@ -119,7 +129,7 @@ export default function Hero() {
               <span className={styles.playWrap} aria-hidden="true">
                 <span className={styles.ring} data-ping />
                 <span className={styles.play}>
-                  <svg width="12" height="12" viewBox="0 0 12 12">
+                  <svg width="10" height="10" viewBox="0 0 12 12">
                     <path d="M3 1.5v9l7.5-4.5z" />
                   </svg>
                 </span>
